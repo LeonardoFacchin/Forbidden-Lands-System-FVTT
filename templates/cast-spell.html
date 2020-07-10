@@ -1,0 +1,92 @@
+<form class="spellCastForm" id="{{this.uID}}" style="font-size: 0.9rem;">
+    <body>
+        <div class="frame frame--no-border">
+            <label class="frame__title">{{this.spellName}}</label>
+            {{#if this.isChanceCasting}}
+            <div class= frame__placement>
+                <span class="frame frame__placement" style="color: rgba(207, 0, 15, 1); border: 1px solid rgba(207, 0, 15, 1)">Warning: Chance Casting! <br> Casting this spell will result in a magical mishap.</span>
+            </div>
+            {{/if}}
+
+            {{#if this.isTooHigh}}
+            <div class= frame__placement>
+               <span class="frame frame__placement" style="color: rgba(207, 0, 15, 1); border: 1px solid rgba(207, 0, 15, 1)">You can't cast a spell whose rank is two or more higher than your relevant Discipline talent rank.</span>
+            </div>
+            {{/if}}
+            <div class="frame__placement table">
+                <div class="table__entry table__entry--2col">
+                    <div class="table__field">                        
+                        <label class="table__data table__data--left-aligned">Spent Willpower: </label>
+                    </div>
+                    <div class="table__field">
+                        <select class="table__data" name="data.spentWillpower">
+                            {{#select this.spentWillpower}}
+                            {{#each this.WPArray}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    <div class=table__field>
+                        <input class="table__data" name="data.isIngredient" type="checkbox" {{checked this.isIngredient}}>
+                        <label class="table__data table__data--left-aligned" title="+1 to PL"> Ingredients</label>
+                    </div>
+                    <div class=table__field>
+                        <input class="table__data" type="checkbox" name="data.isGrimoire" {{checked this.isGrimoire}}>
+                        <label class="table__data table__data--left-aligned" title="-1 to Spell Rank">Grimoire/Scroll</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="frame frame--no-border">
+            <label class="frame__title">Dice</label>
+            <div class="frame__placement table">
+                <div class="table__entry table__entry--2col">
+                    <div class="table__field">
+                        <label class="table__data table__data--left-aligned">Overcharge Dice:</label>
+                    </div>
+                    <div class="table__field">
+                        <select class="table__data" name="data.rolledDice">
+                            {{#select this.rolledDice}}
+                            {{#each this.diceToRoll}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="frame frame--no-border">
+            <label class="frame__title">Summary</label>
+            <div class="table frame__placement">
+                <div class="table__entry table__entry--2col">
+                    <div class="table__field">
+                        <label class="table__data table__data--left-aligned">Base Dice: </label>
+                    </div>
+                    <div class="table__field">
+                        <label class="table__data">{{this.spentWillpower}}</label>
+                    </div>
+                    <div class="table__field">
+                        <label class="table__data table__data--left-aligned">Power Level: </label>
+                    </div>
+                    <div class="table__field">
+                        <label class="table__data">{{this.powerLevel}}</label>
+                    </div>
+                    <div class="table__field">
+                        <label class="table__data table__data--left-aligned">Mishap Chance: </label>
+                    </div>
+                    <div class="table__field">
+                        <label class="table__data">{{this.mishapChance}}%</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    {{#unless this.isTooHigh}}
+    <footer>
+        <button class="confirmSpellCasting" type="button">Cast Spell</button>
+    </footer>
+    {{/unless}}
+    
+</form>

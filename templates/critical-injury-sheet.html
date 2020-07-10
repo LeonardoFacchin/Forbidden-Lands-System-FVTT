@@ -1,0 +1,122 @@
+<form class="{{cssClass}} criticalInjury" autocomplete="off" style="min-height: max-content">
+    <div class="layout layout--equipment">
+        <div class="layout__picture">
+            <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}">
+        </div>
+        
+        <div class="layout__header">
+            <input class="header-title header-title--small" type="text" name="name" value="{{item.name}}", placeholder="Name">
+        </div>
+        
+        <!-- EDIT -->
+        <div class="layout__body">
+
+            <label class="frame__title layout__gap--large">Wound Data</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Type: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.type">
+                                {{#select data.type}}
+                                {{#each settings.type}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Lethal: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.lethal.isLethal">
+                                {{#select data.lethal.isLethal}}
+                                {{#each settings.lethal}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                            <select class="table__data" name="data.lethal.penalty" style="margin: 0 0 0 3px">
+                                {{#select data.lethal.penalty}}
+                                <option value="0">0</option>
+                                <option value="-1">-1</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Time Limit: </label>
+                        </div>
+                        <div class="table__field">
+                                <input class="table__data" name="data.timeLimit.value" value="{{data.timeLimit.value}}" style="display: inline-block; width: 15px">
+                                <select class="table__data" name="data.timeLimit.units">
+                                    {{#select data.timeLimit.units}}
+                                    {{#each settings.timeLimit}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                        </div>
+
+                        <div class="table__field">
+                            <span class="table__data table__data--left-aligned">Penalties: </span>
+                        </div>
+                        <div class="table__entry-table__entry--2col">
+
+                            {{#each data.bonus as |obj key|}}
+                            <div class="table__field">
+                                <select class="table__data" name="data.bonus.{{key}}.skill">
+                                    {{#select obj.skill}}
+                                    {{#each @root.settings.skills as |s k|}}
+                                    <option value="{{s.name}}">{{s.name}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                                <select class="table__data" name="data.bonus.{{key}}.value" data-dtype="Number" style="margin: 0 6px 0 3px">
+                                    {{#select obj.value}}
+                                    <option value="0">0</option>
+                                    <option value="-1">-1</option>
+                                    <option value="-2">-2</option>
+                                </select>
+                                {{/select}}
+                                {{#if @first}}
+                                <i class="fas fa-plus" id="{{key}}" style="font-size: 1.15em; vertical-align: sub; margin: 0 2px 0 0"></i>
+                                {{/if}}
+                                {{#unless @first}}
+                                {{#if @last}}
+                                <i class="fas fa-minus" id="{{key}}" style="font-size: 1.15em; vertical-align: sub; margin: 0 0 0 2px"></i>
+                                {{else}}
+                                <i class="fas fa-minus" style="font-size: 1.15em; vertical-align: sub; margin: 0 0 0 2px; color: lightgray"></i>
+                                {{/if}}
+                                {{/unless}}
+                            </div>
+                            {{/each}}
+
+                        </div>
+                            
+                            <div class="table__field">
+                                <label class="table__data table__data--left-aligned">Effects: </label>
+                            </div>
+                            <div class="table__field">
+                                <div class="table__data" style="height: 75px; text-align: justify;" data-edit="data.effects" contenteditable="true">{{formatDisplay data.effects}}</div>
+                            </div>
+                            <div class="table__field">
+                                <label class="table__data table__data--left-aligned">Healing Time: </label>
+                            </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.healingTime">
+                                {{#select data.healingTime}}
+                                {{#each settings.healingTime}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</form>

@@ -1,0 +1,192 @@
+<form class="{{cssClass}} layout layout--talent" autocomplete="off" style="min-height: max-content">
+    
+    <div class="layout__picture">
+        <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}">
+    </div>
+    
+    <header class="layout__header">
+        <input class= "header-title header-title--small" type="text" name="name" value="{{item.name}}" placeholder="Name">
+    </header>
+    
+    <div class="layout__body">
+        <!-- TALENT CLASSIFICATION DISPLAY -->
+        {{#if isBeingEdited}}
+        <!-- EDIT FORM -->
+        <div class="frame frame--no-lr-border frame__placement layout__gap">
+            <div class="table">
+                <div class="table__entry table__entry--talent-classification">                            
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Type: </label>
+                    </div>
+                    
+                    <div class="table__field">
+                        <select class="table__data" name="data.type">
+                            {{#select data.type}}
+                                {{#each settings.talent-type}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+ 
+                    <div></div>
+
+                    {{#iff data.type comparison="Professional"}}
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Profession: </label>
+                    </div>
+                  
+                    <div class="table__field">
+                        <select class="table__data" name="data.profession">
+                            {{#select data.profession}}
+                                {{#each settings.professions}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Spellcasting: </label>
+                    </div>
+                    <div class="table__field">
+                        <input class="table__data" type="checkbox" name="data.isMagical" value="true" style="justify-content: start" {{checked data.isMagical}}>
+                    </div>
+
+                    <div></div>
+
+                    {{#if data.isMagical}}
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Magical Discipline: </label>
+                    </div>
+                    <div class="table__field">
+                        <select class="table__data" name="data.magicalDiscipline">
+                        {{#select data.magicalDiscipline}}
+                            {{#each settings.disciplines}}
+                            <option value="{{this.name}}">{{this.name}}</option>
+                            {{/each}}
+                        {{/select}}
+                        </select>
+                    </div>
+                    {{/if}}
+                    
+                    {{/iff}}
+                </div>
+            </div>
+        </div>
+
+        <!-- TALENT DESCRIPTION + RANK EFFECTS -->
+        <div class="frame frame--no-border frame--flexible layout__gap" >
+
+            <div class="frame__placement">
+                <div contenteditable="true" style="word-wrap: break-word;" data-edit="data.description">
+                    {{formatDisplay data.description}}
+                </div>
+            </div>
+        {{#unlesss data.type comparison="Kin"}}
+            <div class="table">
+                <div class="table__entry table__entry--talent-content">
+                    <div class="table__field">
+                        <div class="table__data">
+                            <label style="font-variant: small-caps">RANK 1: </label>
+                        </div>
+                    </div>
+                    <div class="table__field">
+                        <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.rank1">
+                            {{formatDisplay data.rank1}}
+                        </div>
+                    </div>
+                    <div class="table__field">    
+                        <div class="table__data">
+                            <label style="font-variant: small-caps">RANK 2: </label>
+                        </div>
+                    </div>
+                    <div class="table__field">
+                        <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.rank2">
+                           {{formatDisplay data.rank2}}
+                        </div>
+                    </div>
+                    <div class="table__field">
+                        <div class="table__data">
+                            <label style="font-variant: small-caps">RANK 3: </label>
+                        </div>
+                    </div>
+                    <div class="table__field">
+                        <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.rank3">
+                            {{formatDisplay data.rank3}}
+                        </div>   
+                    </div>
+                </div>
+            </div>
+        {{/unlesss}}
+            <!-- SAVE BUTTON -->
+            <div>
+                <i class="fas fa-save" style="float: right; font-size: 1.5em; padding: 5px"></i> 
+            </div>
+        </div>
+
+        {{else}}
+        <div class="frame frame--no-lr-border frame__placement layout__gap">
+            <div class="table">
+                <div class="table__entry table__entry--talent-classification">                            
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Type: </label>
+                    </div>
+                    
+                    <div class="table__field">
+                        <span class="table__data">{{data.type}}</span>
+                    </div>
+ 
+                    <div></div>
+
+                    {{#iff data.type comparison="Professional"}}
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Profession: </label>
+                    </div>
+                  
+                    <div class="table__field">
+                        <span class="table__data">{{data.profession}}</span>
+                    </div>
+                    {{/iff}}
+                </div>
+            </div>
+        </div>
+
+        <div class="frame frame--flexible layout__gap" >
+            <label class="frame__title">Description</label>
+            <!-- DISPLAY FORM -->
+
+            <div class="frame__placement">
+                <span>{{formatDisplay data.description}}</span>
+            </div>
+            {{#unlesss data.type comparison="Kin"}}
+            <div>
+                <ul>
+                    <li class="frame__placement">
+                        <span>
+                            <strong style="font-variant: small-caps;">RANK 1 - </strong>
+                            {{formatDisplay data.rank1}}
+                        </span>
+                    </li>
+                    <li class="frame__placement">
+                        <span>
+                            <strong style="font-variant: small-caps;">RANK 2 - </strong>
+                            {{formatDisplay data.rank2}}
+                        </span>
+                    </li>
+                    <li class="frame__placement">
+                        <span>
+                            <strong style="font-variant: small-caps;">RANK 3 - </strong>
+                            {{formatDisplay data.rank3}}
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            {{/unlesss}}
+            <!-- EDIT BUTTON -->
+            <div>
+                <i class="fas fa-edit" style="float: right; font-size: 1.5em; padding: 5px"></i>
+            </div>
+            {{/if}}
+        </div>
+     </div>
+</form>

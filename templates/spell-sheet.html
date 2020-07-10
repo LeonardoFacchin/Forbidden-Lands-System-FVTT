@@ -1,0 +1,173 @@
+<form class="{{cssClass}}" autocomplete="off">
+    
+    <!-- EDIT -->
+    {{#if isBeingEdited}}
+    <div class="layout layout--spell-edit">
+        <!-- SPELL ICON -->
+        <div class="layout__picture">
+                <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}"
+                style="justify-self: center;">
+        </div>
+        <!-- SPELL TITLE -->
+        <div class="layout__header">
+            <input class= "header-title header-title--small" type="text" name="name" value="{{item.name}}" placeholder="Name">
+        </div>
+        
+        <div class="layout__body">
+            
+            <div class="frame frame__placement frame--no-lr-border layout__gap">
+                <div class="table">
+                    
+                    <div class="table__entry--no-border table__entry--mAttacks">
+                        <!-- MAGIC DISCIPLINE -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Discipline: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.discipline">
+                                {{#select data.discipline}}
+                                    {{#each settings.disciplines}}
+                                    <option value="{{@key}}">{{this.name}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <!-- RANK -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Rank: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.rank">
+                                {{#select data.rank}}
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="table__entry--no-border" style="grid-template-columns: 34% 22% 22% 22%">
+                            <!-- CASTING TIME -->
+                            <div class="table__field">
+                                <label class="table__data table__data--left-aligned">Casting Time: </label>
+                            </div>
+                            <div class="table__field">
+                                <span><input class="table__data" type="radio" name="data.castingtime" value=""><label> Normal</label></span>
+                            </div>
+                            <div class="table__field">
+                                <span><input class="table__data" type="radio" name="data.castingtime" value="Ritual"><label> Ritual</label></span>
+                            </div>
+                            <div class="table__field">
+                                <span><input class="table__data" type="radio" name="data.castingtime" value="Power Word"><label> Power Word</label></span>
+                            </div>
+                    </div>    
+
+                    <div class="table__entry--no-border table__entry--mAttacks">
+                        <!-- RANGE -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Range: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.range">
+                                {{#select data.range}}
+                                    {{#each settings.ranges}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <!-- DURATION -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Duration: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.duration">
+                                {{#select data.duration}}
+                                    {{#each settings.durations}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <!-- INGREDIENT -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Ingredient: </label>
+                        </div>
+                        <div class="table__field">
+                            <input type="text" class="table__data table__data--left-aligned" name="data.ingredient" value="{{data.ingredient}}">
+                        </div>
+                    </div>
+                </div>
+            <!-- DESCRIPTION -->
+            </div>
+            <div class="frame frame__placement frame--flexible layout__gap" style="min-height: 100px" data-edit="data.description" contenteditable="true">
+                {{formatDisplay data.description}}
+            </div>
+            <div>
+                <i class="fas fa-save" style="font-size: 1.5em; padding: 5px; float: right"></i>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <!-- DISPLAY -->
+    <div class="layout layout--spell-display" style="height: fit-content">
+
+        <header class="layout__header">
+            <div class="table">
+                <div class="table__entry table__entry--spell">
+                    <div class="table__field">
+                        <div class="table__data">
+                            <div>
+                                <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table__field">
+                        <div class="table__data">
+                            <input class= "header-title header-title--small" type="text" name="name" value="{{item.name}}" placeholder="Name" style="width: 98%">
+                        </div>
+                    </div>
+                    <div class="table__field">
+                        <div class="table__data">
+                            <object type="image/svg+xml" data={{data.image}} class="profile-img--small"></object>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </header>
+        
+        <div class="layout__body">
+            <div class="frame frame--no-lr-border frame--flexible frame__placement layout__gap">
+                <ul>
+                    <li>
+                        <span>
+                            <strong>RANGE: </strong>
+                            {{formatDisplay data.range}}
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <strong>DURATION: </strong>
+                            {{formatDisplay data.duration}}
+                        </span>
+                    </li>
+                    <li>
+                        <span>
+                            <strong>INGREDIENT: </strong>
+                            {{formatDisplay data.ingredient}}
+                        </span>
+                    </li>
+                </ul>
+            </div>    
+            <div class="frame frame--flexible frame--no-border frame__placement">
+                {{formatDisplay data.description}}
+            </div>
+            <div>
+                <i class="fas fa-edit" style="font-size: 1.5em; padding: 5px; float: right"></i>
+            </div>
+        </div>
+    </div>
+    {{/if}}
+</form>

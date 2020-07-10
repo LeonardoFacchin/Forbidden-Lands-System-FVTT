@@ -1,0 +1,254 @@
+{
+ "Actor": {
+     "types": ["PC", "NPC", "Monster"],
+     "templates": {
+        "scores": {
+            "attributes": {
+                "Strength": {
+                    "value": 0,
+                    "damage": 0
+                },
+                "Agility": {
+                    "value": 0,
+                    "damage": 0
+                },
+                "Wits": {
+                    "value": 0,
+                    "damage": 0
+                },
+                "Empathy": {
+                    "value": 0,
+                    "damage": 0
+                }
+            },
+            "skills": {
+                "Might": {
+                    "value": 0,
+                    "attr": "Strength"
+                },
+                "Endurance": {
+                    "value": 0,
+                    "attr": "Strength"
+                },
+                "Melee": {
+                    "value": 0,
+                    "attr": "Strength"
+                },
+                "Crafting": {
+                    "value": 0,
+                    "attr": "Strength"
+                },
+                "Stealth": {
+                    "value": 0,
+                    "attr": "Agility"
+                },
+                "Sleight of Hand": {
+                    "value": 0,
+                    "attr": "Agility"
+                },
+                "Move": {
+                    "value": 0,
+                    "attr": "Agility"
+                },
+                "Marksmanship": {
+                    "value": 0,
+                    "attr": "Agility"
+                },
+                "Scouting": {
+                    "value": 0,
+                    "attr": "Wits"
+                },
+                "Lore": {
+                    "value": 0,
+                    "attr": "Wits"
+                },
+                "Survival": {
+                    "value": 0,
+                    "attr": "Wits"
+                },
+                "Insight": {
+                    "value": 0,
+                    "attr": "Wits"
+                },
+                "Manipulation": {
+                    "value": 0,
+                    "attr": "Empathy"
+                },
+                "Performance": {
+                    "value": 0,
+                    "attr": "Empathy"
+                },
+                "Healing": {
+                    "value": 0,
+                    "attr": "Empathy"
+                },
+                "Animal Handling": {
+                    "value": 0,
+                    "attr": "Empathy"
+                }
+            }
+         }
+
+    },
+        "PC": {
+            "kin": "",
+            "info": {
+                "kin": "",
+                "profession": "",
+                "age": "",
+                "dark secret": "",
+                "pride": "",
+                "reputation": 0
+            },
+            "templates": ["scores"],
+            "willpower": {"max": 10, "score": 0},
+            "experience": {"max": 25 , "score": 0},
+            "consumable": {
+                "Food": "d6",
+                "Water": "d6",
+                "Arrows": "d6",
+                "Torches": "d6"
+            },
+            "money": {
+                "gold": 0,
+                "silver": 0,
+                "copper": 0
+            },
+            "conditions": {
+                "hungry": {"max": 1, "isCondition": 0},
+                "thirsty": {"max": 1, "isCondition": 0},
+                "sleepy": {"max": 1, "isCondition": 0},
+                "cold": {"max": 1, "isCondition": 0}
+            },
+            "isSpellcaster": false,
+            "dieModifiers": {
+                "modifierOne": {"name": "", "value": 0},
+                "modifierTwo": {"name": "", "value": 0},
+                "modifierThree": {"name": "", "value": 0}
+            },
+            "artifactModifiers":{
+                "modifierOne": {"max": 1, "value": 0},
+                "modifierTwo": {"max": 1, "value": 0},
+                "modifierThree": {"max": 1, "value": 0}
+            }
+        },
+
+        "Monster": {
+            "templates": ["scores"],
+            "armor" : 0,
+            "movement": 1,
+            "description": "Description Goes Here"
+        },
+
+        "NPC": {
+            "info": {
+                "kin": "",
+                "profession": "",
+                "age": ""
+            },
+            "templates": ["scores"],
+            "isSpellcaster": false,
+            "dieModifiers": {
+                "modifierOne": {"name": "", "value": 0},
+                "modifierTwo": {"name": "", "value": 0},
+                "modifierThree": {"name": "", "value": 0}
+            },
+            "artifactModifiers":{
+                "modifierOne": {"max": 1, "value": 0},
+                "modifierTwo": {"max": 1, "value": 0},
+                "modifierThree": {"max": 1, "value": 0}
+            }
+        }
+    },
+ "Item": {
+     "types": ["Monster Attack","Monster Special Ability","Talent","Spell","Equipment","Weapon","Armor","Critical Injury"],
+     "templates": {
+        "crafting": {
+            "rawmaterials": "",
+            "time": "",
+            "talent": " - ",
+            "tools": " - "
+        },
+        "inventory": {
+            "price": {"cost": 0, "currency": ""},
+            "supply": "",
+            "weight": ""
+        }
+     },
+     "Monster Special Ability" :{
+        "description": ""
+     },
+     "Monster Attack": {
+        "stats": {
+            "dice": 0,
+            "damage": 0,
+            "type": "",
+            "range": ""
+        },
+        "description": ""
+     },
+     "Talent": {
+        "type": "",
+        "profession": "",
+        "isMagical": false,
+        "magicalDiscipline": "",
+        "description": "",
+        "rank1": "",
+        "rank2": "",
+        "rank3": ""
+     },
+     "Spell": {
+        "image": "icons/svg/mystery-man.svg",
+        "discipline": {},
+        "rank": "",
+        "castingtime": "",
+        "range": "",
+        "duration": "",
+        "ingredient": "",
+        "description": ""
+     },
+     "Equipment": {
+         "bonus": {"value": 0, "damage": 0},
+         "skill": "",
+         "price": {"cost": 0, "currency": ""},
+         "templates": ["crafting", "inventory"],
+         "description": ""
+     },
+     "Weapon": {
+         "isArtifact": "false",
+         "grip": "",
+         "bonus": {"value": 0, "damage": 0},
+         "damage": 0,
+         "range": "",
+         "features": ["", "", "", ""],
+         "skill": "",
+         "artifactDie": "",
+         "templates": ["crafting", "inventory"],
+         "description": ""
+     },
+     "Armor": {
+        "isArtifact": "false",
+        "bonus": {"value": 0, "damage": 0},
+        "location": "",
+        "features": "",
+        "artifactDie": "",
+        "templates": ["crafting", "inventory"],
+        "description": ""
+    },
+     "Critical Injury": {
+         "type": "",
+         "lethal": {"isLethal": "", "penalty": 0},
+         "isTreated": false,
+         "timeLimit": {"value": "", "units": ""},
+         "healingTime": "",
+         "bonus": {"penalty_00": {"skill": "", "value": 0}},
+         "effects": ""
+     },
+
+     "Ailment": {
+         "type": "",
+         "potency": 0,
+         "effects": ""
+     }
+  }
+}

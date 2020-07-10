@@ -1,0 +1,230 @@
+<form class="{{cssClass}}" autocomplete="off">
+
+    <!-- EDIT -->
+    <div class="layout layout--equipment">
+        <div class="layout__picture">
+            <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}">
+        </div>
+        
+        <div class="layout__header">
+            <input class="header-title header-title--small" type="text" name="item.name" value="{{item.name}}", placeholder="Name">
+        </div>
+
+        {{#if isBeingEdited}}
+        <div class="layout__body">
+            <!-- INVENTORY -->            
+            <label class="frame__title layout__gap">Inventory Data</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <!-- PRICE -->
+                    <div class="table__entry table__entry--no-border table__entry--price">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Price: </label>
+                        </div>
+                        <div class="table__field">
+                            <input class="table__data" name="data.price.cost" value={{data.price.cost}}>
+                        </div>
+                        <div class="table__field">
+                                <select class="table__data table__data--left-aligned" name="data.price.currency">
+                                    {{#select data.price.currency}}
+                                        {{#each settings.money}}
+                                        <option value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    {{/select}}
+                                </select>
+                        </div>
+                    </div>
+
+                    <!-- SUPPLY -->
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Supply: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.supply">
+                                {{#select data.supply}}
+                                {{#each settings.supply}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    <!-- WEIGHT -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Weight: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.weight">
+                                {{#select data.weight}}
+                                {{#each settings.weight}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- EFFECTS -->
+        <label class="frame__title layout__gap">Gaming Stats Data</label>
+        <div class="frame frame__placement frame--no-lr-border">
+            <div class="table">
+                <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Bonus: </label>
+                        </div>
+                        <div class="table__field">
+                            <input class="table__data table__data--left-aligned" name="data.bonus.value" value={{data.bonus.value}}>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Skill: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.skill">
+                                {{#select data.skill}}
+                                    {{#each settings.skills}}
+                                    <option value="{{this.name}}">{{this.name}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Description: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.description" style="height: 65px; padding: 10px">{{formatDisplay data.description}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CRAFTING -->
+            <label class="frame__title layout__gap">Crafting Data</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Materials: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.rawmaterials">{{data.rawmaterials}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Tools: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.tools">{{data.tools}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Talents: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.talent">{{data.talent}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Time: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned"contenteditable="true" data-edit="data.time">{{data.time}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div>
+            <i class="fas fa-save" style="float: right; font-size: 1.5em; padding: 5px"></i> 
+        </div>
+    </div>
+    {{else}}
+    <!-- DISPLAY -->
+    <div class="layout__body">
+        <!-- INVENTORY -->
+        <div class="table">
+            <!-- TITLE -->
+            {{#unlesss data.bonus.value comparison=0}}
+            <div class="table__entry table__entry--equipment-stats table__title">
+            {{else}}
+            <div class="table__entry table__entry--equipment-stats-no-bonus table__title">
+            {{/unlesss}}
+                <div class="table__field">
+                    <label class="table__data table__padding">Price</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Supply</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Weight</label>
+                </div>
+            {{#unlesss data.bonus.value comparison=0}}
+                <div class="table__field">
+                    <label class="table__data table__padding">Bonus</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Skill</label>
+                </div>
+            {{/unlesss}}
+                <div class="table__field">
+                    <label class="table__data table__padding">Effect</label>
+                </div>
+            </div>
+            {{#unlesss data.bonus.value comparison=0}}
+            <div class="table__entry table__entry--equipment-stats">
+            {{else}}
+            <div class="table__entry table__entry--equipment-stats-no-bonus">
+            {{/unlesss}}
+                <div class="table__field">
+                    <span class="table__data table__padding"><label>{{data.price.cost}}</label> <label> {{data.price.currency}}</label> </span>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.supply}}</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.weight}}</label>
+                </div>
+            {{#unlesss data.bonus.value comparison=0}}
+                <div class="table__field">
+                    <label class="table__data table__padding">+{{data.bonus.value}}</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.skill}}</label>
+                </div>
+            {{/unlesss}}
+                <div class="table__field">
+                    <div class="table__data table__padding" style="display: flex; justify-content: center;">
+                        <label class="table__data--left-aligned">{{formatDisplay data.description}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="table__entry table__entry--equipment-crafting table__title layout__gap">
+                <div class="table__field">
+                    <label class="table__data table__padding">Materials</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Time</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Talent</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Tools</label>
+                </div>
+            </div>
+            <div class="table__entry table__entry--equipment-crafting table__entry--title">
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.rawmaterials}}</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.time}}</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.talent}}</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.tools}}</label>
+                </div>
+            </div>
+        </div>            
+        <div>
+            <i class="fas fa-edit" style="float: right; font-size: 1.5em; padding: 5px"></i> 
+        </div>    
+    {{/if}}
+</form>

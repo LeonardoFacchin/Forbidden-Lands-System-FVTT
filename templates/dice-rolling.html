@@ -1,0 +1,67 @@
+<body>
+    <div class="frame frame--no-border" style="border-radius: none;">
+        {{#unless this.isSpell}}
+        <h3 class="frame__title">{{this.rolledSkill}} Check</h3>
+        {{/unless}}
+
+        {{#if this.isSpell}}
+        <h3 class="frame__title">Spell Check: {{this.rolledSpell}}</h3>
+        {{/if}}
+        {{#if this.description}}
+        <span class="frame frame__placement description">{{formatDisplay this.description}}</span>
+        {{/if}}
+        <!-- <span>(roll_id: {{this.roll_id}})</span> -->
+    </div>
+    <hr>
+    {{#each this.diceIcons}}
+    {{#if @last}}
+    {{#unless @first}}
+    <hr>
+    <h3>Pushing the roll...</h3>
+    {{/unless}}
+    {{/if}}
+    <div>
+        {{#each this.attributes}}
+        <img src="{{this}}" alt="X" width=30px style="border: none">
+        {{/each}}
+
+        {{#each this.skills}}
+        <img src="{{this}}" alt="X" width=30px style="border: none">
+        {{/each}}
+
+        {{#each this.gear}}
+        <img src="{{this}}" alt="X" width=30px style="border: none">
+        {{/each}}
+
+        {{#each this.artifacts}}
+        <img src="{{this}}" alt="X" width=30px style="border: none">
+        {{/each}}
+    </div>
+    {{#if @last}}
+    <div>
+        {{#unless ../isSpell}}
+        <div>Successes: {{../diceResult.successes}}</div>
+        <div>{{../this.rolledAttribute}} Damage: {{../diceResult.attDamage}}</div>
+        {{#if ../this.rolledItem}}
+        <div><span>{{../this.rolledItem}}</span>  Damage: {{../diceResult.gearDamage}}</div>
+        {{/if}}
+        {{/unless}}
+
+        {{#if ../isSpell}}
+        <div>Overcharge: {{../diceResult.successes}}</div>
+        <div>Spell Power Level: {{../powerLevel}}</div>
+        {{/if}}
+    </div>
+    <hr>
+    {{/if}}
+    {{/each}}
+</body>
+
+<footer style="background-color: black;">
+        {{#if this.canPush}}
+        <input class="push" type="button" data-roll_id="{{this.roll_id}}" data-attribute="{{this.rolledAttribute}}" data-skill="{{this.rolledSkill}}" data-item="{{this.rolledItem}}" data-description="{{this.description}}" value="Push the Roll" style="background-color: rgba(0, 0, 0, 0.8); color: white; border: 1px solid black; padding: 5px; float: left">
+        {{/if}}
+        {{#if this.canPride}}
+        <input class="pride" type="button" data-roll_id="{{this.roll_id}}" data-attribute="{{this.rolledAttribute}}" data-skill="{{this.rolledSkill}}" data-item="{{this.rolledItem}}" data-description="{{this.description}}" value="Roll Pride Die" style="background-color: rgba(0, 0, 0, 0.8); color: white; border: 1px solid black; padding: 5px; float: right">
+        {{/if}}
+</footer>

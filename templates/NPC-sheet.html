@@ -1,0 +1,340 @@
+<form class="{{cssClass}} layout layout--NPC {{actor._id}}" autocomplete="off">
+
+    <!-- TOP-LEFT - PROFILE PICTURE -->
+    <div class="layout__picture">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+    </div>
+
+    <!-- TOP-CENTER-RIGHT - HEADER -->
+    <header class="layout__header">
+        <!-- CHARACTER NAME -->
+        <div class="layout__gap" style="max-height: fit-content">
+            <input class= "header-title header-title--small" name="name" type="text" value="{{actor.name}}" placeholder="Name">
+        </div>
+
+        <div class="frame frame--flexible">
+            <div style="padding: 10px 10px">
+                <div class="table">
+                    <div class="table__entry table__entry--3col">
+                        <div class="table__field" style="padding: 0 10px">
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content">Kin: </label>
+                            <span class="table__data" type="text" style="border-bottom: 1px solid black; border-radius: 0; text-align: left; margin-left: 10px;" contenteditable="true"></span>
+                        </div>
+                        <div class="table__field" style="padding: 0 10px">
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content">Profession: </label>
+                            <span class="table__data" type="text" style="border-bottom: 1px solid black; border-radius: 0; text-align: left; margin-left: 10px;" contenteditable="true"></span>
+                        </div>
+                        <div class="table__field" style="padding: 0 10px">
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content">Age: </label>
+                            <span class="table__data" type="text" style="border-bottom: 1px solid black; border-radius: 0; text-align: left; margin-left: 10px;" contenteditable="true"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="layout__body">
+        <!-- STATS START -->
+        <div class="frame">
+            <label class="frame__title">Stats</label>
+
+            <div class="table">
+                <div class="table__entry table__entry--4col">
+                    {{#each data.attributes as |attObject attName|}}
+                    <div class="table__field table__field--NPC-Att drag-item" data-id="{{attName}}">
+                        <div class="table__entry table__entry--PC-attributes table__padding-lr">
+                            <div class="table__field">
+                                <label class="table__data table__data--name" data-id="{{attName}}" data-action="roll" data-diehook="Attribute" style="text-align: left" >{{attName}}</label>
+                            </div>   
+                            <div class="table__field">
+                                <input class="table__data" type="text" name="data.attributes.{{attName}}.value" value="{{attObject.value}}" data-dtype="Number">
+                            </div>
+                            <div id="{{@key}}" class="table__field">
+                                <div class="table__data">
+                                    {{#each propertyTrack}}
+                                    <img type="image" name="data.attributes.{{attName}}.damage" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: 0 -1px;" alt="X" width="18px" height="18px">
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <div class="table__field">
+                                <label class="table__data" type="text" data-dtype="Number">{{attObject.currentValue}}</label>
+                            </div> 
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+                <div class="table__entry table__entry--4x4">
+                        {{#each data.skills}}
+                        <div class="table__field table__field--4x4border">
+                            <div class="table__entry table__entry--skills table__padding-lr drag-item" data-id="{{@key}}">                            
+                                <div class="table__field">
+                                    <label class="table__data table__data--name" data-id="{{@key}}" data-action="roll" data-diehook="Skill">{{@key}}</label>
+                                </div>
+                                
+                                <div class="table__field">
+                                    <input class="table__data" type="text" name="data.skills.{{@key}}.value" value="{{this.value}}" data-dtype="Number">
+                                </div>
+                                
+                                <div class="table__field">
+                                    <label class="table__data">{{this.abbrev}}</label>
+                                </div>
+                                
+                                <div class="table__field">
+                                    <label class="table__data">{{this.total}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}      
+                </div>
+            </div>
+        </div>
+        <!-- STATS END -->
+        <!-- WEAPONS -->
+        <div class="table table__entry--2col layout__gap" style="column-gap: 10px;">
+            <div class="table__entry">
+                <div class="frame">
+                    <label class="frame__title">Weapons</label>
+        
+        
+                    <div class="table dieHook-Weapon drag-target">
+                        {{#each data.Weapon as |weapon counter|}}
+                        <div class="table__entry table__entry--PC-weapon-display table__entry--no-border frame frame__margin--PC-items drag-item" data-id="{{weapon._id}}">
+                            <div class="table__field">
+                                    <img class="table__data" src="{{weapon.img}}" data-action="show-item" data-id="{{weapon._id}}" width="25px" height="25px">
+                            </div>
+                            <div class="table__field" data-action="roll">
+                                <span class="table__data table__data--left-aligned" data-id="{{weapon._id}}" data-action="roll" data-diehook="Weapon">{{weapon.name}}</span>
+                            </div>
+                            <div class="table__field">
+                                <span class="table__data">
+                                    {{weapon.data.grip}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                                <span class="table__data">
+                                    {{FirstWord weapon.data.range}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                                <div class="table__data">
+                                    {{#each data.bonus.propertyTrack}}
+                                            <img type="image" name="data.bonus.damage" data-id="{{weapon._id}}" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: -2px -1px;  vertical-align: middle;" alt="" width="18px" height="18px">
+                                    {{/each}}
+                                </div>
+                            </div>
+                            <div class="table__field">
+                                <span class="table__data" style="font-size: 1.3em;">
+                                    {{weapon.data.damage}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                                <span class="table__data">
+                                    {{weapon.data.artifactDie}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                                <span class="table__data">
+                                    {{#each weapon.data.features~}}
+                                        {{#unless @first}}{{#if this}}, {{/if}}{{/unless}}{{this~}}
+                                    {{/each}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                            <i class="fas fa-trash table__data" data-id="{{weapon._id}}" data-action="delete"></i>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <!-- ARMOR -->
+                <div class="frame layout__gap">
+                    <label class="frame__title">Armor</label>
+        
+                    <div class="table drag-target">
+                        {{#each data.Armor as |armor counter|}}
+                        <div class="table__entry table__entry--PC-armor-display table__entry--no-border frame frame__margin--PC-items drag-item" data-id="{{armor._id}}">
+                            <div class="table__field">
+                                <img class="table__data" src="{{armor.img}}" data-action="show-item" data-id="{{armor._id}}" width="25px" height="25px">
+                            </div>
+                            <div class="table__field" title="{{armor.data.features}}" data-id="{{armor._id}}" data-action="roll">
+                                <span class="table__data table__data--left-aligned" data-action="roll" data-diehook="Armor">
+                                    {{armor.name}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                                <span class="table__data">
+                                    {{armor.data.location}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                                <div class="table__data">
+                                {{#each data.bonus.propertyTrack}}
+                                    <span>
+                                        <img type="image" class="table__data" name="data.bonus.damage" data-id="{{armor._id}}" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: -2px 0; vertical-align: middle;" alt="" width="18px" height="18px">
+                                    </span>
+                                {{/each}}
+                                </div>
+                            </div>
+                            <div class="table__field">
+                                <span class="table__data">
+                                    {{armor.data.artifactDie}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                                <i class="fas fa-trash table__data" data-id="{{armor._id}}"></i>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            <!-- TALENTS + DICE MODIFIERS START -->
+            <div class="table__entry table__entry--2col" style ="column-gap: 10px;">
+                <!-- FIRST COLUMN: TALENTS -->
+                <div class="frame frame--no-border">
+
+                    <nav class="tabs">
+                        <a class="item frame__title" data-tab="talents">Talents</a>
+                        {{#if data.isSpellcaster}}
+                        <a class="item frame__title" data-tab="spells">Spells</a>
+                        {{/if}}
+                    </nav> 
+
+                    <section class="content table--flexible frame" style="overflow-y: scroll; height: 336.31px">
+                        <div class="table tab drag-target" data-tab="talents">
+                            {{#each data.Talent as |talent key|}}
+                            <div class="table__entry table__entry--PC-talent-display table__entry--no-border frame frame__margin--PC-items drag-item" data-id="{{talent._id}}" style="background-color: white;">
+                                <div class="table__field">
+                                    <img class="table__data" src="{{talent.img}}" data-action="show-item" data-id="{{talent._id}}" alt="" width="25px" height="25px">
+                                </div>
+                                <div class="table__field">
+                                    <label class="table__data">{{talent.name}}</label>
+                                </div>
+                                <div class="table__field">
+                                    {{#unlesss talent.data.type comparison="Kin"}}
+                                    <select class="table__data talentRank" name="data.Talent.{{key}}.data.talentRank" id={{talent._id}}>
+                                        {{#select talent.data.talentRank}}
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        {{/select}}    
+                                    </select>
+                                    {{/unlesss}}
+                                </div>
+                                <div class="table__field">
+                                    <i class="fas fa-trash table__data" data-id="{{talent._id}}"></i>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                        <!-- SPELLS -->
+                        {{#if data.isSpellcaster}}
+                        <div class="table tab" data-tab="spells">
+                            {{#each data.Spell as |spell key|}}
+                            <div class="table__entry table__entry--PC-spell-display table__entry--no-border frame frame__margin--PC-items" style="background-color: white;">
+                                <div class="table__field">
+                                    <img class="table__data" src="{{spell.img}}" alt="" data-action="show-item" data-id="{{spell._id}}" width="25px" height="25px">
+                                </div>
+                                <div class="table__field">
+                                    <label class="table__data" data-action="roll" data-diehook="Spell" data-id="{{spell._id}}">{{spell.name}} ({{spell.data.rank}})</label>
+                                </div>
+                                <div class="table__field">
+                                    <img class="table__data" src="{{spell.data.image}}" alt="" width="25px" height="25px">
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                    </section>
+
+                </div>
+                <!-- FIRST COLUMN END -->
+
+                <!-- SECOND COLUMN: DICE MODIFIERS -->
+                <div class="frame frame--no-border">    
+                    <label class="frame__title">Dice Modifiers</label>
+
+                    <section class="frame">
+                        <div class="table dieMod">
+                            <div class="table__entry">
+                                <div class="table__entry frame" style="background-color: white; margin: 4px; padding: 2px">
+                                    <div class="table__field">
+                                            {{#each data.dieModifiers.modifierOne.modTrack}}
+                                            <img class="table__data" name="data.dieModifiers.modifierOne.value" data-modtype="die" data-trackvalue="{{@index}}" src="{{this}}" alt="" width="30px" style="border: none">
+                                            {{/each}}
+                                    </div>
+                                </div>
+                                <div class="table__entry frame" style="background-color: white; margin: 4px; padding: 2px">
+                                    <div class="table__field">
+                                            {{#each data.dieModifiers.modifierTwo.modTrack}}
+                                            <img class="table__data" name="data.dieModifiers.modifierTwo.value" data-modtype="die" data-trackvalue="{{@index}}" src="{{this}}" alt="" width="30px" style="border: none">
+                                            {{/each}}
+                                    </div>
+                                </div>
+                                <div class="table__entry table__entry--3col frame" style="background-color: white; margin: 4px; padding: 2px">
+                                    <div class="table__field">
+                                        <img name="data.artifactModifiers.modifierOne.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierOne.propertyTrack}}" alt="" width="25px" style="border: none">
+                                    </div>
+                                    <div class="table__field">
+                                        <img name="data.artifactModifiers.modifierTwo.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierTwo.propertyTrack}}" alt="" width="25px" style="border: none">
+                                    </div>
+                                    <div class="table__field">
+                                        <img name="data.artifactModifiers.modifierThree.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierThree.propertyTrack}}" alt="" width="25px" style="border: none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>                            
+                    </section>
+                    <label class="layout__gap frame__title" style="flex: 0">Injuries</label>
+
+                    <div class="table table--flexible frame">
+                        {{#each data.[Critical Injury] as |injury|}}
+                        {{#iff injury.data.lethal.isLethal comparison="Yes"}}
+                        <div class="table__entry table__entry--PC-deadly-injury-display table__entry--no-border frame frame__margin--PC-items" style="height: fit-content">
+                        {{else}}
+                        <div class="table__entry table__entry--PC-injury-display table__entry--no-border frame frame__margin--PC-items" style="height: fit-content">
+                        {{/iff}}
+                            {{#unless injury.data.isTreated}}
+                                {{#iff injury.data.lethal.isLethal comparison="Yes"}}
+                                <div class="table__field">
+                                    <img class="table__data" src="/systems/forbiddenlands/icons/injuries/skull-crossed-bones.svg" style="height: 25px">
+                                </div>
+                                <div class="table__field">        
+                                    <span class="table__data" type="text">{{injury.data.timeLimit.value}} {{injury.data.timeLimit.units}}</span>
+                                </div>
+                                {{else}}
+                                <div class="table__field">
+                                    <img class="table__data" src="/systems/forbiddenlands/icons/injuries/open-wound.svg" style="height: 25px">
+                                </div>
+                                <div class="table__field">        
+                                    <span class="table__data" type="text">{{injury.data.healingTime}} Days</span>
+                                </div>
+                                {{/iff}}
+                            {{else}}
+                            <div class="table__field">
+                                <img class="table__data" src="/systems/forbiddenlands/icons/injuries/health-normal.svg" style="height: 25px">
+                            </div>
+                            <div class="table__field">        
+                                <span class="table__data" type="text">{{injury.data.healingTime}} Days</span>
+                            </div>
+                            {{/unless}}
+        
+        
+                            <div class="table__field">
+                                <span class="table__data" title="{{data.effects}}" data-action="treat" data-id="{{injury._id}}">{{name}}</span>
+                            </div>
+                            <div class="table__field">
+                                <i class="fas fa-trash table__data" data-id="{{injury._id}}"></i>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+
+                </div>
+                <!-- SECOND COLUMN: END -->
+            </div>
+            <!-- TALENTS + DICE MODIFIERS END -->    
+        </div>
+    </div>
+</form>

@@ -1,0 +1,12 @@
+{
+    "name": "forbiddenlands",
+    "title": "Forbidden Lands",
+    "description": "Implementation of Fria Ligan's Forbidden Lands gaming system",
+    "version": "0.0.6",
+    "templateVersion": 2,
+    "minimumCoreVersion": "0.5.5",
+    "compatibleCoreVersion": "0.5.5",
+    "author": "Leonardo Facchin",
+    "styles": ["styles/fbl.css"],
+    "esmodules": ["module/fbl.js"]
+}

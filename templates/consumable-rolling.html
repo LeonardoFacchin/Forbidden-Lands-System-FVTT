@@ -1,0 +1,19 @@
+<body>
+    <div class="frame frame--no-border">
+        <label class="frame__title">{{consumable}} Resource Check</label>
+    </div>
+    <div style="padding: 10px 10px 0 10px">
+        <img src="{{this.dieResult}}" alt="" width="35px" style="border: none">
+    </div>
+    <hr>
+    {{#if this.passed}}
+    <div >
+        {{this.consumable}} test passed.
+    </div>
+    {{else}}
+    <div style="color: rgba(207, 0, 15, 1)">
+        <span>{{consumable}} test failed.</span>
+        <span> <br> Resource Die reduced one step. </span>
+    </div>
+    {{/if}}
+</body>

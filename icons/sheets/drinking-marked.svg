@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="drinking-marked.svg"
+   style="height: 512px; width: 512px;"
+   viewBox="0 0 512 512"
+   version="1.1"
+   id="svg8">
+  <sodipodi:namedview
+     inkscape:current-layer="svg8"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="256"
+     inkscape:cx="256"
+     inkscape:zoom="1.4355469"
+     showgrid="false"
+     id="namedview8"
+     inkscape:window-height="1137"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <metadata
+     id="metadata14">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs12" />
+  <path
+     d="M0 0h512v512H0z"
+     fill="#000"
+     fill-opacity="1"
+     id="path2" />
+  <g
+     class=""
+     style="touch-action:none;fill:#ff2a2a"
+     transform="translate(0,0)"
+     id="g6">
+    <path
+       d="M136.56 70.504a88.18 88.18 0 0 0-12.686.949c-33.833 5.004-62.022 29.192-80.272 65.89-18.25 36.699-26.008 85.566-18.285 137.307 7.723 51.741 29.418 96.251 57.598 126.082 28.18 29.831 62.216 44.819 96.048 39.815 33.833-5.004 62.024-29.195 80.274-65.893 4.264-8.573 7.947-17.818 11.002-27.601-29.164.07-58.834-2.573-92.08-24.287 47.863-14.36 76.86-36.492 101.926-60.243a271.619 271.619 0 0 0-2.565-25.173c-7.723-51.741-29.416-96.253-57.596-126.084-24.657-26.103-53.8-40.838-83.365-40.762zm244.189 97.467l-87.937 109.81c-.11.17-17.645 28.102-14.198 42.682 1.549 6.554 7.56 14.287 14.304 14.287 6.744 0 12.758-7.733 14.307-14.287 3.426-14.494-13.853-42.137-14.238-42.75l8.82 5.222 128.162 75.854 59.686-74.506zm1.06 27.468l69.85 74.6H322.047zm-133.21 2.33l13.13 12.311c-17.393 18.552-47.5 23.81-71.523 21.414l1.787-17.912c19.327 1.927 45.889-4.382 56.605-15.813z"
+       fill="#fff"
+       fill-opacity="1"
+       id="path4"
+       style="fill:#ff2a2a" />
+  </g>
+</svg>

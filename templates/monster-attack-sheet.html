@@ -1,0 +1,72 @@
+<form class="{{cssClass}} layout layout--monster-attack" autocomplete="off">
+
+    <div class="layout__picture">
+        <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}">
+    </div>
+
+    <header class="layout__header">
+        <input class= "header-title header-title--small" type="text" name="name" value="{{item.name}}" placeholder="Name">
+    </header>
+        
+    <div class="layout__body">
+
+        <div class="frame frame__content frame--no-lr-border layout__gap">
+
+            <div class="table">
+                <div class="table__entry table__entry--attack-stats">
+
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Dice: </label>
+                    </div>
+                    <div class="table__field">
+                        <input class="table__data" type="text" name="data.stats.dice" value="{{data.stats.dice}}">
+                    </div>
+                    
+                    <div class="empty"></div>
+
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Damage: </label>
+                    </div>
+                    <div class="table__field">
+                        <input class="table__data" type="text" name="data.stats.damage" value="{{data.stats.damage}}">
+                    </div>
+
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Type: </label>
+                    </div>
+                    <div class="table__field">
+                        <select class="table__data" name="data.stats.type">
+                            {{#select data.stats.type}}
+                                {{#each settings.damage-types}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                    
+                    <div class="empty"></div>
+
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Range: </label>
+                    </div>
+                    <div class="table__field">
+                        <select class="table__data" name="data.stats.range">
+                            {{#select data.stats.range}}
+                                {{#each settings.ranges}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                            {{/select}}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="frame frame--flexible layout__gap">
+            <label class="frame__title">Description</label>
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div> 
+    </div>
+
+</form>

@@ -1,0 +1,312 @@
+<form class="{{cssClass}}" autocomplete="off">
+
+    <div class="layout layout--equipment">
+        <div class="layout__picture">
+            <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}">
+        </div>
+        
+        <div class="layout__header">
+            <input class="header-title header-title--small" type="text" name="name" value="{{item.name}}", placeholder="Name">
+        </div>
+        
+        <!-- EDIT -->
+        {{#if isBeingEdited}}
+        <div class="layout__body">
+            
+            <!-- ARTIFACT -->
+            <div style="text-align: left;">
+                <label class="table__data table__data--left-aligned" style="vertical-align: 0.3em; font-variant: small-caps;">Artifact </label>
+                <input type="checkbox" class="table__data" style="justify-content: start" name="data.isArtifact" value="true" {{checked data.isArtifact}}>
+            </div>
+            <!-- EFFECTS -->
+            <label class="frame__title layout__gap--large">Gaming Stats Data</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Location: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.location">
+                                {{#select data.location}}
+                                    {{#each settings.locations}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Rating: </label>
+                        </div>
+                        <div class="table__field">
+                            <input class="table__data table__data--left-aligned" name="data.bonus.value" value="{{data.bonus.value}}" data-dtype="Number">
+                        </div>
+                       
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Features: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" data-edit="data.features" contenteditable="true">{{data.features}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ARTIFACT -->
+            {{#if data.isArtifact}}
+            <label class="frame__title layout__gap--large">Artifact</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Artifact Die: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.artifactDie">
+                                {{#select data.artifactDie}}
+                                    {{#each settings.artifactDie}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Effects: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.description" style="height: 120px; padding: 10px">{{formatDisplay data.description}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- INVENTORY -->            
+            <label class="frame__title layout__gap--large">Inventory Data</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <!-- PRICE -->
+                    {{#unless data.isArtifact}}
+                    <div class="table__entry table__entry--no-border table__entry--price">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Price: </label>
+                        </div>
+                        <div class="table__field">
+                            <input class="table__data" name="data.price.cost" value={{data.price.cost}} data-dtype="Number">
+                        </div>
+                        <div class="table__field">
+                                <select class="table__data table__data--left-aligned" name="data.price.currency">
+                                    {{#select data.price.currency}}
+                                        {{#each settings.money}}
+                                        <option value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    {{/select}}
+                                </select>
+                        </div>
+                    </div>
+                    {{/unless}}
+                    <!-- SUPPLY -->
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        {{#unless data.isArtifact}}
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Supply: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.supply">
+                                {{#select data.supply}}
+                                {{#each settings.supply}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        {{/unless}}                        
+                    <!-- WEIGHT -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Weight: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.weight">
+                                {{#select data.weight}}
+                                {{#each settings.weight}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRAFTING -->
+            {{#unless data.isArtifact}}
+            <label class="frame__title layout__gap--large">Crafting Data</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Materials: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.rawmaterials">{{data.rawmaterials}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Tools: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.tools">{{data.tools}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Talents: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.talent">{{data.talent}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Time: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned"contenteditable="true" data-edit="data.time">{{data.time}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/unless}}
+            <div>
+                <i class="fas fa-save" style="float: right; font-size: 1.5em; padding: 5px"></i> 
+            </div>
+        </div>
+    {{else}}
+
+    <!-- DISPLAY -->
+    <div class="layout__body">
+        <!-- COMBAT STATS -->
+        <div class="table">
+            <!-- TITLE -->
+            {{#if data.isArtifact}}
+            <div class="table__entry table__entry--armor-artifact-stats table__title">
+            {{else}}
+            <div class="table__entry table__entry--armor-stats table__title">
+            {{/if}}
+                {{#if data.isArtifact}}
+                <div class="table__field">
+                    <label class="table__data table__padding">Weight</label>
+                </div>
+                {{/if}}
+                <div class="table__field">
+                    <label class="table__data table__padding">Location</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Rating</label>
+                </div>
+                {{#if data.isArtifact}}
+                <div class="table__field">
+                <label class="table__data table__padding">Artifact Die</label>
+                 </div>
+                {{/if}}
+                <div class="table__field">
+                    <label class="table__data table__padding">Features</label>
+                </div>
+            </div>
+
+            {{#if data.isArtifact}}
+            <div class="table__entry table__entry--armor-artifact-stats">
+            {{else}}
+            <div class="table__entry table__entry--armor-stats">
+            {{/if}}
+                {{#if data.isArtifact}}
+                <div class="table__field">
+                    <span class="table__data table__padding">{{data.weight}}</span>
+                </div>
+                {{/if}}
+                <div class="table__field">
+                    <span class="table__data table__padding">{{data.location}}</span>
+                </div>
+                <div class="table__field">
+                    <span class="table__data table__padding">{{data.rating.value}}</span>
+                </div>
+                {{#if data.isArtifact}}
+                <div class="table__field">
+                <span class="table__data table__padding">{{data.artifactDie}}</span>
+                 </div>
+                {{/if}}
+                <div class="table__field">
+                    <span class="table__data table__padding">{{data.features}}</span>
+                </div>
+            </div>
+
+            {{#if data.isArtifact}}
+            <div class="table__entry layout__gap--large">
+                <div class="table__field table__title">
+                    <label class="table__data table__padding">Description</label>
+                </div>
+                <div class="table__entry">
+                    <div class="table__field">
+                        <div class="table__data table__padding" style="display: flex; justify-content: center;">
+                            <label class="table__data--left-aligned">{{formatDisplay data.description}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+
+            {{#unless data.isArtifact}}
+
+            <div class="table__entry table__entry--weapon-inventory table__title layout__gap--large">
+                <div class="table__field">
+                    <label class="table__data table__padding">Price</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Supply</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Weight</label>
+                </div>
+            </div>
+            <div class="table__entry table__entry--weapon-inventory table__entry--title">
+                <div class="table__field">
+                    <span class="table__data table__padding">{{data.price.cost}} {{data.price.currency}}</span>
+                </div>
+                <div class="table__field">
+                    <span class="table__data table__padding">{{data.supply}}</span>
+                </div>
+                <div class="table__field">
+                    <span class="table__data table__padding">{{data.weight}}</span>
+                </div>
+            </div>
+
+            <div class="table__entry table__entry--equipment-crafting table__title layout__gap--large">
+                <div class="table__field">
+                    <label class="table__data table__padding">Materials</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Time</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Talent</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">Tools</label>
+                </div>
+            </div>
+            <div class="table__entry table__entry--equipment-crafting table__entry--title">
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.rawmaterials}}</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.time}}</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.talent}}</label>
+                </div>
+                <div class="table__field">
+                    <label class="table__data table__padding">{{data.tools}}</label>
+                </div>
+            </div>
+            {{/unless}}            
+        </div>
+        <div>
+            <i class="fas fa-edit" style="float: right; font-size: 1.5em; padding: 5px"></i> 
+        </div>    
+    {{/if}}
+</form>

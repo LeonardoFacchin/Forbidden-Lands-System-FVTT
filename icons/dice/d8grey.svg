@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="40 40 66.667998 98.738"
+   width="42.667519"
+   height="50.553856"
+   version="1.1"
+   id="svg14">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18" />
+  <g
+     style="fill:#b3b3b3"
+     id="g12"
+     transform="translate(-16.665691,-0.63138)">
+    <g
+       style="fill:#b3b3b3"
+       transform="translate(-242.40981,-473.89862)"
+       id="g10">
+      <path
+         style="fill:#b3b3b3"
+         fill="#000000"
+         d="m 293.527,582.264 38.894,-67.597 39.229,67.261 z"
+         id="path2" />
+      <path
+         style="fill:#b3b3b3"
+         fill="#000000"
+         d="m 291.304,581.946 -0.562,-38.354 39.36,-29.039 z"
+         id="path4" />
+      <path
+         style="fill:#b3b3b3"
+         fill="#000000"
+         d="m 373.477,581.529 0.6,-37.685 -39.565,-29.314 z"
+         id="path6" />
+      <path
+         style="fill:#b3b3b3"
+         fill="#000000"
+         d="m 332.421,613.268 -38.894,-29.016 78.122,-0.621 z"
+         id="path8" />
+    </g>
+  </g>
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.875px;line-height:1.25;font-family:Rubik;-inkscape-font-specification:'Rubik, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.95312"
+     x="59.037125"
+     y="105.77525"
+     id="text839"><tspan
+       x="59.037125"
+       y="105.77525"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.875px;font-family:Rubik;-inkscape-font-specification:'Rubik, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:1.95312"
+       id="tspan893">8</tspan><tspan
+       x="59.037125"
+       y="164.369"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.875px;font-family:Rubik;-inkscape-font-specification:'Rubik, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:1.95312"
+       id="tspan892" /></text>
+</svg>

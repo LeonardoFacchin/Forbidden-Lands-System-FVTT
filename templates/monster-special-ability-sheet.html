@@ -1,0 +1,20 @@
+<form class="{{cssClass}} layout layout--special-ability" autocomplete="off">
+
+    <div class="layout__picture">
+        <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}">
+    </div>
+
+    <header class="layout__header">
+        <input class= "header-title header-title--small" type="text" name="name" value="{{item.name}}" placeholder="Name">
+    </header>
+
+    <body>
+        <div class="layout__body">
+            <div class="frame frame--flexible">
+                <label class="frame__title">Description</label>
+                {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+            </div> 
+        </div>
+    </body>
+
+</form>

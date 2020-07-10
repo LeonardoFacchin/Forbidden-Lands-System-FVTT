@@ -1,0 +1,179 @@
+<form class="{{cssClass}} layout layout--monster {{actor._id}}" autocomplete="off">
+    
+    <!-- TOP-LEFT - PROFILE PICTURE -->
+    <div class="layout__picture">
+        <img class="profile-img--big" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+    </div>
+    
+    <!-- TOP-CENTER-RIGHT - HEADER -->
+    <header class="layout__header">
+            
+            <!-- MONSTER NAME -->
+            <input class= "header-title" name="name" type="text" value="{{actor.name}}" placeholder="Name">
+
+            <!-- MONSTER DESCRIPTION EDITOR -->
+            <div class="frame frame--flexible frame--can-scroll layout__gap">
+                    <label class="frame__title">Description</label>
+                    {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+            </div>
+    </header>
+
+    <body>
+
+        <!-- LEFT-SIDEBAR -->
+        <div class="layout__left-sidebar">
+
+            <!-- ARMOR & MOVEMENT -->
+            <div class="frame frame--no-lr-border">
+                <div class="table">                    
+                    <div class="table__entry table__entry--mov-arm">
+
+                        <div class="table__field">
+                            <label class="table__data" data-action="roll" data-diehook="Monster-armor">Armor:</label>
+                        </div>
+
+                        <div class="table__field">
+                            <input type="text" class="table__data" name="data.armor" value="{{data.armor}}">
+                        </div>
+                        
+                        <div class="empty"></div>
+                        
+                        <div class="table__field">
+                            <label class="table__data">Movement:</label>
+                        </div>
+                        
+                        <div class="table__field">
+                            <input type="text" class="table__data" name="data.movement" value="{{data.movement}}">
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            
+            <!-- ATTRIBUTES -->
+        <div class="frame layout__gap">             
+            <div class="frame__title">
+                <label>Attributes</label> 
+            </div>
+            <div class="table">
+                {{#each data.attributes as |attObject attName|}}
+                    <div class="table__entry table__entry--PC-attributes table__padding-lr drag-item" data-id="{{attName}}"> 
+                        <div class="table__field">
+                            <label class="table__data table__data--name" data-id="{{attName}}" data-action="roll" data-diehook="Attribute">{{attName}}</label>
+                        </div>   
+                        <div class="table__field">
+                            <input class="table__data" type="text" name="data.attributes.{{@key}}.value" value="{{this.value}}" data-dtype="Number">
+                        </div>
+                        <div id="{{@key}}" class="table__field">
+                            <div class="table__data">
+                                {{#each propertyTrack}}
+                                <img type="image" name="data.attributes.{{attName}}.damage" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: 0 -1px; float: left;" alt="X" width="18px" height="18px">
+                                {{/each}}
+                            </div>
+                            <!-- <img class="table__data" type="image" src="systems/forbiddenlands/icons/sheets/healing.svg" style="flex: 0; border: none; float: right;" alt="X" width="15px" height="15px"> -->
+                        </div>
+                         <div class="table__field">
+                            <label class="table__data" type="text" data-dtype="Number">{{this.currentValue}}</label>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+            
+            <!-- SKILLS -->
+        <div class="frame layout__gap">
+
+            <div class="table">
+                <div class="table__entry table__entry--skills table__padding-lr table__title" style="color: white">
+                    
+                    <div class="table__field">
+                        <label class="table__data table__data--name">Skill</label>
+                    </div>
+                    
+                    <div class="table__field">
+                        <label class="table__data">Sco</label>
+                    </div>
+                    
+                    <div class="table__field">
+                        <label class="table__data">Att</label>
+                    </div>
+                    
+                    <div class="table__field">
+                        <label class="table__data">Tot</label>
+                    </div>
+                </div>
+                
+                {{#each data.skills}}
+                <div class="table__entry table__entry--skills table__padding-lr drag-item" data-id="{{@key}}">
+                    
+                    <div class="table__field">
+                        <label class="table__data table__data--name" data-id="{{@key}}" data-action="roll" data-diehook="Skill">{{@key}}</label>
+                    </div>
+                    
+                    <div class="table__field">
+                        <input class="table__data" type="text" name="data.skills.{{@key}}.value" value="{{this.value}}" data-dtype="Number">
+                    </div>
+                    
+                    <div class="table__field">
+                        <label class="table__data">{{this.abbrev}}</label>
+                    </div>
+                    
+                    <div class="table__field">
+                        <label class="table__data">{{this.total}}</label>
+                    </div>
+                </div>
+                {{/each}}                         
+            </div>
+        </div> 
+    </div>
+            
+            <!-- CENTER-RIGHT MAIN BODY -->
+        <div class="layout__body">
+
+            <!-- SPECIAL ABILITIES -->
+            <div class="frame">
+                <label class="frame__title">Special Abilities</label>  
+                <!-- <span> <a id = "addSpecialAbility" class="attribute-control" data-action="create"><i class="fas fa-plus"></i></a> </span> -->
+                <div class="table">
+                {{#each data.[Monster Special Ability]}}
+                            <div class="table__entry">
+                                <div class="table__field">
+                                    <div class="table__data table__padding-lr" style="text-align: justify;">
+                                        <span style="font-variant: small-caps; font-weight: bold; color: rgba(207, 0, 15, 1)">{{formatDisplay this.name}}</span> <span> - {{formatDisplay this.data.description}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                    {{/each}}    
+                </div>
+            </div>
+
+            <!-- MONSTER ATTACKS -->
+            <div class="frame frame--flexible layout__gap">
+
+                <label class="frame__title randomAttack" id="test" title="Double click to execute a random attack" data-action="random-attack">Monster Attacks
+                    <!-- <img src="/systems/forbiddenlands/icons/sheets/rolling-dices.svg" data-action="random-attack" height="25px" alt="" style="float: right"> -->
+                </label>                          
+
+                <div class="table table--flexible">
+                    {{#each data.[Monster Attack]}}
+                    <div class="table__entry table__entry--mAttacks drag-item" data-id="{{this._id}}">
+
+                            <div class="table__field table__field--vruler">
+                                <div class="table__data">
+                                    <img src="systems/forbiddenlands/icons/dice/d6_{{@index}}.svg" alt="" data-id="{{this._id}}" data-action="roll" data-diehook="Monster-attack" height="25px">
+                                </div>
+                            </div>
+                            
+                            <div class="table__field">
+                                <div class="table__data">
+                                    <div class="table__padding-lr" style="text-align: justify"><span style="font-variant: small-caps; font-weight: bold; color: rgba(207, 0, 15, 1)">{{formatDisplay this.name}}!</span> <span> - {{formatDisplay this.data.description}}</span></div>
+                                </div>                            
+                            </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </body>
+</form>

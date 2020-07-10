@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   id="svg1193"
+   version="1.1"
+   viewBox="0 0 28.221207 28.221207"
+   height="28.221207mm"
+   width="28.221207mm">
+  <defs
+     id="defs1187" />
+  <metadata
+     id="metadata1190">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-63.752493,-157.49059)"
+     id="layer1">
+    <rect
+       style="fill:#800080"
+       id="rect46"
+       stroke-width="1.41106"
+       stroke="#000000"
+       fill="#800000"
+       ry="2.6810148"
+       height="26.810146"
+       width="26.810146"
+       y="158.19612"
+       x="64.458023" />
+    <text
+       id="text50"
+       xml:space="preserve"
+       line-height="125%"
+       style="line-height:125%;stroke-width:0.282213"
+       word-spacing="0px"
+       letter-spacing="0px"
+       font-size="50.7981px"
+       font-family="'IM FELL Great Primer'"
+       fill="#f7f5f3"
+       y="177.37428"
+       x="71.209473"><tspan
+         style="stroke-width:0.301016"
+         id="tspan48"
+         font-size="25.3991px"
+         font-family="'IM FELL Great Primer'"
+         fill="#f7f5f3"
+         y="177.37428"
+         x="71.209473">2</tspan></text>
+  </g>
+</svg>
