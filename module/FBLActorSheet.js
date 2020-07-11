@@ -4,6 +4,7 @@ import { CONFIG_WEAR_ICONS,
          CONFIG_WILLPOWER_ICONS,
          CONFIG_CONSUMABLE_ICONS,
          CONFIG_CONDITIONS_ICONS,
+         CONFIG_INJURY_STATUS,
          CONFIG_DICE_ICONS,
          CONFIG_DICE_MODIFIERS,
          CONFIG_ARTIFACT_MODIFIERS,
@@ -85,26 +86,23 @@ export class FBLActorSheet extends ActorSheet {
       } catch (err) {    
         return false;    
       }
+
+      let item;
   
       // Case 1 - Import from a Compendium pack    
       const actor = this.actor;    
-      if (data.pack) {    
-        return actor.importItemFromCollection(data.pack, data.id);    
-      }
-  
-      // Case 2 - Data explicitly provided    
-      // else if (data.data) {
-      //   console.log("Did it fire?"); 
-      //   let sameActor = data.actorId === actor._id;    
-      //   if (sameActor && actor.isToken) sameActor = data.tokenId === actor.token.id;    
-      //   if (sameActor) return this._onSortItem(event, data.data); // Sort existing items    
-      //   else return actor.createEmbeddedEntity("OwnedItem", duplicate(data.data));  // Create a new Item    
-      // }
-  
-      // Case 3 - Import from World entity    
+      if (data.pack) {  
+        const pack = game.packs.get(data.pack);
+        if (pack.metadata.entity !== "Item") return;    
+        item = await pack.getEntity(data.id);
+        console.log("From Compendium", item)  
+        }
+      // Case 2 - Import from a World Item
       else {    
-        let item = game.items.get(data.id);    
-        if (!item) return;
+        item = game.items.get(data.id);
+        console.log("From Item", item);
+      }    
+      if (!item) return;
 
         // ----------------- Begin overriding  ---------------------
         //  if this actor can't embed this type of entity, return
@@ -125,6 +123,7 @@ export class FBLActorSheet extends ActorSheet {
           else {
             newItem = await actor.createEmbeddedEntity("OwnedItem", duplicate(item.data));
             await actor.updateEmbeddedEntity("OwnedItem", {"_id": newItem._id, "sort": (actor.data.items.length-1), "data": {"quantity": 1} });
+            actor.prepareEmbeddedEntities();
           };
           return;
         }
@@ -183,7 +182,6 @@ export class FBLActorSheet extends ActorSheet {
         await actor.updateEmbeddedEntity("OwnedItem", {"_id": newItem._id, "sort": actor.data.items.length});
         actor.prepareEmbeddedEntities();
         return;
-      }
     }    
     // -------------------------- END _ONDROP() ------------------------------------
 
@@ -228,6 +226,7 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     //configure Icons and Currency
     data.data.Consumables = CONFIG_CONSUMABLE_ICONS;
     data.data.diceIcons = CONFIG_DICE_ICONS;
+    data.data.injuryStatus = CONFIG_INJURY_STATUS;
     data.data.currency = Array.from(CONFIG_MONEY).reverse();
     // configure Encumbrance Icon according to encumbrance status
     data.data.isEncumbered = (data.data.encumbrance.value > data.data.encumbrance.capacity) ?  true : false;
@@ -274,6 +273,7 @@ export class MonsterSheet extends FBLActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
     document.querySelector(`.layout--monster.${this.actor._id}`).addEventListener("click", updateTrackData.bind(this));
+    document.querySelector(`.layout--monster.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
     document.querySelector(`.layout--monster.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
     document.querySelector(`.layout--monster.${this.actor._id} .randomAttack`).addEventListener("dblclick", rollRandomAttack.bind(this));
   }
@@ -305,6 +305,7 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
     Object.entries(data.data.dieModifiers).forEach( (d) => createDieTrack.call(this, d));
     // create ARTIFACT DICE MODIFIERS track
     Object.entries(data.data.artifactModifiers).forEach(d => createTrack.call(this, d[1], CONFIG_ARTIFACT_MODIFIERS[d[0]]) );
+    data.data.injuryStatus = CONFIG_INJURY_STATUS;
     return data;
   }
 
@@ -315,6 +316,7 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
     document.querySelector(`.layout--NPC.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
     document.querySelector(`.layout--NPC.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
     document.querySelector(`.layout--NPC.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
+    document.querySelector(`.layout--NPC.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
     document.querySelector(`.layout--NPC.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
 
     //activate tabs
@@ -322,7 +324,7 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
     tabs.bind(document.querySelector(".layout--NPC"));
   }
 }
-/* ------------------------------ END MonsterSheet ------------------------------------ */
+/* ------------------------------ END NPCSheet ------------------------------------ */
 
 /* ------------------------------ FUNCTIONS AND EVENTHANDLERS ------------------------------------ */
 
@@ -340,7 +342,6 @@ function createTrack(data, iconsURLArray) {
 }
 
   function createDieTrack(modifier) {
-  console.log(this);
   let mod = modifier[1].value;
   let diceModifiers = Array.from(CONFIG_DICE_MODIFIERS[0]);   
   if (mod === 0) {return this.actor.data.data.dieModifiers[modifier[0]] = mergeObject(modifier[1], {"modTrack": diceModifiers})};

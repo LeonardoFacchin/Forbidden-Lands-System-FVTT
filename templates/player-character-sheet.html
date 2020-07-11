@@ -1,5 +1,4 @@
 <form class="{{cssClass}} layout layout--PC {{actor._id}}" autocomplete="off">
-    {{log this.data.info}}
 
     <!-- TOP-LEFT - PROFILE PICTURE -->
     <div class="layout__picture">
@@ -399,17 +398,18 @@
                 {{else}}
                 <div class="table__entry table__entry--PC-injury-display table__entry--no-border frame frame__margin--PC-items">
                 {{/iff}}
+                {{log @root.data.injuryStatus}}
                     {{#unless injury.data.isTreated}}
                         {{#iff injury.data.lethal.isLethal comparison="Yes"}}
                         <div class="table__field">
-                            <img class="table__data" src="/systems/forbiddenlands/icons/injuries/skull-crossed-bones.svg" style="height: 25px">
+                            <img class="table__data" src="{{@root.data.injuryStatus.lethal}}" style="height: 25px">
                         </div>
                         <div class="table__field">        
                             <span class="table__data" type="text">{{injury.data.timeLimit.value}} {{injury.data.timeLimit.units}}</span>
                         </div>
                         {{else}}
                         <div class="table__field">
-                            <img class="table__data" src="/systems/forbiddenlands/icons/injuries/open-wound.svg" style="height: 25px">
+                            <img class="table__data" src="{{@root.data.injuryStatus.open}}" style="height: 25px">
                         </div>
                         <div class="table__field">        
                             <span class="table__data" type="text">{{injury.data.healingTime}} Days</span>
@@ -417,7 +417,7 @@
                         {{/iff}}
                     {{else}}
                     <div class="table__field">
-                        <img class="table__data" src="/systems/forbiddenlands/icons/injuries/health-normal.svg" style="height: 25px">
+                        <img class="table__data" src="{{@root.data.injuryStatus.healing}}" style="height: 25px">
                     </div>
                     <div class="table__field">        
                         <span class="table__data" type="text">{{injury.data.healingTime}} Days</span>

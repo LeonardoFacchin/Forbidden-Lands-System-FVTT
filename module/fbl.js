@@ -26,7 +26,7 @@ Hooks.once("init", async function() {
 
   CONFIG.Actor.entityClass = FBLActor;
   CONFIG.Item.entityClass = FBLItem;
-  CONFIG.debug.hooks = true;
+  // CONFIG.debug.hooks = true;
   // CONFIG.Actor.sheetClass = FBLActorSheet;
 
   let dPool = new Collection();

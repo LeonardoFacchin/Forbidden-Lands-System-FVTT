@@ -38,7 +38,7 @@ export class FBLItemSheet extends ItemSheet {
     // retrieve the editing flag so that it
     // can be passed to the Handlebar templates as context
     // this.settings is defined in each FBLItemSheet child implementation
-    data = mergeObject(data, {"isBeingEdited": this.isBeingEdited, "settings": this.settings});
+    data = mergeObject(duplicate(data), {"isBeingEdited": this.isBeingEdited, "settings": this.settings});
     return data;
   }
 

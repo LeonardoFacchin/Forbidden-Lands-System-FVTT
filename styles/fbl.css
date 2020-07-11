@@ -30,7 +30,9 @@
   box-sizing: border-box;
 }
 
-.fbl .window-content, #chat-log .message, .dialog .window-content {
+.fbl .window-content,
+#chat-log .message,
+.dialog .window-content {
   /* font-family: "IM Fell DW Pica Roman"; */
   font-family: "IM Fell DW Pica Roman";
   background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
@@ -38,10 +40,21 @@
   color: black;
   text-align: justify;
   min-height: fit-content;
+  min-width: fit-content;
   /* make sure any refreshed window is resized to match its content.
   Needed when transitioning from the "edit" version of a sheet to the "display" version. */
   padding: 10px;
   overflow-y: hidden;
+}
+
+.app.window-app.fbl {
+  min-height: fit-content;
+  min-width: fit-content;
+}
+
+form {
+  min-height: fit-content;
+  min-width: fit-content;
 }
 
 #chat-log .message {
@@ -54,7 +67,8 @@
   text-shadow: 0 0 7px darkorange, 0 0 7px orange;
 }
 
-.fbl [data-dieHook="Monster-attack"]:hover {
+.fbl [data-dieHook="Monster-attack"]:hover,
+.fbl [data-action="show-item"]:hover {
   box-shadow: 0 0 7px darkorange, 0 0 7px orange;
 }
 
@@ -70,20 +84,14 @@ progress {
 progress::-webkit-progress-bar {
 background-color: transparent;
 border-radius: 2px;
-/* box-shadow: rgba(255, 255, 240, 0.1); */
 }
 
 progress::-webkit-progress-value {
 -webkit-appearance: none;
-background-image:   linear-gradient(to right, white,  white 157.6px, var(--negative-effect) 368px),
+background-image:   linear-gradient(to right, white, white),
                     linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));    
 border-radius: 2px;
-/* color: black; */
 }
-
-/* .fbl ::-webkit-scrollbar {
-  display: none;
-} */
 
 /* --------------------------- RESETS ----------------------------*/
 
@@ -371,12 +379,6 @@ height: 35px;
 
     .table                          - block wrapper
     .table__entry                   - an entry (row) in the table UI
-        .table__entry--attributes   - attributes display (2 fields: attribute - value)
-        .table__entry--skills       - skills display (4 fields: skill - score - linked attribute - total)
-        .table__entry--mAttacks     - monster attacks section of the monster sheet display
-                                      (2 fields: dice icon - description)
-        .table__entry--attack-stats - monster attacks stats display of the Monster Attacks item sheet 
-                                      (4 fields: dice - damage - damage type - range) 
     .table__field                   - table cell, the container for .table__data
     .table__data                    - the actual content of a table cell    
     .table__title                   - table header and title. Applied to a .table__entry
@@ -648,7 +650,7 @@ select.table__data {
 }
 
 .table__data--money-bg {
-  background-image: url("/systems/forbiddenlands/icons/equipment/shiny-purse.svg");
+  background-image: url("/systems/forbiddenlands/icons/sheets/money/shiny-purse.svg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

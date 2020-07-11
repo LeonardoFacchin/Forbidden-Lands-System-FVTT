@@ -17,16 +17,16 @@
                 <div class="table">
                     <div class="table__entry table__entry--3col">
                         <div class="table__field" style="padding: 0 10px">
-                            <label class="table__data table__data--left-aligned" style="max-width: fit-content">Kin: </label>
-                            <span class="table__data" type="text" style="border-bottom: 1px solid black; border-radius: 0; text-align: left; margin-left: 10px;" contenteditable="true"></span>
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Kin: </strong></label>
+                            <div class="table__data table__data--fill-form" type="text" contenteditable="true" data-edit="data.info.kin">{{data.info.kin}}</div>
                         </div>
                         <div class="table__field" style="padding: 0 10px">
-                            <label class="table__data table__data--left-aligned" style="max-width: fit-content">Profession: </label>
-                            <span class="table__data" type="text" style="border-bottom: 1px solid black; border-radius: 0; text-align: left; margin-left: 10px;" contenteditable="true"></span>
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Profession: </strong></label>
+                            <div class="table__data table__data--fill-form" type="text" contenteditable="true" data-edit="data.info.profession">{{data.info.profession}}</div>
                         </div>
                         <div class="table__field" style="padding: 0 10px">
-                            <label class="table__data table__data--left-aligned" style="max-width: fit-content">Age: </label>
-                            <span class="table__data" type="text" style="border-bottom: 1px solid black; border-radius: 0; text-align: left; margin-left: 10px;" contenteditable="true"></span>
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Age: </strong></label>
+                            <div class="table__data table__data--fill-form" type="text" contenteditable="true" data-edit="data.info.age">{{data.info.age}}</div>
                         </div>
                     </div>
                 </div>
@@ -287,25 +287,25 @@
                         </div>                            
                     </section>
                     <label class="layout__gap frame__title" style="flex: 0">Injuries</label>
-
-                    <div class="table table--flexible frame">
+                    <!-- INJURIES -->
+                    <div class="table table--flexible frame" style="align-content: flex-start">
                         {{#each data.[Critical Injury] as |injury|}}
                         {{#iff injury.data.lethal.isLethal comparison="Yes"}}
-                        <div class="table__entry table__entry--PC-deadly-injury-display table__entry--no-border frame frame__margin--PC-items" style="height: fit-content">
+                        <div class="table__entry table__entry--PC-deadly-injury-display table__entry--no-border frame frame__margin--PC-items" style="height: fit-content;">
                         {{else}}
-                        <div class="table__entry table__entry--PC-injury-display table__entry--no-border frame frame__margin--PC-items" style="height: fit-content">
+                        <div class="table__entry table__entry--PC-injury-display table__entry--no-border frame frame__margin--PC-items" style="height: fit-content;">
                         {{/iff}}
                             {{#unless injury.data.isTreated}}
                                 {{#iff injury.data.lethal.isLethal comparison="Yes"}}
                                 <div class="table__field">
-                                    <img class="table__data" src="/systems/forbiddenlands/icons/injuries/skull-crossed-bones.svg" style="height: 25px">
+                                    <img class="table__data" src="{{@root.data.injuryStatus.lethal}}" style="height: 25px">
                                 </div>
                                 <div class="table__field">        
                                     <span class="table__data" type="text">{{injury.data.timeLimit.value}} {{injury.data.timeLimit.units}}</span>
                                 </div>
                                 {{else}}
                                 <div class="table__field">
-                                    <img class="table__data" src="/systems/forbiddenlands/icons/injuries/open-wound.svg" style="height: 25px">
+                                    <img class="table__data" src="{{@root.data.injuryStatus.open}}" style="height: 25px">
                                 </div>
                                 <div class="table__field">        
                                     <span class="table__data" type="text">{{injury.data.healingTime}} Days</span>
@@ -313,7 +313,7 @@
                                 {{/iff}}
                             {{else}}
                             <div class="table__field">
-                                <img class="table__data" src="/systems/forbiddenlands/icons/injuries/health-normal.svg" style="height: 25px">
+                                <img class="table__data" src="{{@root.data.injuryStatus.healing}}" style="height: 25px">
                             </div>
                             <div class="table__field">        
                                 <span class="table__data" type="text">{{injury.data.healingTime}} Days</span>

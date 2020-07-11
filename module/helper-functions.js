@@ -221,7 +221,7 @@ export async function prepareRollData( rollType, actor, id) {
   //----------------------- Spell ------------------------------
   if ( rollType==="Spell" ) {
     
-    if(Number(actor.data.data.willpower.score) === 0) {console.log("%c You need to have at least 1 Willpower point to cast a spell", "color: blue"); return null}
+    if(Number(actor.data.data.willpower.score) === 0) {ui.notifications.error("You need to have at least 1 Willpower point to cast a spell"); return null}
 
     let diag = new SpellDialog ({
       actor: actor,

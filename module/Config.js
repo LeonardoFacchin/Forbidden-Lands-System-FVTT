@@ -61,10 +61,10 @@ export const CONFIG_MONEY = ["Copper", "Silver", "Gold"];
 export const CONFIG_WEAR_ICONS = ["systems/forbiddenlands/icons/sheets/equip-wear.svg", "systems/forbiddenlands/icons/sheets/equip-healthy.svg"];
 
 export const CONFIG_CONSUMABLE_ICONS = {
-  "Food": "systems/forbiddenlands/icons/equipment/sliced-bread.svg",
-  "Water": "systems/forbiddenlands/icons/equipment/magic-potion.svg",
-  "Arrows": "systems/forbiddenlands/icons/equipment/arrow-cluster.svg",
-  "Torches": "systems/forbiddenlands/icons/equipment/torch.svg",
+  "Food": "systems/forbiddenlands/icons/sheets/consumables/sliced-bread.svg",
+  "Water": "systems/forbiddenlands/icons/sheets/consumables/magic-potion.svg",
+  "Arrows": "systems/forbiddenlands/icons/sheets/consumables/arrow-cluster.svg",
+  "Torches": "systems/forbiddenlands/icons/sheets/consumables/torch.svg",
 }
 
 // MAGIC
@@ -78,8 +78,8 @@ export const CONFIG_MAGIC_DISCIPLINES = {
     "stonesong": {name: "Stone Song", url: "systems/forbiddenlands/icons/magic-disciplines/mountaintop.svg"},
     "blood": {name: "Blood Magic", url: "systems/forbiddenlands/icons/magic-disciplines/drop.svg"},
     "death": {name: "Death Magic", url: "systems/forbiddenlands/icons/magic-disciplines/grim-reaper.svg"},
-    "elemental": {name: "Elemental Magic", url: "systems/forbiddenlands/icons/magic-disciplines/grim-reaper.svg"},
-    "ice": {name: "Ice Affinity", url: "systems/forbiddenlands/icons/magic-disciplines/grim-reaper.svg"}
+    "elemental": {name: "Elemental Magic", url: "systems/forbiddenlands/icons/magic-disciplines/wildfires.svg"},
+    "ice": {name: "Ice Affinity", url: "systems/forbiddenlands/icons/magic-disciplines/frozen-orb.svg"}
   };
   
   export const CONFIG_COMBAT_RANGES = ["Arm's Length", "Near","Short", "Long", "Distant"];
@@ -94,10 +94,16 @@ export const CONFIG_MAGIC_DISCIPLINES = {
   export const CONFIG_WOUND_ICONS = ["systems/forbiddenlands/icons/sheets/attribute-damaged.svg", "systems/forbiddenlands/icons/sheets/attribute-healthy.svg"];
 
   export const CONFIG_CONDITIONS_ICONS = {
-    "hungry": ["systems/forbiddenlands/icons/sheets/eating-marked.svg","systems/forbiddenlands/icons/sheets/eating-unmarked.svg"],
-    "thirsty": ["systems/forbiddenlands/icons/sheets/drinking-marked.svg", "systems/forbiddenlands/icons/sheets/drinking-unmarked.svg"],
-    "sleepy": ["systems/forbiddenlands/icons/sheets/sleepy-marked.svg", "systems/forbiddenlands/icons/sheets/sleepy-unmarked.svg"],
-    "cold": ["systems/forbiddenlands/icons/sheets/snowflake-2-marked.svg","systems/forbiddenlands/icons/sheets/snowflake-2-unmarked.svg"]
+    "hungry": ["systems/forbiddenlands/icons/sheets/conditions/eating-marked.svg","systems/forbiddenlands/icons/sheets/conditions/eating-unmarked.svg"],
+    "thirsty": ["systems/forbiddenlands/icons/sheets/conditions/drinking-marked.svg", "systems/forbiddenlands/icons/sheets/conditions/drinking-unmarked.svg"],
+    "sleepy": ["systems/forbiddenlands/icons/sheets/conditions/sleepy-marked.svg", "systems/forbiddenlands/icons/sheets/conditions/sleepy-unmarked.svg"],
+    "cold": ["systems/forbiddenlands/icons/sheets/conditions/snowflake-2-marked.svg","systems/forbiddenlands/icons/sheets/conditions/snowflake-2-unmarked.svg"]
+  }
+
+  export const CONFIG_INJURY_STATUS = {    
+    "lethal": ["systems/forbiddenlands/icons/sheets/injuries/skull-crossed-bones.svg"],
+    "open": ["systems/forbiddenlands/icons/sheets/injuries/open-wound.svg"],
+    "healing": ["systems/forbiddenlands/icons/sheets/injuries/health-normal.svg"],
   }
 
   export const CONFIG_LETHAL = ["No", "Yes"];

@@ -142,6 +142,9 @@
                                     <div class="table__data table__padding-lr" style="text-align: justify;">
                                         <span style="font-variant: small-caps; font-weight: bold; color: rgba(207, 0, 15, 1)">{{formatDisplay this.name}}</span> <span> - {{formatDisplay this.data.description}}</span>
                                     </div>
+                                    <div>
+                                        <i class="fas fa-trash" data-id="{{this._id}}" style="float: right; font-size: 1em; padding: 5px"></i>
+                                    </div> 
                                 </div>
                             </div>
                     {{/each}}    
@@ -151,9 +154,7 @@
             <!-- MONSTER ATTACKS -->
             <div class="frame frame--flexible layout__gap">
 
-                <label class="frame__title randomAttack" id="test" title="Double click to execute a random attack" data-action="random-attack">Monster Attacks
-                    <!-- <img src="/systems/forbiddenlands/icons/sheets/rolling-dices.svg" data-action="random-attack" height="25px" alt="" style="float: right"> -->
-                </label>                          
+                <label class="frame__title randomAttack" id="test" title="Double click to execute a random attack" data-action="random-attack">Monster Attacks</label>                          
 
                 <div class="table table--flexible">
                     {{#each data.[Monster Attack]}}
@@ -168,6 +169,9 @@
                             <div class="table__field">
                                 <div class="table__data">
                                     <div class="table__padding-lr" style="text-align: justify"><span style="font-variant: small-caps; font-weight: bold; color: rgba(207, 0, 15, 1)">{{formatDisplay this.name}}!</span> <span> - {{formatDisplay this.data.description}}</span></div>
+                                </div>
+                                <div>
+                                    <i class="fas fa-trash" data-id="{{this._id}}" style="float: right; font-size: 1em; padding: 5px"></i> 
                                 </div>                            
                             </div>
                     </div>
