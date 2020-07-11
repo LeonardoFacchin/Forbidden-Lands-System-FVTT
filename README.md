@@ -54,6 +54,13 @@ Monster attacks can not be pushed because the rules forbid it.
 - Dragging and Dropping an Attribute, Skill, Weapon, Equipment or Spell element from the character sheet to the macro bar will automatically add a macro that will perform the corresponding check once clicked.  
 NB: a token must be selected for the macro to actually work. An error message will be displayed asking the player to select a single token if he didn't before clicking the button.
 
+- if for some reason you need to roll a Forbidden Land style dice-check for which no automation has been built, you can do it by typing the follwoing command in the chat window:  
+/fbl(nAtt, nSkill, nGear, artifactDieOne, artifactDie2,...)  
+For example /fbl(4, -1, 2, d10) would roll 4 Base Dice, 1 penalty die, 2 gear Dice and a single d10 artifact die. This roll doesn't support pushing (yet?)
+
+- Spells can't be added to the Character sheet automatically. They are automatically added when a Spellcasting talent is dragged onto the character sheet and automatically removed if the Talent is removed.  
+So, please, make sure you configure your talent and spells correctly by choosing the right magical discipline associated to each of them when you import your talents and spells.
+
 # Feedback 
 Feedback is very welcome. Please report any bug and I will try to look at them as soon as possibile.
 Up to about the first week of april 2020 I didn't know anything about JS, HTML or CSS, except that they existed. So, I'm a noob at software development. That means the code behind this system will hardly be optimized. It's much more likely to be a monster of a spaghetti code mess. Sorry about that.
