@@ -8,5 +8,8 @@
     "compatibleCoreVersion": "0.6.5",
     "author": "Leonardo",
     "styles": ["styles/fbl.css"],
-    "esmodules": ["module/fbl.js", "module/helper-functions.js"]
+    "esmodules": ["module/fbl.js", "module/helper-functions.js"],
+    "url":"https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System",
+    "manifest": "https://raw.githubusercontent.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/master/system.json",
+    "download": "https://codeload.github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/zip/master"
 }
