@@ -65,10 +65,10 @@ Feedback is very welcome. Please report any bug and I will try to look into it a
 Up to about the first week of april 2020 I didn't know anything about JS, HTML or CSS, except that they existed. So, I'm a noob at software development. That means the code behind this system will hardly be optimized. It's much more likely to be a monster of a spaghetti code mess. Sorry about that.
 
 # Media
-!(https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/ChacracterSheet2020-07-12_104534.png?raw=true)
-!(https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Monster_Sheet_2020-07-12_104739.png?raw=true)
-!(https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/NPC_Sheet_2020-07-12_105043.png?raw=true)
-!(https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Melee_Check_Pushed_2020-07-12_105314.png?raw=true)
-!(https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Monster_Attack_Check2020-07-12_105520.png?raw=true)
-!(https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Spell_Casting_2020-07-12_105139.png?raw=true)
-!(https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Spell_Casting_Check_Annotation_2020-07-12_105635.png?raw=true)
+![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/ChacracterSheet2020-07-12_104534.png?raw=true)
+![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Monster_Sheet_2020-07-12_104739.png?raw=true)
+![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/NPC_Sheet_2020-07-12_105043.png?raw=true)
+![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Melee_Check_Pushed_2020-07-12_105314.png?raw=true)
+![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Monster_Attack_Check2020-07-12_105520.png?raw=true)
+![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Spell_Casting_2020-07-12_105139.png?raw=true)
+![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Spell_Casting_Check_Annotation_2020-07-12_105635.png?raw=true)
