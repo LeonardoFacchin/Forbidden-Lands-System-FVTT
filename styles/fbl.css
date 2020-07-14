@@ -668,7 +668,10 @@ select.table__data {
               rgba(0, 0, 0, 0.8);
 }
 
-.table__data--fill-form {
+input[type="text"].table__data--fill-form {
+  height: 20px;
+  border: none;
+  background-color: transparent;
   border-bottom: 1px solid black;
   border-radius: 0;
   text-align: left;
