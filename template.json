@@ -195,7 +195,8 @@
         "description": "",
         "rank1": "",
         "rank2": "",
-        "rank3": ""
+        "rank3": "",
+        "talentRank": ""
      },
      "Spell": {
         "image": "icons/svg/mystery-man.svg",
