@@ -126,76 +126,83 @@ export const CONFIG_MAGIC_DISCIPLINES = {
   }
 
   export const CONFIG_DICE_ATTRIBUTES = [
-    "systems/forbiddenlands/icons/dice/custom/base-d6-1.svg",
-    "systems/forbiddenlands/icons/dice/custom/base-d6-2.svg",
-    "systems/forbiddenlands/icons/dice/custom/base-d6-3.svg",
-    "systems/forbiddenlands/icons/dice/custom/base-d6-4.svg",
-    "systems/forbiddenlands/icons/dice/custom/base-d6-5.svg",
-    "systems/forbiddenlands/icons/dice/custom/base-d6-6.svg"
+    "systems/forbiddenlands/icons/dice/custom/base-d6-1.png",
+    "systems/forbiddenlands/icons/dice/custom/base-d6-2.png",
+    "systems/forbiddenlands/icons/dice/custom/base-d6-3.png",
+    "systems/forbiddenlands/icons/dice/custom/base-d6-4.png",
+    "systems/forbiddenlands/icons/dice/custom/base-d6-5.png",
+    "systems/forbiddenlands/icons/dice/custom/base-d6-6.png"
   ]
 
   export const CONFIG_DICE_SKILLS = [
-    "systems/forbiddenlands/icons/dice/custom/skill-d6-1.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-d6-2.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-d6-3.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-d6-4.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-d6-5.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-d6-6.svg"
+    "systems/forbiddenlands/icons/dice/custom/skill-d6-1.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-d6-2.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-d6-3.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-d6-4.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-d6-5.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-d6-6.png"
   ]
 
   export const CONFIG_DICE_SKILLS_NEGATIVE = [
-    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-1.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-2.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-3.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-4.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-5.svg",
-    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-6.svg"
+    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-1.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-2.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-3.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-4.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-5.png",
+    "systems/forbiddenlands/icons/dice/custom/skill-negative-d6-6.png"
   ]
 
   export const CONFIG_DICE_GEAR = [
-    "systems/forbiddenlands/icons/dice/custom/gear-d6-1.svg",
-    "systems/forbiddenlands/icons/dice/custom/gear-d6-2.svg",
-    "systems/forbiddenlands/icons/dice/custom/gear-d6-3.svg",
-    "systems/forbiddenlands/icons/dice/custom/gear-d6-4.svg",
-    "systems/forbiddenlands/icons/dice/custom/gear-d6-5.svg",
-    "systems/forbiddenlands/icons/dice/custom/gear-d6-6.svg"
+    "systems/forbiddenlands/icons/dice/custom/gear-d6-1.png",
+    "systems/forbiddenlands/icons/dice/custom/gear-d6-2.png",
+    "systems/forbiddenlands/icons/dice/custom/gear-d6-3.png",
+    "systems/forbiddenlands/icons/dice/custom/gear-d6-4.png",
+    "systems/forbiddenlands/icons/dice/custom/gear-d6-5.png",
+    "systems/forbiddenlands/icons/dice/custom/gear-d6-6.png"
   ]
 
   export const CONFIG_DICE_ARTIFACT_MIGHTY = [
-    "systems/forbiddenlands/icons/dice/custom/artifact-d8-1.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d8-2.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d8-3.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d8-4.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d8-5.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d8-6.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d8-7.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d8-8.svg"
+    "systems/forbiddenlands/icons/dice/custom/artifact-d8-1.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d8-2.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d8-3.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d8-4.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d8-5.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d8-6.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d8-7.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d8-8.png"
   ]
 
   export const CONFIG_DICE_ARTIFACT_EPIC = [
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-1.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-2.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-3.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-4.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-5.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-6.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-7.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-8.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-9.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d10-10.svg"
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-1.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-2.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-3.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-4.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-5.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-6.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-7.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-8.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-9.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d10-10.png"
     ]
 
   export const CONFIG_DICE_ARTIFACT_LEGENDARY = [
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-1.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-2.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-3.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-4.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-5.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-6.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-7.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-8.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-9.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-10.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-11.svg",
-    "systems/forbiddenlands/icons/dice/custom/artifact-d12-12.svg"
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-1.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-2.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-3.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-4.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-5.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-6.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-7.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-8.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-9.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-10.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-11.png",
+    "systems/forbiddenlands/icons/dice/custom/artifact-d12-12.png"
   ]
+
+  // COMBAT TRACKER
+
+  export const CONFIG_COMBAT_TRACKER_ACTIONS = {
+    "fast": ["systems/forbiddenlands/icons/combat-tracker/fast-available.png", "systems/forbiddenlands/icons/combat-tracker/fast-spent.png"],
+    "slow": ["systems/forbiddenlands/icons/combat-tracker/slow-available.png", "systems/forbiddenlands/icons/combat-tracker/slow-spent.png"]
+  }
