@@ -65,10 +65,17 @@ export class FBLActor extends Actor {
         Object.entries(data.consumable).forEach( i => {
             itemsWeight = (i[1] !== "dX") ? (itemsWeight + 1) : itemsWeight;
         } );
+
+        let additionalWeight = 0;
+        const packRatRank = Number(data.Talent.find( t => t.name === "Pack Rat")?.data.talentRank) || 0;
+
+        if (packRatRank === 1) additionalWeight = 2;
+        if (packRatRank === 2) additionalWeight = 5;
+        if (packRatRank === 3) additionalWeight = 10;
         
         data.encumbrance = {};
         data.encumbrance.value = itemsWeight + ( Math.floor( (data.money.gold + data.money.silver + data.money.copper) / 100) * 0.5);
-        data.encumbrance.capacity = data.attributes.Strength.value * 2;
+        data.encumbrance.capacity = data.attributes.Strength.value * 2 + additionalWeight;
     
     }
 

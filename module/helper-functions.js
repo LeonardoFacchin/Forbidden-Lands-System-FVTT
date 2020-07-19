@@ -5,7 +5,8 @@ import { CONFIG_DICE_ATTRIBUTES,
          CONFIG_DICE_ARTIFACT_MIGHTY,
          CONFIG_DICE_ARTIFACT_EPIC,
          CONFIG_DICE_ARTIFACT_LEGENDARY,
-         CONFIG_MAGIC_DISCIPLINES } from "./config.js"
+         CONFIG_MAGIC_DISCIPLINES,
+         CONFIG_COMBAT_TRACKER_ACTIONS } from "./config.js"
 
 // creates a data structure from a property
 // useuful to update actors and embeddedEntities
@@ -221,7 +222,7 @@ export async function prepareRollData( rollType, actor, id) {
   //----------------------- Spell ------------------------------
   if ( rollType==="Spell" ) {
     
-    if(Number(actor.data.data.willpower.score) === 0) {ui.notifications.error("You need to have at least 1 Willpower point to cast a spell"); return null}
+    if(Number(actor.data.data.willpower?.score) === 0) {ui.notifications.error("You need to have at least 1 Willpower point to cast a spell"); return null}
 
     let diag = new SpellDialog ({
       actor: actor,
@@ -437,7 +438,7 @@ export class SpellDialog extends Dialog {
     // console.log(data.isTooHigh);
     const minDice = Math.max( 0, data.spentWillpower - Math.max(0, data.talentRank - data.spellRank) );
     // console.log(minDice);
-    let WP = actor.data.data.willpower.score;
+    let WP = actor.isPC ? actor.data.data.willpower.score : data.talentRank;
     const WPArray = [];
     const diceToRoll = [];
     for (let i = 1; i <= WP; i++) { WPArray.push(i)};
@@ -449,5 +450,150 @@ export class SpellDialog extends Dialog {
     data = mergeObject( data, { "WPArray": WPArray, "diceToRoll": diceToRoll, "uID": this.dialogID});
     return data;
    }
+
+}
+
+// ------------------------------------------------------------------------------------------------
+// ---------------------- spellDialog: Forbidden Lands spell dialog extension ---------------------
+// ------------------------------------------------------------------------------------------------
+
+export class FBLCombatTracker extends CombatTracker {
+
+  static get defaultOptions() {
+	  return mergeObject(super.defaultOptions, {
+      id: "combat",
+      template: "/systems/forbiddenlands/templates/combat-tracker.html",
+      title: "Combat Tracker",
+      scrollY: [".directory-list"],
+      width: 325
+    });
+
+  }
+
+  async getData(options) {
+    // Get the combat encounters possible for the viewed Scene
+    const combat = this.combat;
+    const hasCombat = combat !== null;
+    const view = canvas.scene;
+    const combats = view ? game.combats.entities.filter(c => c.data.scene === view._id) : [];
+    const currentIdx = combats.findIndex(c => c === this.combat);
+    const previousId = currentIdx > 0 ? combats[currentIdx-1].id : null;
+    const nextId = currentIdx < combats.length - 1 ? combats[currentIdx+1].id : null;
+    const settings = game.settings.get("core", Combat.CONFIG_SETTING);
+    // Prepare rendering data
+
+    const data = {
+      user: game.user,
+      combats: combats,
+      currentIndex: currentIdx + 1,
+      combatCount: combats.length,
+      hasCombat: hasCombat,
+      combat,
+      turns: [],
+      previousId,
+      nextId,
+      started: this.started,
+      control: false,
+      settings
+    };
+
+    if ( !hasCombat ) return data;
+    // Add active combat data
+    const combatant = combat.combatant;
+    const hasControl = combatant && combatant.players && combatant.players.includes(game.user);
+    // Update data for combatant turns
+    const decimals = CONFIG.Combat.initiative.decimals;
+    const turns = [];
+    for ( let [i, t] of combat.turns.entries() ) {
+      if ( !t.visible ) continue;
+      // Name and Image
+      t.name = t.token.name || t.actor.name;
+      if ( t.defeated ) t.img = CONFIG.controlIcons.defeated;
+      else if ( VideoHelper.hasVideoExtension(t.token.img) ) {
+        t.img = await game.video.createThumbnail(t.token.img, {width: 100, height: 100});
+      }
+      else t.img = t.token.img || t.actor.img;
+      // Turn order and initiative
+      t.active = i === combat.turn;
+      t.initiative = isNaN(parseFloat(t.initiative)) ? null : Number(t.initiative).toFixed(decimals);
+      t.hasRolled = t.initiative !== null;
+      t.actTwice = t.flags?.forbiddenlands?.actTwice ? t.flags.forbiddenlands.actTwice : false;
+      t.surprise = t.flags?.forbiddenlands?.hasSurprise ? t.flags.forbiddenlands.hasSurprise : false;
+      // Styling rules
+      t.css = [
+        t.active ? "active" : "",
+        t.hidden ? "hidden" : "",
+        t.defeated ? "defeated" : ""
+      ].join(" ").trim();
+      // Tracked resources
+      t.fAction = t.flags?.forbiddenlands?.fastActionSpent ? CONFIG_COMBAT_TRACKER_ACTIONS.fast[1] : CONFIG_COMBAT_TRACKER_ACTIONS.fast[0];
+      // console.log(t.fAction);
+      t.sAction = t.flags?.forbiddenlands?.slowActionSpent ? CONFIG_COMBAT_TRACKER_ACTIONS.slow[1] : CONFIG_COMBAT_TRACKER_ACTIONS.slow[0];
+      // console.log(t.sAction);
+      t.resource = t.actor.data.data.attributes.Strength.value - this.trackedResources[t.tokenId][settings.resource];
+      turns.push(t);
+    }
+
+    // Merge update data for rendering
+    return mergeObject(data, {
+      round: combat.data.round,
+      turn: combat.data.turn,
+      turns: turns,
+      control: hasControl
+    });
+  }
+
+
+  async _onCombatantControl(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const btn = event.currentTarget;
+    const li = btn.closest(".combatant");
+    const c = this.combat.getCombatant(li.dataset.combatantId);
+    // Switch control action
+    switch (btn.dataset.control) {
+      // Toggle combatant visibility
+      case "toggleHidden":
+        await this.combat.updateCombatant({_id: c._id, hidden: !c.hidden});
+        break;
+
+      // Toggle combatant defeated flag
+      case "toggleDefeated":
+        let isDefeated = !c.defeated;
+        await this.combat.updateCombatant({_id: c._id, defeated: isDefeated});
+        const token = canvas.tokens.get(c.tokenId);
+        if ( token ) {
+          if ( isDefeated && !token.data.overlayEffect ) token.toggleOverlay(CONFIG.controlIcons.defeated);
+          else if ( !isDefeated && token.data.overlayEffect === CONFIG.controlIcons.defeated ) token.toggleOverlay(null);
+        }
+        break;
+      
+      case "toggleActTwice":
+        const isActingTwice = c.flags?.forbiddenlands?.actTwice ? !c.flags.forbiddenlands.actTwice : true;
+        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.actTwice": isActingTwice });
+        console.log(c);
+        break;
+
+      case "toggleSurprise":
+        const isSurprise = c.flags?.forbiddenlands?.hasSurprise ? !c.flags.forbiddenlands.hasSurprise : true;
+        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.hasSurprise": isSurprise });
+        break;
+
+      case "toggleFastAction":
+        const isFastActionSpent = c.flags?.forbiddenlands?.fastActionSpent ? !c.flags.forbiddenlands.fastActionSpent : true;
+        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.fastActionSpent": isFastActionSpent });
+        break;
+
+      case "toggleSlowAction":
+        const isSlowActionSpent = c.flags?.forbiddenlands?.slowActionSpent ? !c.flags.forbiddenlands.slowActionSpent : true;
+        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.slowActionSpent": isSlowActionSpent });
+        break;    
+    }
+
+    // Render tracker updates
+    this.render();
+
+  }
+
 
 }

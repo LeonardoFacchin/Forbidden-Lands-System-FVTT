@@ -361,7 +361,7 @@
         </div>
         <!-- ENCUMBRANCE METER -->
         <div class="frame" style="margin-top: 3px; height: 50px">
-            <div class="table table--flexible">
+            <div class="table table--flexible" title="{{data.encumbrance.value}} / {{data.encumbrance.capacity}}">
 
                 {{#if data.isEncumbered}}
                 <div class="table__entry table__entry--encumbrance-meter table__data--encumbrance-isEncumbered">
@@ -373,7 +373,7 @@
 
                 <div class="table__field">
                     <div class="table__data">
-                        <progress max="{{data.encumbrance.capacity}}" value="{{data.encumbrance.value}}">{{data.encumbrance.value}}/{{data.encumbrance.capacity}}</progress>
+                        <progress max="{{data.encumbrance.capacity}}" value="{{data.encumbrance.value}}"></progress>
                     </div>
                 </div>
 

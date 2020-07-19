@@ -108,6 +108,10 @@ border-radius: 2px;
   margin-left: -15px;
   content: "\2725"
 }
+
+.app.sidebar-popout #combat-tracker.directory-list{
+  overflow: hidden;
+}
 /* --------------------------- LAYOUT ----------------------------*/
 /*  Layout classes have the responsibility of defining the Sheet layout and to implement it
 
@@ -692,6 +696,10 @@ background-color: lightgrey;
 .fbl .tabs .item.active, .fbl .tabs-modifiers .item.active {
   text-shadow: none;
   background-color: var(--title-background-color);
+}
+
+.trackedResource {
+  background: no-repeat center url("/systems/forbiddenlands/icons/combat-tracker/hearts.svg");
 }
 
 /* ---------------------------  ----------------------------*/

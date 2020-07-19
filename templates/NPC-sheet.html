@@ -232,7 +232,7 @@
                         {{#if data.isSpellcaster}}
                         <div class="table tab" data-tab="spells">
                             {{#each data.Spell as |spell key|}}
-                            <div class="table__entry table__entry--PC-spell-display table__entry--no-border frame frame__margin--PC-items" style="background-color: white;">
+                            <div class="table__entry table__entry--PC-spell-display table__entry--no-border frame frame__margin--PC-items drag-item" data-id="{{spell._id}}" style="background-color: white;">
                                 <div class="table__field">
                                     <img class="table__data" src="{{spell.img}}" alt="" data-action="show-item" data-id="{{spell._id}}" width="25px" height="25px">
                                 </div>

@@ -15,7 +15,8 @@ import { FBLItemSheet,
          WeaponSheet,
          ArmorSheet,
          CriticalInjurySheet } from "./FBLItemSheet.js";
-import { fblPool, prepareChatData, prepareRollData, pushingRoll, prideRoll } from "./helper-functions.js";
+import { fblPool, prepareChatData, prepareRollData, pushingRoll, prideRoll, FBLCombatTracker } from "./helper-functions.js";
+import { setupTurns, rollAll, rollInitiative, nextRound, nextTurn } from "./combatOverride.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -27,6 +28,12 @@ Hooks.once("init", async function() {
   CONFIG.Actor.entityClass = FBLActor;
   CONFIG.Item.entityClass = FBLItem;
   // CONFIG.debug.hooks = true;
+  CONFIG.ui.combat = FBLCombatTracker;
+  Combat.prototype.rollAll = rollAll;
+  Combat.prototype.setupTurns = setupTurns;
+  Combat.prototype.rollInitiative = rollInitiative;
+  Combat.prototype.nextRound = nextRound;
+  Combat.prototype.nextTurn = nextTurn;
   // CONFIG.Actor.sheetClass = FBLActorSheet;
 
   let dPool = new Collection();
@@ -34,12 +41,12 @@ Hooks.once("init", async function() {
 
 	/**
 	 * Set an initiative formula for the system
-	 * @type {String}
+	 * @type {String} */
 	 
-	CONFIG.Combat.initiative = {
-	  formula: "1d20",
-    decimals: 2
-  }; */
+	//  CONFIG.Combat.initiative = {
+	//  formula: "1d20",
+  //  decimals: 2
+  //  };
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
@@ -96,6 +103,16 @@ Hooks.once("init", async function() {
     return string = string.match(rexp);
   });
 
+//   // console.log(game.socket);
+//   game.socket.on("upAction", async function(data) {
+//     console.log("socket fired");
+//   if (!game.user.isGM) return;
+//   const combatTracker = data.combatTracker;
+//   const actionType = data.actionType;
+//   if (actionType === "fastAction") {return await combatTracker.combat.updateCombatant({_id: data._id, fastActionSpent: data.fastActionSpent})};
+//   if (actionType === "slowAction") {return await combatTracker.combat.updateCombatant({_id: data._id, slowActionSpent: data.slowActionSpent})} 
+// })
+
 });
 
 
@@ -145,9 +162,11 @@ Hooks.on("renderSpellDialog", async function(dialog) {
     const spellDice = dialog.data.rolledDice;
     const castingRoll = new fblPool(spellDice, 0, 0, []);
     // console.log(dialog.data.spellName);
-    let willpower = dialog.actor.data.data.willpower.score;
-    willpower = willpower - dialog.data.spentWillpower;
-    dialog.actor.update({"data.willpower.score": willpower});
+    if (dialog.actor.isPC) {
+      let willpower = dialog.actor.data.data.willpower.score;
+      willpower = willpower - dialog.data.spentWillpower;
+      dialog.actor.update({"data.willpower.score": willpower});
+    }
     // console.log(dialog.actor);
     const dialogData = {"spellName": dialog.data.spellName, "powerLevel": dialog.data.powerLevel, "description": dialog.data.description}
     // console.log(dialog.data.spellName);
@@ -180,7 +199,7 @@ Hooks.on("hotbarDrop", async function (hotbar, dropData, slot) {
   const id = dropData.id;
   const actor = dropData.actor;
   const rollType = dropData.roll;
-  console.log(rollType);
+  const displayName = dropData.isToken ? dropData.token.name : actor.name; // Not working... why isn't the Token name updated?
   const command = `
     const rollType = "${rollType}";
     const id = "${id}";
@@ -196,13 +215,13 @@ Hooks.on("hotbarDrop", async function (hotbar, dropData, slot) {
   if (rollType != "Attribute" && rollType != "Skill") {
     const item = actor.items.find( i => i._id === id);
     image = item.img;
-    name = `${actor.name} - ${item.name}`;
+    name = `${displayName} - ${item.name}`;
   }
 
   if (rollType === "Attribute" || rollType === "Skill") {
     const item = actor.items.find( i => i._id === id);
     image = "/icons/svg/dice-target.svg";
-    name = `${actor.name} - ${id}`;
+    name = `${displayName} - ${id}`;
   }
 
   const macroData = {
@@ -211,6 +230,7 @@ Hooks.on("hotbarDrop", async function (hotbar, dropData, slot) {
     img: image,
     command: command
   }
+  
   let macro = await Macro.create(macroData);
   console.log(macro)
   game.user.assignHotbarMacro(macro, slot);
