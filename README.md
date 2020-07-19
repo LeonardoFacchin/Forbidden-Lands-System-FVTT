@@ -1,12 +1,17 @@
 ## Foundry VTT - Forbidden Lands System
 
-**version**: 0.1.0  
+**version**: 0.2.0  
 **supported browsers**: Chrome, Edge  
 (NB: Firefox won't display character sheets as intended. Right now I'm incliend not to bother trying to make the system work with Firefox, mostly because on my PC Firefox performance was way worse than Edge's or Chrome's. If enough people are **really really** interested I might change my mind, but I suggest using Chrome to be on the safe side)
 
+# New features and bug fixes in v0.2
+- Implementation of a custom Combat Tracker (more on this below)
+- Added support for the "Pack Rat" talent. The talent is now taken into account when computing encumbrance. When hovering over the encumbrance meter on the character sheet a tooltip will show the current encumbrance value vs the maximum carrying capacity of the character.
+- fixed a bug preventing NPCs from being able to use spells from their character sheet
+- fixed a few bugs related to macro creationg by dragging and dropping spells onto the macro bar.
+
 # Features not yet supported
 - No Stronghold sheet, nor functions
-- No custom initiative tracker (that is: right now my system doesn't provide a way to set the initiatve score according to card draws according to FBL rules, nor to track the expenditure of slow and fast actions. These features require to modify the combat tracker, something I have not yet looked into)
 - No Hidden Combinations advanced combat
 - No way to track Poisoned or Diseased state on the character sheet (use tokens state as a stopgap, please)
 
@@ -60,9 +65,35 @@ For example `/fbl(4, -1, 2, d10)` would roll 4 Base Dice, 1 negative Skill Die, 
 - Spells can't be added to the Character sheet directly. They are automatically added when a Spellcasting talent is dragged onto the character sheet and automatically removed when the Talent is removed.  
 Make sure to correctly import the talents and spells by configuring the right magical discipline associated to each of them.
 
+# Combat Tracker
+![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/CombatTracker_Illustration.png?raw=true)
+
+This custom implementation of the Foundry VTT default Combat Tracker should make it somewhat easier to track combatants' actions and initiative order according to the Forbidden Lands game rules.  
+
+Features:
+- tracking of fast and slow actions expenditure. Click on the "F" and "S" icons to toggle their status between "available" and "spent". All the combatants' actions are automatically reset to "available" when a new round is started.
+- The "Lightning Fast" talent is automatically detected and accounted for by the initiative algorithm
+- Actors can be flagged for eligibility of Surprise bonus (see the picture to learn which icon to click in order to activate the bonus).
+- An actor that is allowed to act twice in a turn can be flagged by clicking the "Forward" icon **before** rolling for initiative. The combatant will automatically be duplicated and cards drawn for his second action.
+- If the fight includes 10 or less combatants, each one will receive his own initiative card, otherwise combatants will be grouped according to the Forbidden Lands rules and each group will act on the same initiative card.  
+
+Limitations:
+- In cases where a combatant can draw more than one initiative card, the system will automatically assign that combatant the lowest initiative score possible (i.e. no choosing your own card for speed and simplicity. This is the greatest departure from the "rules as written" but I think is a fair compromise)
+- When more than ten combatants are present, in order for a group of combatants to benefit from the Surprise bonus, **all** of the combatants in the group should be marked accordingly. Otherwise the behaviour will be inconsistent: the group initiative will be set by the first combatant processed by the algorithm among those belonging to the group (a group of combatants is based on the actor the tokens was created from, even if unlinked).
+- Because of Foundry VTT managing of permissions, only players with a permission level of Assistant GM or higher will be able to mark their actions or activate any icons on the tracker. The GM will have to assign the permissions or manage the display of the action economy him/herself (once I get a grasp of sockets I may try to remove this limitation).
+
+
 # Feedback 
 Feedback is very welcome. Please report any bug and I will try to look into it as soon as possibile.  
 Up to about the first week of april 2020 I didn't know anything about JS, HTML or CSS, except that they existed. So, I'm a noob at software development. That means the code behind this system will hardly be optimized. It's much more likely to be a monster of a spaghetti code mess. Sorry about that.
+
+# Credits
+Thanks to:
+- Free League Publishing for creating a great RPG
+- Atropos for creating the outstanding Foundry VTT and building such a tight-knit community
+- The Discord Foundry VTT community members. Without their help I wouldn't have been able to put this system together
+- senutnareph, for creating the high quality dice icons and sharing them with the community ( https://www.reddit.com/r/ForbiddenLands/comments/amyzeq/forbidden_lands_dice_icons_for_roll20/ )
+- eldersign for his precious feedback and his willingness to playtest this system.
 
 # Media
 ![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/ChacracterSheet2020-07-12_104534.png?raw=true)
