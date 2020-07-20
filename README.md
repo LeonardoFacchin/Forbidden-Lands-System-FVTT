@@ -60,7 +60,7 @@ NB: a token must be selected for the macro to actually work. An error message wi
 
 - To roll a Forbidden Land style dice-check for which no automation has been built, type the following command in the chat window:  
 `/fbl(nAtt, nSkill, nGear, artifactDieOne, artifactDieTwo,...)`  
-For example `/fbl(4, -1, 2, d10)` would roll 4 Base Dice, 1 negative Skill Die, 2 Gear Dice and a single d10 Artifact Die. This roll doesn't support pushing (yet?)
+For example `/fbl(4, -1, 2, d10)` would roll 4 Base Dice, 1 negative Skill Die, 2 Gear Dice and a single d10 Artifact Die. <s>This roll doesn't support pushing (yet?)</s> (*Pushing and rolling of the Pride Die functionality added in v0.2*)
 
 - Spells can't be added to the Character sheet directly. They are automatically added when a Spellcasting talent is dragged onto the character sheet and automatically removed when the Talent is removed.  
 Make sure to correctly import the talents and spells by configuring the right magical discipline associated to each of them.
@@ -71,6 +71,7 @@ Make sure to correctly import the talents and spells by configuring the right ma
 This custom implementation of the Foundry VTT default Combat Tracker should make it somewhat easier to track combatants' actions and initiative order according to the Forbidden Lands game rules.  
 
 Features:
+- tracking of combatants HP. In order for the tracking to work make sure to set the combat tracker Tracked Resource to `attributes.Strength.damage`.
 - tracking of fast and slow actions expenditure. Click on the "F" and "S" icons to toggle their status between "available" and "spent". All the combatants' actions are automatically reset to "available" when a new round is started.
 - The "Lightning Fast" talent is automatically detected and accounted for by the initiative algorithm
 - Actors can be flagged for eligibility of Surprise bonus (see the picture to learn which icon to click in order to activate the bonus).

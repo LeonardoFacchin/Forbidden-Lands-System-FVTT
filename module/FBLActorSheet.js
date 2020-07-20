@@ -558,7 +558,7 @@ async function rollCheckHandler(event) {
   // event.stopPropagation();
 
   const origin = event.target;
-  if (origin.dataset.action !== "roll") return console.log("not a roll");
+  if (origin.dataset.action !== "roll") return console.log("Not a roll");
 
   const rollType = origin.dataset.diehook;
   const id = origin.dataset.id;

@@ -4,9 +4,9 @@ import { CONFIG_DICE_ATTRIBUTES,
          CONFIG_DICE_GEAR,
          CONFIG_DICE_ARTIFACT_MIGHTY,
          CONFIG_DICE_ARTIFACT_EPIC,
-         CONFIG_DICE_ARTIFACT_LEGENDARY,
-         CONFIG_MAGIC_DISCIPLINES,
-         CONFIG_COMBAT_TRACKER_ACTIONS } from "./config.js"
+         CONFIG_DICE_ARTIFACT_LEGENDARY } from "./config.js"
+
+import { SpellDialog } from "./FBLSpellDialog.js"
 
 // creates a data structure from a property
 // useuful to update actors and embeddedEntities
@@ -227,8 +227,7 @@ export async function prepareRollData( rollType, actor, id) {
     let diag = new SpellDialog ({
       actor: actor,
       ID: id,
-      rollType: rollType},
-    {template: "/systems/forbiddenlands/templates/cast-spell.html"}).render(true);
+      rollType: rollType}).render(true);
 
     await diag.render(true);
     return null; // transfer control of the spellcasting process to the Spell dialog
@@ -273,11 +272,11 @@ export async function prepareChatData(fblCustomRoll, rollType=undefined, display
     chatData = {
       "canPush": displayData ? displayData.canPush : false,
       "canPride": displayData ? displayData.canPride : false,
-      "roll_id": origin.dataset.roll_id,
-      "rolledAttribute": origin.dataset.attribute,
-      "rolledSkill": origin.dataset.skill,
-      "rolledItem": origin.dataset.item,
-      "description": origin.dataset.description,
+      "roll_id": origin?.dataset.roll_id,
+      "rolledAttribute": origin?.dataset.attribute,
+      "rolledSkill": origin?.dataset.skill,
+      "rolledItem": origin?.dataset.item,
+      "description": origin?.dataset.description,
       "diceResult": diceResult,
       "diceIcons": diceIcons
     }
@@ -357,10 +356,10 @@ export function prepareDiceIcons( rollArray, artifactArray, isNegative ) {
 
 export async function pushingRoll(fblCustomRoll, origin) {
   const oldRoll = fblCustomRoll;
-  console.log(oldRoll);
+  // console.log(oldRoll);
   const newRoll = oldRoll.pushRoll();
   let message = game.messages.get(fblCustomRoll.message_id);
-  let displayData = {"canPush": true,"canPride": true};
+  let displayData = {"canPush": true, "canPride": true};
   let chatData = await prepareChatData(newRoll, undefined, displayData, true, origin);
   message.update(chatData);
   // console.log(fblCustomRoll.sequence);
@@ -375,225 +374,9 @@ export async function prideRoll(fblCustomRoll, origin) {
   let displayData = {"canPush": false,"canPride": false};
   const data = await prepareChatData(newRoll, undefined, displayData, true, origin);
   message.update(data);
-  console.log(fblCustomRoll.sequence);
+  // console.log(fblCustomRoll.sequence);
   ui.chat.updateMessage(message, true);
 }
 // ------------------------------------------------------------------------------------------------
-// 
 // ------------------------------------------------------------------------------------------------
 
-// ------------------------------------------------------------------------------------------------
-// ---------------------- spellDialog: Forbidden Lands spell dialog extension ---------------------
-// ------------------------------------------------------------------------------------------------
-// extension of the Dialog class that manages the creation and update of the spell casting dialog.
-// The HTML dialog needs to dynamically update the spell Power Level and the spell Rank according
-// to choices made by the player, like the use of ingredients or Grimoires/scrolls.
-// For this reason the dialog needs to store and dynamically re-compute data. 
-export class SpellDialog extends Dialog {
-
-   constructor(dialogData, options) {
-     super(dialogData, options);
-    //  console.log(dialogData);
-     
-     const actor = dialogData.actor;
-     const spell = actor.getEmbeddedEntity("OwnedItem", dialogData.ID);
-
-     this.actor = actor;
-     this.spell = spell;
-     this.type = dialogData.rollType;
-     this.dialogID = randomID();
-     this.data.spellName = spell.name;
-     this.data.description = spell.data.description;
-     this.data.spentWillpower = 1;
-     this.data.rolledDice = this.data.spentWillpower;
-     this.data.powerLevel = this.data.spentWillpower;
-     this.data.isGrimoire = false;
-     this.data.isIngredient = false;
-     this.data.spellRank = Number(spell.data.rank);
-     //  console.log(CONFIG_MAGIC_DISCIPLINES[spell.data.discipline].name);
-     // if casting a General spell, get the highest Magical Discipline talent rank of this character
-     if(CONFIG_MAGIC_DISCIPLINES[spell.data.discipline].name === "General") {
-       this.data.talentRank = actor.data.data.Talent.map( t => { return t.data.isMagical ? Number(t.data.talentRank) : 0}).reduce( (higher, t) => {
-        return higher = (t > higher) ? t : higher;
-       }, 0);
-     }
-     // otherwise get the talent rank of the Magical Discipline that matches the one of the spell being cast.
-     else this.data.talentRank = Number(actor.data.data.Talent.find( d => { 
-        return d.data.magicalDiscipline === CONFIG_MAGIC_DISCIPLINES[spell.data.discipline].name;
-      }).data.talentRank);
-    //  console.log(this.data.talentRank);
-      this.data.mishapChance;
-   }
-
-   getData() {
-    let data = this.data;
-    const actor = this.actor;
-    data.isIngredient ? data.powerLevel = Number(data.spentWillpower) + 1 : data.powerLevel = data.spentWillpower;
-    data.isGrimoire ? data.spellRank = Math.max(0, this.spell.data.rank - 1) : data.spellRank = this.spell.data.rank;
-    // console.log("spellRank: ", data.spellRank);
-    // console.log("talentRank: ", data.talentRank);
-    data.isChanceCasting = (data.spellRank == (data.talentRank + 1)) ? true : false;
-    // console.log(data.isChanceCasting);
-    data.isTooHigh =  (data.spellRank > data.talentRank + 1) ? true : false;
-    // console.log(data.isTooHigh);
-    const minDice = Math.max( 0, data.spentWillpower - Math.max(0, data.talentRank - data.spellRank) );
-    // console.log(minDice);
-    let WP = actor.isPC ? actor.data.data.willpower.score : data.talentRank;
-    const WPArray = [];
-    const diceToRoll = [];
-    for (let i = 1; i <= WP; i++) { WPArray.push(i)};
-    for (let i = minDice; i <= data.spentWillpower; i++) { diceToRoll.push(i)};
-    this.data.rolledDice = Math.max(minDice, this.data.rolledDice);
-    this.data.mishapChance = data.isChanceCasting ? 100 : Math.round((1 - Math.pow(5/6, this.data.rolledDice))*10000)/100;
-    // console.log(this.data);
-
-    data = mergeObject( data, { "WPArray": WPArray, "diceToRoll": diceToRoll, "uID": this.dialogID});
-    return data;
-   }
-
-}
-
-// ------------------------------------------------------------------------------------------------
-// ---------------------- spellDialog: Forbidden Lands spell dialog extension ---------------------
-// ------------------------------------------------------------------------------------------------
-
-export class FBLCombatTracker extends CombatTracker {
-
-  static get defaultOptions() {
-	  return mergeObject(super.defaultOptions, {
-      id: "combat",
-      template: "/systems/forbiddenlands/templates/combat-tracker.html",
-      title: "Combat Tracker",
-      scrollY: [".directory-list"],
-      width: 325
-    });
-
-  }
-
-  async getData(options) {
-    // Get the combat encounters possible for the viewed Scene
-    const combat = this.combat;
-    const hasCombat = combat !== null;
-    const view = canvas.scene;
-    const combats = view ? game.combats.entities.filter(c => c.data.scene === view._id) : [];
-    const currentIdx = combats.findIndex(c => c === this.combat);
-    const previousId = currentIdx > 0 ? combats[currentIdx-1].id : null;
-    const nextId = currentIdx < combats.length - 1 ? combats[currentIdx+1].id : null;
-    const settings = game.settings.get("core", Combat.CONFIG_SETTING);
-    // Prepare rendering data
-
-    const data = {
-      user: game.user,
-      combats: combats,
-      currentIndex: currentIdx + 1,
-      combatCount: combats.length,
-      hasCombat: hasCombat,
-      combat,
-      turns: [],
-      previousId,
-      nextId,
-      started: this.started,
-      control: false,
-      settings
-    };
-
-    if ( !hasCombat ) return data;
-    // Add active combat data
-    const combatant = combat.combatant;
-    const hasControl = combatant && combatant.players && combatant.players.includes(game.user);
-    // Update data for combatant turns
-    const decimals = CONFIG.Combat.initiative.decimals;
-    const turns = [];
-    for ( let [i, t] of combat.turns.entries() ) {
-      if ( !t.visible ) continue;
-      // Name and Image
-      t.name = t.token.name || t.actor.name;
-      if ( t.defeated ) t.img = CONFIG.controlIcons.defeated;
-      else if ( VideoHelper.hasVideoExtension(t.token.img) ) {
-        t.img = await game.video.createThumbnail(t.token.img, {width: 100, height: 100});
-      }
-      else t.img = t.token.img || t.actor.img;
-      // Turn order and initiative
-      t.active = i === combat.turn;
-      t.initiative = isNaN(parseFloat(t.initiative)) ? null : Number(t.initiative).toFixed(decimals);
-      t.hasRolled = t.initiative !== null;
-      t.actTwice = t.flags?.forbiddenlands?.actTwice ? t.flags.forbiddenlands.actTwice : false;
-      t.surprise = t.flags?.forbiddenlands?.hasSurprise ? t.flags.forbiddenlands.hasSurprise : false;
-      // Styling rules
-      t.css = [
-        t.active ? "active" : "",
-        t.hidden ? "hidden" : "",
-        t.defeated ? "defeated" : ""
-      ].join(" ").trim();
-      // Tracked resources
-      t.fAction = t.flags?.forbiddenlands?.fastActionSpent ? CONFIG_COMBAT_TRACKER_ACTIONS.fast[1] : CONFIG_COMBAT_TRACKER_ACTIONS.fast[0];
-      // console.log(t.fAction);
-      t.sAction = t.flags?.forbiddenlands?.slowActionSpent ? CONFIG_COMBAT_TRACKER_ACTIONS.slow[1] : CONFIG_COMBAT_TRACKER_ACTIONS.slow[0];
-      // console.log(t.sAction);
-      t.resource = t.actor.data.data.attributes.Strength.value - this.trackedResources[t.tokenId][settings.resource];
-      turns.push(t);
-    }
-
-    // Merge update data for rendering
-    return mergeObject(data, {
-      round: combat.data.round,
-      turn: combat.data.turn,
-      turns: turns,
-      control: hasControl
-    });
-  }
-
-
-  async _onCombatantControl(event) {
-    event.preventDefault();
-    event.stopPropagation();
-    const btn = event.currentTarget;
-    const li = btn.closest(".combatant");
-    const c = this.combat.getCombatant(li.dataset.combatantId);
-    // Switch control action
-    switch (btn.dataset.control) {
-      // Toggle combatant visibility
-      case "toggleHidden":
-        await this.combat.updateCombatant({_id: c._id, hidden: !c.hidden});
-        break;
-
-      // Toggle combatant defeated flag
-      case "toggleDefeated":
-        let isDefeated = !c.defeated;
-        await this.combat.updateCombatant({_id: c._id, defeated: isDefeated});
-        const token = canvas.tokens.get(c.tokenId);
-        if ( token ) {
-          if ( isDefeated && !token.data.overlayEffect ) token.toggleOverlay(CONFIG.controlIcons.defeated);
-          else if ( !isDefeated && token.data.overlayEffect === CONFIG.controlIcons.defeated ) token.toggleOverlay(null);
-        }
-        break;
-      
-      case "toggleActTwice":
-        const isActingTwice = c.flags?.forbiddenlands?.actTwice ? !c.flags.forbiddenlands.actTwice : true;
-        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.actTwice": isActingTwice });
-        console.log(c);
-        break;
-
-      case "toggleSurprise":
-        const isSurprise = c.flags?.forbiddenlands?.hasSurprise ? !c.flags.forbiddenlands.hasSurprise : true;
-        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.hasSurprise": isSurprise });
-        break;
-
-      case "toggleFastAction":
-        const isFastActionSpent = c.flags?.forbiddenlands?.fastActionSpent ? !c.flags.forbiddenlands.fastActionSpent : true;
-        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.fastActionSpent": isFastActionSpent });
-        break;
-
-      case "toggleSlowAction":
-        const isSlowActionSpent = c.flags?.forbiddenlands?.slowActionSpent ? !c.flags.forbiddenlands.slowActionSpent : true;
-        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.slowActionSpent": isSlowActionSpent });
-        break;    
-    }
-
-    // Render tracker updates
-    this.render();
-
-  }
-
-
-}

@@ -15,8 +15,8 @@ import { FBLItemSheet,
          WeaponSheet,
          ArmorSheet,
          CriticalInjurySheet } from "./FBLItemSheet.js";
-import { fblPool, prepareChatData, prepareRollData, pushingRoll, prideRoll, FBLCombatTracker } from "./helper-functions.js";
-import { setupTurns, rollAll, rollInitiative, nextRound, nextTurn } from "./combatOverride.js";
+import { fblPool, prepareChatData, prepareRollData, pushingRoll, prideRoll } from "./helper-functions.js";
+import { setupTurns, rollAll, rollInitiative, nextRound, nextTurn, FBLCombatTracker } from "./FBLCombatTracking.js";
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -38,15 +38,6 @@ Hooks.once("init", async function() {
 
   let dPool = new Collection();
   game.data.fblDicePools = dPool;
-
-	/**
-	 * Set an initiative formula for the system
-	 * @type {String} */
-	 
-	//  CONFIG.Combat.initiative = {
-	//  formula: "1d20",
-  //  decimals: 2
-  //  };
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
@@ -102,29 +93,18 @@ Hooks.once("init", async function() {
     const rexp = /(?:\w*)/;
     return string = string.match(rexp);
   });
-
-//   // console.log(game.socket);
-//   game.socket.on("upAction", async function(data) {
-//     console.log("socket fired");
-//   if (!game.user.isGM) return;
-//   const combatTracker = data.combatTracker;
-//   const actionType = data.actionType;
-//   if (actionType === "fastAction") {return await combatTracker.combat.updateCombatant({_id: data._id, fastActionSpent: data.fastActionSpent})};
-//   if (actionType === "slowAction") {return await combatTracker.combat.updateCombatant({_id: data._id, slowActionSpent: data.slowActionSpent})} 
-// })
-
 });
 
 
 // add event listener to the chat log
 Hooks.on( "renderChatLog", async function (cLog) {
-
   const cLogHtml = document.getElementById("chat-log");
 
   cLogHtml.addEventListener("click", chatRolls.bind(this));
 
   function chatRolls(event) {
     const origin = event.target;
+    // console.log(origin);
     // retrieve last chatlog message
     const roll_id = origin.dataset.roll_id;
     let fblCustomRoll = game.data.fblDicePools.get(roll_id);
@@ -140,59 +120,26 @@ Hooks.on( "renderChatLog", async function (cLog) {
   }
 });
 
-// add event listener to the spellDialog
-Hooks.on("renderSpellDialog", async function(dialog) {
-  document.querySelector(`.spellCastForm`).addEventListener("input", updateSpellValues.bind(dialog));
-  document.querySelector(`.confirmSpellCasting`) ? document.querySelector(`.confirmSpellCasting`).addEventListener("click", submitCastingData.bind(dialog)) : console.log("No Button");
-  // document.querySelector(`.confirmSpellCasting`).addEventListener("click", submitCastingData.bind(dialog));
-  // console.log("the eventListener was successfully added");
-
-  function updateSpellValues(event) {
-    const origin = event.target;
-    // console.log(origin.tagName);
-    // console.log(origin)
-    if (origin.tagName === "SELECT") setProperty(dialog, `${event.target.name}`, event.target.value);
-    if (origin.tagName === "INPUT") getProperty(dialog, `${event.target.name}`) === false ? setProperty(dialog, `${event.target.name}`, true) : setProperty(dialog, `${event.target.name}`, false);
-    dialog.getData();
-    // console.log(dialog);
-    dialog.render(true);
-  }
-
-  async function submitCastingData(event) {
-    const spellDice = dialog.data.rolledDice;
-    const castingRoll = new fblPool(spellDice, 0, 0, []);
-    // console.log(dialog.data.spellName);
-    if (dialog.actor.isPC) {
-      let willpower = dialog.actor.data.data.willpower.score;
-      willpower = willpower - dialog.data.spentWillpower;
-      dialog.actor.update({"data.willpower.score": willpower});
-    }
-    // console.log(dialog.actor);
-    const dialogData = {"spellName": dialog.data.spellName, "powerLevel": dialog.data.powerLevel, "description": dialog.data.description}
-    // console.log(dialog.data.spellName);
-    const chatData = await prepareChatData(castingRoll, dialog.type, dialogData);
-    dialog.close();
-    await ChatMessage.create(chatData);
-  }
-});
-
 // Add fblPool parsing capabilities to the chat log
 // Syntax: /fbl(aDice, sDice, gDice, artDieOne, artDieTwo, ...)
-Hooks.on("chatMessage", function (chatLog, chatContent) {  
-  
-  let command = chatContent.match("(?<=/fbl[(])(?:.*[^)])");
-  
-  if (!command) return console.log("Quit");
-  
+Hooks.on("chatMessage", function (chatLog, chatContent) {    
+  let command = chatContent.match("(?<=/fbl[(])(?:.*[^)])");  
+  if (!command) return console.log("Quit");  
   command = command[0].replace(/(?:,\s*)/g, ",").split(",");
   let nArtifact = [];
   for (let i = 3; i < command.length; i++) {nArtifact.push(command[i])};
   
   const newRoll = new fblPool(Number(command[0]), Number(command[1]), Number(command[2]), nArtifact);
-  prepareChatData(newRoll).then( chatData => ChatMessage.create(chatData) );
-  return false; // prevent the default chat message to be broadcast
+  const displayData = {"canPush": true, "canPride": true};
+  let rollMessage;
+  prepareChatData(newRoll, undefined, displayData).then( async chatData => {
+    rollMessage = await ChatMessage.create(chatData);
+    newRoll.message_id = rollMessage._id;
+    });
+  return false; // prevent the default chat message from being broadcast
 })
 
+// Macro Drag and Drop creation hook
 Hooks.on("hotbarDrop", async function (hotbar, dropData, slot) {
   const dataType = dropData.type;
   if (dataType === "Talent") return;
@@ -232,6 +179,6 @@ Hooks.on("hotbarDrop", async function (hotbar, dropData, slot) {
   }
   
   let macro = await Macro.create(macroData);
-  console.log(macro)
+  // console.log(macro):
   game.user.assignHotbarMacro(macro, slot);
 })
