@@ -1,6 +1,6 @@
 // Import some relevant constants refrenced by most item types,
 // like magic and weapon ranges, magical disciplines, spell durations, etc.
-import { CONFIG_MAGIC_DISCIPLINES} from "./config.js";
+import { CONFIG_MAGIC_DISCIPLINES} from "./Config.js";
 
 export class FBLItem extends Item {
 

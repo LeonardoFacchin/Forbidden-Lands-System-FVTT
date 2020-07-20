@@ -20,7 +20,7 @@ import {  CONFIG_PC_CLASSES,
           CONFIG_ARMOR_LOCATION,
           CONFIG_LETHAL,
           CONFIG_TIME_LIMIT,
-          CONFIG_HEALING_TIME } from "./config.js";
+          CONFIG_HEALING_TIME } from "./Config.js";
 
 /* ----------------------- FBLItemSheet ------------------------*/
 // extension of the ItemSheet class. NOT INSTANTIATED DIRECTLY, only for inheritance.

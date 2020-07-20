@@ -4,7 +4,7 @@ import { CONFIG_DICE_ATTRIBUTES,
          CONFIG_DICE_GEAR,
          CONFIG_DICE_ARTIFACT_MIGHTY,
          CONFIG_DICE_ARTIFACT_EPIC,
-         CONFIG_DICE_ARTIFACT_LEGENDARY } from "./config.js"
+         CONFIG_DICE_ARTIFACT_LEGENDARY } from "./Config.js"
 
 import { SpellDialog } from "./FBLSpellDialog.js"
 

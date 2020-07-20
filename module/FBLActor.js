@@ -3,7 +3,7 @@ import { CONFIG_WEAR_ICONS,
     CONFIG_WILLPOWER_ICONS,
     CONFIG_CONSUMABLE_ICONS,
     CONFIG_DICE_ICONS,
-    CONFIG_MONEY } from "./config.js";
+    CONFIG_MONEY } from "./Config.js";
 
     import { fblPool,
         prepareRollData,
