@@ -2,13 +2,13 @@
 
 **version**: 0.2.0  
 **supported browsers**: Chrome, Edge  
-(NB: Firefox won't display character sheets as intended. Right now I'm incliend not to bother trying to make the system work with Firefox, mostly because on my PC Firefox performance was way worse than Edge's or Chrome's. If enough people are **really really** interested I might change my mind, but I suggest using Chrome to be on the safe side)
+(NB: Firefox won't display character sheets as intended. Right now I'm inclined not to bother trying to make the system work with Firefox, mostly because on my PC Firefox performance was way worse than Edge's or Chrome's. If enough people are **really really** interested I might change my mind, but I suggest using Chrome to be on the safe side)
 
 # New features and bug fixes in v0.2
-- Implementation of a custom Combat Tracker (more on this below)
+- Implemented a custom Combat Tracker (more on this below).
 - Added support for the "Pack Rat" talent. The talent is now taken into account when computing encumbrance. When hovering over the encumbrance meter on the character sheet a tooltip will show the current encumbrance value vs the maximum carrying capacity of the character.
-- fixed a bug preventing NPCs from being able to use spells from their character sheet
-- fixed a few bugs related to macro creationg by dragging and dropping spells onto the macro bar.
+- fixed a bug preventing players from being able to use NPC spells from the NPC sheet.
+- fixed a few bugs related to macro creation by dragging and dropping spells onto the macro bar.
 
 # Features not yet supported
 - No Stronghold sheet, nor functions
@@ -90,7 +90,7 @@ Up to about the first week of april 2020 I didn't know anything about JS, HTML o
 # Credits
 Thanks to:
 - Free League Publishing for creating a great RPG
-- Atropos for creating the outstanding Foundry VTT and building such a tight-knit community
+- Atropos for creating the outstanding Foundry VTT and building such a tightly-knit community
 - Game-icons.net for all the great svg art and icons
 - The Discord Foundry VTT community members. Without their help I wouldn't have been able to put this system together
 - senutnareph, for creating the high quality dice icons and sharing them with the community ( https://www.reddit.com/r/ForbiddenLands/comments/amyzeq/forbidden_lands_dice_icons_for_roll20/ )
