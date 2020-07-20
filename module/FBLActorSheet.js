@@ -15,7 +15,7 @@ import { CONFIG_WEAR_ICONS,
          CONFIG_DICE_ARTIFACT_EPIC,
          CONFIG_DICE_ARTIFACT_LEGENDARY,
          CONFIG_MONEY, 
-         CONFIG_MAGIC_DISCIPLINES} from "./config.js";
+         CONFIG_MAGIC_DISCIPLINES} from "./Config.js";
         
 import { updateDataFromProperty } from "./helper-functions.js";
 import { EquipmentSheet } from "./FBLItemSheet.js";

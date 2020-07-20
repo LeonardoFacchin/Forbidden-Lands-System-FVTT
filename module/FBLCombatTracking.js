@@ -1,4 +1,4 @@
-import {CONFIG_COMBAT_TRACKER_ACTIONS } from "./config.js"
+import {CONFIG_COMBAT_TRACKER_ACTIONS } from "./Config.js"
 
 // ------------------------------------------------------------------------------------------------
 // ---------------------- spellDialog: Forbidden Lands Combat Tracker extension ---------------------

@@ -1,4 +1,4 @@
-import { CONFIG_MAGIC_DISCIPLINES } from "./config.js"
+import { CONFIG_MAGIC_DISCIPLINES } from "./Config.js"
 
 import { fblPool, prepareChatData } from "./helper-functions.js"
 
