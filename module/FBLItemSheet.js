@@ -48,7 +48,7 @@ export class FBLItemSheet extends ItemSheet {
     // add event listeners to the edit and save html icon elements
     // and bind the sheet instance to "this" so that the sheet object can 
     // easily be referenced in the eventhandler function
-    this.form.querySelectorAll(".fas.fa-edit, .fas.fa-save").forEach( (el) => el.addEventListener("click", editSheet.bind(this)));
+    this.form.querySelectorAll(".fas.fa-edit.item-edit, .fas.fa-save.item-edit").forEach( (el) => el.addEventListener("click", editSheet.bind(this)));
 
     // sheet editing event handler
     async function editSheet (event) {

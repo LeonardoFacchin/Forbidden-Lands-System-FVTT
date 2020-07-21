@@ -102,11 +102,15 @@
                 </div>
             <!-- DESCRIPTION -->
             </div>
-            <div class="frame frame__placement frame--flexible layout__gap" style="min-height: 100px" data-edit="data.description" contenteditable="true">
-                {{formatDisplay data.description}}
+            <!-- <div class="frame frame__placement frame--flexible layout__gap" style="min-height: 100px" data-edit="data.description" contenteditable="true">
+                {{{formatDisplay data.description}}}
+            </div> -->
+            <div class="frame frame--flexible frame--can-scroll layout__gap">
+                <label class="frame__title">Description</label>
+                {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
             </div>
             <div>
-                <i class="fas fa-save" style="font-size: 1.5em; padding: 5px; float: right"></i>
+                <i class="fas fa-save item-edit" style="font-size: 1.5em; padding: 5px; float: right"></i>
             </div>
         </div>
     </div>
@@ -161,11 +165,12 @@
                     </li>
                 </ul>
             </div>    
-            <div class="frame frame--flexible frame--no-border frame__placement">
-                {{formatDisplay data.description}}
+            <div class="frame frame--flexible frame--no-border layout__gap frame__placement">
+                <label class="frame__title">Description</label>
+                {{{data.description}}}
             </div>
             <div>
-                <i class="fas fa-edit" style="font-size: 1.5em; padding: 5px; float: right"></i>
+                <i class="fas fa-edit item-edit" style="font-size: 1.5em; padding: 5px; float: right"></i>
             </div>
         </div>
     </div>

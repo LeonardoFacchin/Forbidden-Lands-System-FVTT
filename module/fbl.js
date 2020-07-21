@@ -93,6 +93,21 @@ Hooks.once("init", async function() {
     const rexp = /(?:\w*)/;
     return string = string.match(rexp);
   });
+
+  game.socket.on("system.forbiddenlands", async data => {
+    console.log("Socket Fired");
+    switch(data.type) {
+
+      case "toggleFastAction":
+        if (game.user.isGM) await game.combats.get(data.combat._id).updateCombatant(data.updateData);
+        break;
+
+      case "toggleSlowAction":
+        if (game.user.isGM) await game.combats.get(data.combat._id).updateCombatant(data.updateData);
+        break;
+    }
+  });
+
 });
 
 

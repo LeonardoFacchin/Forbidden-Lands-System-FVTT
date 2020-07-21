@@ -93,6 +93,12 @@ background-image:   linear-gradient(to right, white, white),
 border-radius: 2px;
 }
 
+.fbl [contenteditable="true"] {
+  white-space: pre-line;
+  /* background-color: aliceblue; */
+  overflow-y: scroll;
+}
+
 /* --------------------------- RESETS ----------------------------*/
 
 .window-app ul {
@@ -369,6 +375,7 @@ height: 35px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-height: 200px;
   /* border: 2px dashed red; */
 }
 

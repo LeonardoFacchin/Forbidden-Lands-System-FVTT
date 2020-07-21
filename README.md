@@ -81,7 +81,7 @@ Features:
 Limitations:
 - In cases where a combatant can draw more than one initiative card, the system will automatically assign that combatant the lowest initiative score possible (i.e. no choosing your own card for speed and simplicity. This is the greatest departure from the "rules as written" but I think is a fair compromise)
 - When more than ten combatants are present, in order for a group of combatants to benefit from the Surprise bonus, **all** of the combatants in the group should be marked accordingly. Otherwise the behaviour will be inconsistent: the group initiative will be set by the first combatant processed by the algorithm among those belonging to the group (a group of combatants is based on the actor the tokens was created from, even if unlinked).
-- Because of Foundry VTT managing of permissions, only players with a permission level of Assistant GM or higher will be able to mark their actions or activate any icons on the tracker. The GM will have to assign the permissions or manage the display of the action economy him/herself (once I get a grasp of sockets I may try to remove this limitation).
+- <s>Because of Foundry VTT managing of permissions, only players with a permission level of Assistant GM or higher will be able to mark their actions or activate any icons on the tracker. The GM will have to assign the permissions or manage the display of the action economy him/herself (once I get a grasp of sockets I may try to remove this limitation).</s> (Added the possibility for players to set the action expenditure for the characters they control).
 
 
 # Feedback 

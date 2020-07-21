@@ -90,6 +90,18 @@ export class FBLCombatTracker extends CombatTracker {
     });
   }
 
+  // activateListeners(html) {
+  //   super.activateListeners(html);
+
+  //   game.socket.on("system.forbiddenlands", async data => {
+  //     console.log("Socket Fired");
+  //     switch(data.type) {
+  //       case "toggleFastAction":
+  //         if (game.user.isGM) await this.combat.updateCombatant(data.updateData);
+  //         break;
+  //     }
+  //   });
+  // }
 
   async _onCombatantControl(event) {
     event.preventDefault();
@@ -128,12 +140,16 @@ export class FBLCombatTracker extends CombatTracker {
 
       case "toggleFastAction":
         const isFastActionSpent = c.flags?.forbiddenlands?.fastActionSpent ? !c.flags.forbiddenlands.fastActionSpent : true;
-        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.fastActionSpent": isFastActionSpent });
+        if (!c.actor.owner && !game.user.isGM) {console.log("Not owner nor GM. Breaking"); break};
+        game.user.isGM ? await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.fastActionSpent": isFastActionSpent }) 
+                       : game.socket.emit("system.forbiddenlands", { "type": "toggleFastAction", "combat": this.combat, "updateData": {_id: c._id, "flags.forbiddenlands.fastActionSpent": isFastActionSpent }});
         break;
 
       case "toggleSlowAction":
         const isSlowActionSpent = c.flags?.forbiddenlands?.slowActionSpent ? !c.flags.forbiddenlands.slowActionSpent : true;
-        await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.slowActionSpent": isSlowActionSpent });
+        if (!c.actor.owner && !game.user.isGM) {console.log("Not owner nor GM. Breaking"); break};
+        game.user.isGM ? await this.combat.updateCombatant({_id: c._id, "flags.forbiddenlands.slowActionSpent": isSlowActionSpent }) 
+                       : game.socket.emit("system.forbiddenlands", { "type": "toggleSlowAction", "combat": this.combat, "updateData": {_id: c._id, "flags.forbiddenlands.slowActionSpent": isSlowActionSpent }});
         break;    
     }
 
