@@ -74,14 +74,14 @@ Features:
 - tracking of combatants HP. In order for the tracking to work make sure to set the combat tracker Tracked Resource to `attributes.Strength.damage`.
 - tracking of fast and slow actions expenditure. Click on the "F" and "S" icons to toggle their status between "available" and "spent". All the combatants' actions are automatically reset to "available" when a new round is started.
 - The "Lightning Fast" talent is automatically detected and accounted for by the initiative algorithm
-- Actors can be flagged for eligibility of Surprise bonus (see the picture to learn which icon to click in order to activate the bonus).
+- Support for an arbitrary number of initiative cards to draw in addition to the default 1 + Lightning Fast talent. The GM can just insert the quantity into the corresponding input box (useful to account for surprise or the Path of the Knight Rider talent).
 - An actor that is allowed to act twice in a turn can be flagged by clicking the "Forward" icon **before** rolling for initiative. The combatant will automatically be duplicated and cards drawn for his second action.
 - If the fight includes 10 or less combatants, each one will receive his own initiative card, otherwise combatants will be grouped according to the Forbidden Lands rules and each group will act on the same initiative card.  
 
 Limitations:
 - In cases where a combatant can draw more than one initiative card, the system will automatically assign that combatant the lowest initiative score possible (i.e. no choosing your own card for speed and simplicity. This is the greatest departure from the "rules as written" but I think is a fair compromise)
-- When more than ten combatants are present, in order for a group of combatants to benefit from the Surprise bonus, **all** of the combatants in the group should be marked accordingly. Otherwise the behaviour will be inconsistent: the group initiative will be set by the first combatant processed by the algorithm among those belonging to the group (a group of combatants is based on the actor the tokens was created from, even if unlinked).
-- <s>Because of Foundry VTT managing of permissions, only players with a permission level of Assistant GM or higher will be able to mark their actions or activate any icons on the tracker. The GM will have to assign the permissions or manage the display of the action economy him/herself (once I get a grasp of sockets I may try to remove this limitation).</s> (Added the possibility for players to set the action expenditure for the characters they control).
+- When more than ten combatants are present, in order for a group of combatants to benefit from a draw bonus, **all** of the combatants in the group should be marked accordingly. Otherwise the behaviour will be inconsistent: the group initiative will be set by the first combatant processed by the algorithm among those belonging to the group (a group of combatants is formed by all the tokens that share the same prototype actor, even if unlinked).
+- <s>Because of Foundry VTT managing of permissions, only players with a permission level of Assistant GM or higher will be able to mark their actions or activate any icons on the tracker. The GM will have to assign the permissions or manage the display of the action economy him/herself (once I get a grasp of sockets I may try to remove this limitation).</s> Players can now toggle the action expenditure for the characters they control.
 
 
 # Feedback 
