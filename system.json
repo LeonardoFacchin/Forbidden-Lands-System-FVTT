@@ -2,7 +2,7 @@
     "name": "forbiddenlands",
     "title": "Forbidden Lands RPG System",
     "description": "Implementation of Fria Ligan's Forbidden Lands gaming system",
-    "version": "0.2.1",
+    "version": "0.2.2",
     "templateVersion": 2,
     "minimumCoreVersion": "0.6.5",
     "compatibleCoreVersion": "0.6.5",
