@@ -65,8 +65,9 @@
                         <i class="fas fa-skull"></i></a>
                     <a class="combatant-control {{#if this.actTwice}}active{{/if}}" title="Toggle Second Action per Round" data-control="toggleActTwice">
                         <i class="fas fa-forward"></i></a>
-                    <a class="combatant-control {{#if this.surprise}}active{{/if}}" title="Toggle Surprise" data-control="toggleSurprise">
-                        <i class="fas fa-surprise"></i></a>
+                    <!-- <a class="combatant-control {{#if this.surprise}}active{{/if}}" title="Toggle Surprise" data-control="toggleSurprise">
+                        <i class="fas fa-surprise"></i></a> -->
+                    <input style="flex:none; width: 15px; color: white; text-align: center; position: relative; top: -3px" type="text" title="Bonus cards to draw" value={{flags.forbiddenlands.bonusCards}}>
                     {{/if}}
 
                     <div class="token-effects">

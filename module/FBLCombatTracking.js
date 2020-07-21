@@ -45,6 +45,13 @@ export class FBLCombatTracker extends CombatTracker {
     };
 
     if ( !hasCombat ) return data;
+    let upd = this.combat.combatants.map( c => {
+      const bCards = c.flags?.forbiddenlands?.bonusCards ? c.flags.forbiddenlands.bonusCards : 0;
+      return {_id: c._id, "flags.forbiddenlands.bonusCards": bCards}
+    });
+
+    await this.combat.updateCombatant(upd);
+
     // Add active combat data
     const combatant = combat.combatant;
     const hasControl = combatant && combatant.players && combatant.players.includes(game.user);
@@ -90,18 +97,17 @@ export class FBLCombatTracker extends CombatTracker {
     });
   }
 
-  // activateListeners(html) {
-  //   super.activateListeners(html);
-
-  //   game.socket.on("system.forbiddenlands", async data => {
-  //     console.log("Socket Fired");
-  //     switch(data.type) {
-  //       case "toggleFastAction":
-  //         if (game.user.isGM) await this.combat.updateCombatant(data.updateData);
-  //         break;
-  //     }
-  //   });
-  // }
+  activateListeners(html) {
+    super.activateListeners(html);
+    document.querySelectorAll("#combat-tracker li.combatant.actor.directory-item.flexrow").forEach( el => el.addEventListener("change", async event => {
+      event.preventDefault();
+      const target = event.target;
+      const currentTarget = event.currentTarget;
+      // console.log(currentTarget.dataset);
+      if (target.value === NaN) return;
+      await this.combat.updateCombatant({_id: currentTarget.dataset.combatantId, "flags.forbiddenlands.bonusCards": Number(target.value)});
+    }))
+    };
 
   async _onCombatantControl(event) {
     event.preventDefault();
@@ -164,7 +170,7 @@ export class FBLCombatTracker extends CombatTracker {
 
 export const setupTurns = function () {
 
-    console.log("setupTurns fired");
+    // console.log("setupTurns fired");
     const scene = game.scenes.get(this.data.scene);
     const players = game.users.players;
     // Populate additional data for each combatant
@@ -221,19 +227,19 @@ export const rollAll = async function () {
 
   await this.updateEmbeddedEntity("Combatant", prepareCombatants);
 
-  // console.log(this.data.combatants);
-
     let combatantsArray;
     let isOverflowing = false;
 
 
     if (combatants.length <= 10) { 
       combatantsArray = Array.from(combatants).sort( (a, b) => { 
-        const aTalent = a.actor.data.data.Talent?.find( t => t.name === "Lightning Fast");
-        const aRank = aTalent?.data.talentRank || 0;
-        const bTalent = b.actor.data.data.Talent?.find( t => t.name === "Lightning Fast");
-        const bRank = bTalent?.data.talentRank || 0;
-        return bRank - aRank;
+        const aTalent = a.actor?.data.data.Talent?.find( t => t.name === "Lightning Fast");
+        const aRank = Number(aTalent?.data.talentRank || 0 ) + Number(a.flags.forbiddenlands.bonusCards);
+        const bTalent = b.actor?.data.data.Talent?.find( t => t.name === "Lightning Fast");
+        const bRank = Number(bTalent?.data.talentRank || 0 ) + Number(b.flags.forbiddenlands.bonusCards);
+        let compare = bRank - aRank;
+        if (compare === 0) compare = Math.random()-0.5;
+        return compare;
       })
       // console.log(combatantsArray);
     }
@@ -243,23 +249,29 @@ export const rollAll = async function () {
       let LFArray = [];
       let othersArray = Array.from(combatants);
       combatants.forEach( c => {
-        if (c.actor.data.data.Talent?.some( t => t.name == "Lightning Fast")) LFArray.push(c);
+        if (c.actor.data.data.Talent?.some( t => t.name == "Lightning Fast") || c.flags?.forbiddenlands?.bonusCards > 0) LFArray.push(c);
       });
+      console.log(LFArray);
       // Sort the Lighning Fast combatants in descending order of talent rank
       LFArray.sort((a, b) => { 
         const aTalent = a.actor.data.data.Talent.find( t => t.name === "Lightning Fast");
-        const aRank = aTalent.data.talentRank;
+        const aRank = Number(aTalent?.data.talentRank || 0 ) + Number(a.flags.forbiddenlands.bonusCards);
         const bTalent = b.actor.data.data.Talent.find( t => t.name === "Lightning Fast");
-        const bRank = bTalent.data.talentRank;
-        return bRank - aRank;
+        const bRank = Number(bTalent?.data.talentRank || 0 ) + Number(b.flags.forbiddenlands.bonusCards);
+        let compare = bRank - aRank;
+        if (compare === 0) compare = Math.random()-0.5;
+        console.log(compare);
+        return compare;
       });
-      // console.log("LFArray: ", LFArray);
+      console.log("LFArray: ", LFArray);
       // Remove the combatants with Lightning Fast from the other array
       LFArray.forEach( e => {
-        const index = combatants.indexOf(e);
+        const index = othersArray.indexOf(e);
+        console.log(index);
         othersArray.splice(index, 1);
+        console.log(othersArray.slice());
       });
-      console.log("othersArray (before removing doubles): ", othersArray);        
+      // console.log("othersArray (before removing doubles): ", othersArray);        
       // Reduce the NPCs combatants to a single sample per archetype
       let doublesArray = Array.from(othersArray);
       // console.log("doublesArray: ", doublesArray);
@@ -278,6 +290,7 @@ export const rollAll = async function () {
         return o = !o.some( i => i?.actor.name === e.actor.name) ? o.concat([e]) : o;
       }, []);
       // console.log("othersArray (final): ", othersArray);
+      console.log(othersArray);
       combatantsArray = LFArray.concat(doublesArray.concat(othersArray));
       // console.log("combatantsArray: ", combatantsArray);
       if (combatantsArray.length > 10) ui.notifications.error("Too many combatants. Please split the encounter into sub-encounters so that no more than 10 PCs + NPCs archetypes are present.");
@@ -285,7 +298,9 @@ export const rollAll = async function () {
       // console.log(combatantsArray);      
     }
 
-    let cardsArray = [1,2,3,4,5,6,7,8,9,10]; 
+    let cardsArray = [1,2,3,4,5,6,7,8,9,10];
+    
+    console.log(combatantsArray);
 
     for ( let c of combatantsArray ) cardsArray = await rollInitiative.bind(this)(c, cardsArray, isOverflowing);
 
@@ -298,9 +313,10 @@ export const rollInitiative = async function (combatant, cardsArray, isOverflowi
 
   const talent = combatant.actor.data.data.Talent?.find( t => t.name === "Lightning Fast");
   const rank = Number(talent?.data.talentRank) || 0;
-  const surprise = combatant.flags?.forbiddenlands.hasSurprise ? 1 : 0;
+  const bonusDraw = combatant.flags?.forbiddenlands.bonusCards ? combatant.flags?.forbiddenlands.bonusCards : 0;
   // console.log(surprise); 
-  const nCard = 1 + rank + surprise;
+  const nCard = 1 + rank + bonusDraw;
+  console.log(combatant.actor.name, nCard)
   // draw a number of cards equal to 1 + Lightning Fast rank
   let draw = [];
   for (let i = 0; i < nCard; i++) {
