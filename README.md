@@ -1,4 +1,5 @@
-## Foundry VTT - Forbidden Lands System
+# Forbidden Lands System
+Unofficial, fan made implementation of the Forbidden Lands RPG system for use with the Foundry VTT virtual tabletop.
 
 **version**: 0.2.2  
 **supported browsers**: Chrome, Edge  
@@ -95,7 +96,7 @@ Thanks to:
 - Game-icons.net for all the great svg art and icons
 - The Discord Foundry VTT community members. Without their help I wouldn't have been able to put this system together
 - senutnareph, for creating the high quality dice icons and sharing them with the community ( https://www.reddit.com/r/ForbiddenLands/comments/amyzeq/forbidden_lands_dice_icons_for_roll20/ )
-- eldersign for his precious feedback and his willingness to playtest this system.
+- last but definitely not least, eldersign for her precious feedback, her willingness to playtest this system and her support.
 
 # Media
 ![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/ChacracterSheet2020-07-12_104534.png?raw=true)
