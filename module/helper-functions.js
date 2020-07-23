@@ -33,7 +33,7 @@ export class fblPool extends DicePool {
       const r2 = new Roll(`${Math.abs(nSkill)}d6`);
       const r3 = new Roll(`${nGear}d6`);
       const allRolls = [r1, r2, r3].concat(nArtifact.map( d => {return new Roll(d)}));
-      console.log(allRolls);
+      // console.log(allRolls);
       let r = super(allRolls);
 
       if (nSkill < 0) this.isSkillNegative = true;
@@ -171,8 +171,8 @@ export async function prepareRollData( rollType, actor, id) {
     const bodyArmorValue = bodyArmor ? bodyArmor.data.bonus.currentValue : 0;
     const headArmorValue = headArmor ? headArmor.data.bonus.currentValue : 0;
     // console.log(bodyArmor)
-    const artifactBodyDie = (bodyArmor.data.isArtifact) ? [bodyArmor.data.artifactDie] : [];
-    const artifactHeadDie = (headArmor.data.isArtifact) ? [headArmor.data.artifactDie] : [];
+    const artifactBodyDie = (bodyArmor?.data.isArtifact) ? [bodyArmor.data.artifactDie] : [];
+    const artifactHeadDie = (headArmor?.data.isArtifact) ? [headArmor.data.artifactDie] : [];
     const artifactDie = artifactBodyDie.concat(artifactHeadDie);
 
     const gearDice = bodyArmorValue + headArmorValue;
