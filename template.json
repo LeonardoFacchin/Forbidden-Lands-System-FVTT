@@ -213,7 +213,7 @@
         "description": ""
      },
      "Equipment": {
-        "isArtifact": "false",
+        "isArtifact": false,
          "bonus": {"value": 0, "damage": 0},
          "skill": "",
          "price": {"cost": 0, "currency": ""},
@@ -222,7 +222,7 @@
          "description": ""
      },
      "Weapon": {
-         "isArtifact": "false",
+         "isArtifact": false,
          "grip": "",
          "bonus": {"value": 0, "damage": 0},
          "damage": 0,
@@ -234,7 +234,7 @@
          "description": ""
      },
      "Armor": {
-        "isArtifact": "false",
+        "isArtifact": false,
         "bonus": {"value": 0, "damage": 0},
         "location": "",
         "features": "",

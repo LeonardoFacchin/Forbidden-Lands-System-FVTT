@@ -33,6 +33,7 @@ export class fblPool extends DicePool {
       const r2 = new Roll(`${Math.abs(nSkill)}d6`);
       const r3 = new Roll(`${nGear}d6`);
       const allRolls = [r1, r2, r3].concat(nArtifact.map( d => {return new Roll(d)}));
+      console.log(allRolls);
       let r = super(allRolls);
 
       if (nSkill < 0) this.isSkillNegative = true;
@@ -150,6 +151,7 @@ export async function prepareRollData( rollType, actor, id) {
     const artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => a.type ) : [];
     artifactDie = artifactDie.concat(artModifiers); 
     skillDice = skillDice + skillDieModifier;
+    // console.log(attributeDice, skillDice, gearDice, artifactDie);
     return {
             "canPush": true,
             "canPride": true,
@@ -229,8 +231,7 @@ export async function prepareRollData( rollType, actor, id) {
 
   //----------------------- Spell ------------------------------
   if ( rollType==="Spell" ) {
-    
-    if(Number(actor.data.data.willpower?.score) === 0) {ui.notifications.error("You need to have at least 1 Willpower point to cast a spell"); return null}
+    if(Number(actor.data.data.willpower?.value) === 0) {ui.notifications.error("You need to have at least 1 Willpower point to cast a spell"); return null}
 
     let diag = new SpellDialog ({
       actor: actor,

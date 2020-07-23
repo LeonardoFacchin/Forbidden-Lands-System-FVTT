@@ -117,6 +117,16 @@ Hooks.once("init", async function() {
 
 });
 
+// Update Items to correct a boolean template.json mistake
+Hooks.on("ready", async () => {
+  if (game.data.system.data.version === "0.2.3") {
+    let itemsToUpdate = game.data.items.filter( i => i.data.isArtifact === "false");
+    itemsToUpdate = itemsToUpdate.map( i => game.items.get(i._id) );
+    console.log(itemsToUpdate);
+    itemsToUpdate.forEach( async i => await i.update({"_id": i._id, "data.isArtifact": false}));
+    console.log(itemsToUpdate);
+  }
+});
 
 // add event listener to the chat log
 Hooks.on( "renderChatLog", async function (cLog) {

@@ -6,11 +6,35 @@
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
-   height="527"
-   width="527"
-   viewBox="0 0 527 527"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="cursed-star.svg"
+   id="svg22"
    version="1.1"
-   id="svg22">
+   viewBox="0 0 527 527"
+   width="527"
+   height="527">
+  <sodipodi:namedview
+     inkscape:current-layer="svg22"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="263.5"
+     inkscape:cx="263.5"
+     inkscape:zoom="1.3946869"
+     showgrid="false"
+     id="namedview37"
+     inkscape:window-height="1137"
+     inkscape:window-width="1920"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
   <metadata
      id="metadata28">
     <rdf:RDF>
@@ -19,168 +43,158 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <defs
      id="defs26">
     <filter
-       id="shadow-1"
-       height="3"
-       width="3"
+       y="-1"
        x="-1"
-       y="-1">
+       width="3"
+       height="3"
+       id="shadow-1">
       <feFlood
-         flood-color="rgba(252, 136, 252, 1)"
+         id="feFlood2"
          result="flood"
-         id="feFlood2" />
+         flood-color="rgba(252, 136, 252, 1)" />
       <feComposite
-         in="flood"
-         in2="SourceGraphic"
-         operator="atop"
+         id="feComposite4"
          result="composite"
-         id="feComposite4" />
+         operator="atop"
+         in2="SourceGraphic"
+         in="flood" />
       <feGaussianBlur
-         in="composite"
-         stdDeviation="215"
+         id="feGaussianBlur6"
          result="blur"
-         id="feGaussianBlur6" />
+         stdDeviation="215"
+         in="composite" />
       <feOffset
-         dx="0"
-         dy="0"
+         id="feOffset8"
          result="offset"
-         id="feOffset8" />
+         dy="0"
+         dx="0" />
       <feComposite
-         in2="offset"
-         in="SourceGraphic"
+         id="feComposite10"
          operator="over"
-         id="feComposite10" />
+         in="SourceGraphic"
+         in2="offset" />
     </filter>
     <radialGradient
-       xlink:href="#linearGradient888"
-       id="radialGradient890"
-       cx="248.62892"
-       cy="253.29128"
-       fx="248.62892"
-       fy="253.29128"
-       r="238.313"
+       gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.1113751,-1.1143928,1.1240641,1.1210202,-302.79749,259.45203)"
-       gradientUnits="userSpaceOnUse" />
+       r="238.313"
+       fy="253.29128"
+       fx="248.62892"
+       cy="253.29128"
+       cx="248.62892"
+       id="radialGradient890"
+       xlink:href="#linearGradient888" />
     <linearGradient
        id="linearGradient888">
       <stop
-         style="stop-color:#ffcc00;stop-opacity:1;"
+         id="stop884"
          offset="0"
-         id="stop884" />
+         style="stop-color:#ffcc00;stop-opacity:1;" />
       <stop
-         id="stop892"
+         style="stop-color:#9797cb;stop-opacity:1"
          offset="0.25812325"
-         style="stop-color:#9797cb;stop-opacity:1" />
+         id="stop892" />
       <stop
-         style="stop-color:#000080;stop-opacity:1"
+         id="stop886"
          offset="1"
-         id="stop886" />
+         style="stop-color:#000080;stop-opacity:1" />
     </linearGradient>
     <radialGradient
-       xlink:href="#linearGradient912"
-       id="radialGradient914"
-       cx="254.95511"
-       cy="281.10904"
-       fx="254.95511"
-       fy="281.10904"
-       r="24.957472"
+       gradientUnits="userSpaceOnUse"
        gradientTransform="matrix(1.2279461,-0.01200172,0.02653979,2.7153321,-56.995806,-477.09024)"
-       gradientUnits="userSpaceOnUse" />
+       r="24.957472"
+       fy="281.10904"
+       fx="254.95511"
+       cy="281.10904"
+       cx="254.95511"
+       id="radialGradient914"
+       xlink:href="#linearGradient912" />
     <linearGradient
        id="linearGradient912">
       <stop
-         style="stop-color:#7fff2a;stop-opacity:1"
+         id="stop908"
          offset="0"
-         id="stop908" />
+         style="stop-color:#7fff2a;stop-opacity:1" />
       <stop
-         style="stop-color:#112b00;stop-opacity:1"
+         id="stop910"
          offset="1"
-         id="stop910" />
+         style="stop-color:#112b00;stop-opacity:1" />
     </linearGradient>
   </defs>
   <path
-     d="m 7.5,7.5 h 512 v 512 H 7.5 Z"
-     fill="#000000"
-     fill-opacity="1"
+     style="fill:#000000;stroke:#000000;stroke-width:15;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="path2"
-     style="fill:#ffffff;stroke:#000080;stroke-width:15;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+     fill-opacity="1"
+     fill="#000000"
+     d="m 7.5,7.5 h 512 v 512 H 7.5 Z" />
   <g
-     font-family="Arial, Helvetica, sans-serif"
-     font-size="140px"
-     font-style="normal"
-     font-weight="bold"
-     text-anchor="middle"
-     class=""
+     id="g20"
      transform="translate(456.5,141.5)"
-     id="g20">
+     class=""
+     text-anchor="middle"
+     font-weight="bold"
+     font-style="normal"
+     font-size="140px"
+     font-family="Arial, Helvetica, sans-serif">
     <text
-       stroke="rgba(255, 255, 255, 0)"
+       id="text12"
        stroke-width="35"
-       id="text12"><tspan
-         x="0"
+       stroke="rgba(255, 255, 255, 0)"><tspan
+         id="tspan8"
          y="0"
-         id="tspan8" /><tspan
-         x="0"
+         x="0" /><tspan
+         id="tspan10"
          y="140"
-         id="tspan10" /></text>
+         x="0" /></text>
     <text
-       fill="rgba(144, 19, 254, 1)"
-       id="text18"><tspan
-         x="0"
+       id="text18"
+       fill="rgba(144, 19, 254, 1)"><tspan
+         id="tspan14"
          y="0"
-         id="tspan14" /><tspan
-         x="0"
+         x="0" /><tspan
+         id="tspan16"
          y="140"
-         id="tspan16" /></text>
+         x="0" /></text>
   </g>
   <text
-     xml:space="preserve"
-     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
-     x="619.11359"
+     id="text855"
      y="106.41701"
-     id="text855"><tspan
-       id="tspan853"
+     x="619.11359"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+     xml:space="preserve"><tspan
+       y="106.41701"
        x="619.11359"
-       y="106.41701" /></text>
+       id="tspan853" /></text>
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:160px;line-height:1.25;font-family:'Comic Sans MS';-inkscape-font-specification:'Comic Sans MS, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;fill:#000080;fill-opacity:1;stroke:#0000ff;stroke-opacity:1;"
-     x="399.68506"
-     y="167.71771"
-     id="text859"><tspan
-       style="fill:#000080;fill-opacity:1;stroke:#0000ff;stroke-opacity:1;"
-       id="tspan857"
-       x="399.68506"
-       y="167.71771">1</tspan></text>
-  <text
-     id="text859-7"
-     y="143.97783"
-     x="542.99768"
      style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:160px;line-height:1.25;font-family:'IM FELL French Canon';-inkscape-font-specification:'IM FELL French Canon, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;fill:#bd10e0;fill-opacity:1;stroke:none"
-     xml:space="preserve"><tspan
-       y="143.97783"
+     x="542.99768"
+     y="143.97783"
+     id="text859-7"><tspan
+       id="tspan857-9"
        x="542.99768"
-       id="tspan857-9" /></text>
+       y="143.97783" /></text>
   <g
-     class=""
-     style="fill:url(#radialGradient890);fill-opacity:1"
+     id="g6"
      transform="translate(4.217,19.813)"
-     id="g6">
+     style="fill:#ffffff;fill-opacity:1;stroke:#ffffff"
+     class="">
     <path
-       d="M 259.125,16.938 216.22,128.094 97.343,164.25 l 106.53,-4.22 -36.436,94.407 102.719,-148.187 50.22,64.406 -61.25,-153.72 z m 50.406,63.687 36.376,102.28 -102.344,-6.75 172.063,53.876 -46.5,67.126 128.47,-104.28 -116.94,-7.69 -71.124,-104.56 z m -123.467,98.97 -165.094,10.842 87.936,71.375 -0.375,127.125 27.75,-104.907 82.345,66.845 L 109.345,207.5 186.063,179.594 Z m 71.156,18.968 c -22.404,0 -44.817,25.943 -67.22,77.875 43.462,77.53 88.133,86.365 134.438,0 -22.403,-51.93 -44.816,-77.875 -67.22,-77.875 z m 0.405,15.687 c 11.05,8.62 19,30.54 19,56.438 0,25.896 -7.95,47.818 -19,56.437 -11.05,-8.62 -19,-30.54 -19,-56.438 0,-25.896 7.95,-47.818 19,-56.437 z m 82.53,10.594 5.19,180.22 L 266.75,383 407.22,470.438 376.812,359.125 450.375,255.655 367.5,325.031 340.156,224.845 Z m -187.215,84.186 -43.594,159.595 98.906,-61.53 120.656,39.436 -90.5,-58.217 87.094,-54.188 -171.22,56.53 -1.343,-81.624 z"
-       fill="#000000"
-       fill-opacity="1"
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff"
        id="path4"
-       style="fill:#000080;fill-opacity:1" />
+       fill-opacity="1"
+       fill="#000000"
+       d="M 259.125,16.938 216.22,128.094 97.343,164.25 l 106.53,-4.22 -36.436,94.407 102.719,-148.187 50.22,64.406 -61.25,-153.72 z m 50.406,63.687 36.376,102.28 -102.344,-6.75 172.063,53.876 -46.5,67.126 128.47,-104.28 -116.94,-7.69 -71.124,-104.56 z m -123.467,98.97 -165.094,10.842 87.936,71.375 -0.375,127.125 27.75,-104.907 82.345,66.845 L 109.345,207.5 186.063,179.594 Z m 71.156,18.968 c -22.404,0 -44.817,25.943 -67.22,77.875 43.462,77.53 88.133,86.365 134.438,0 -22.403,-51.93 -44.816,-77.875 -67.22,-77.875 z m 0.405,15.687 c 11.05,8.62 19,30.54 19,56.438 0,25.896 -7.95,47.818 -19,56.437 -11.05,-8.62 -19,-30.54 -19,-56.438 0,-25.896 7.95,-47.818 19,-56.437 z m 82.53,10.594 5.19,180.22 L 266.75,383 407.22,470.438 376.812,359.125 450.375,255.655 367.5,325.031 340.156,224.845 Z m -187.215,84.186 -43.594,159.595 98.906,-61.53 120.656,39.436 -90.5,-58.217 87.094,-54.188 -171.22,56.53 -1.343,-81.624 z" />
   </g>
   <path
-     style="fill:url(#radialGradient914);fill-opacity:1;stroke:none;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     id="path906"
      d="m 260.72364,227.97065 c -11.97073,11.24291 -17.36837,27.82289 -19.30385,43.77016 -2.37892,21.53693 -0.64432,44.53333 9.98276,63.81215 2.80277,4.24247 5.74691,9.09441 10.43945,11.38504 5.84573,0.36084 8.50954,-6.36359 11.61406,-10.21909 11.3344,-18.65613 13.2724,-41.55731 11.2118,-62.87071 -1.93597,-16.39018 -6.6928,-33.76135 -19.09252,-45.40408 -1.66318,-1.07335 -3.00923,-1.18404 -4.8517,-0.47347 z"
-     id="path906" />
+     style="fill:#000000;fill-opacity:1;stroke:#ffffff;stroke-width:5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
 </svg>
