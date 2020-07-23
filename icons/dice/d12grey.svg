@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   viewBox="0 0 73.724914 97.352438"
+   width="47.183945"
+   height="49.844448"
+   version="1.1"
+   id="svg14">
+  <metadata
+     id="metadata20">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs18" />
+  <path
+     id="path885-0"
+     style="stroke-width:1;fill:#b3b3b3"
+     d="M 35.290358,1.5e-6 7.6083576,9.3250015 -8.544643,32.650002 8.4833576,38.617001 35.583358,17.194002 Z m -17.328976,72.1204625 -10.4150004,-31.761 -16.7619956,-5.829 0.076,28.558 16.6089956,23.311003 z m 37.802146,0.273486 10.415,-31.761 16.762,-5.829 -0.076,28.558 -16.609,23.310997 z M 38.181392,0.1004055 l 27.682,9.325 16.153,23.3249995 -17.028,5.967 -27.1,-21.423 z M 53.848901,74.248188 20.3322,73.475664 9.2944296,88.442657 l 26.9510184,8.90978 27.830516,-8.35675 z m -33.580373,-2.351782 -10.5980004,-31.762 26.8530004,-21.056 27.455,21.056 -10.2,32.344 z" />
+  <text
+     id="text839"
+     y="65.316841"
+     x="10.740971"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.875px;line-height:1.25;font-family:Rubik;-inkscape-font-specification:'Rubik, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1.95312"
+     xml:space="preserve"><tspan
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.875px;font-family:Rubik;-inkscape-font-specification:'Rubik, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:1.95312"
+       y="65.316841"
+       x="10.740971"
+       id="tspan837">12</tspan></text>
+</svg>

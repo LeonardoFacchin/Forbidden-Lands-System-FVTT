@@ -12,7 +12,7 @@
    height="54.118393"
    version="1.1"
    id="svg16"
-   sodipodi:docname="d10black.svg"
+   sodipodi:docname="d10grey.svg"
    inkscape:version="1.0 (4035a4fb49, 2020-05-01)">
   <metadata
      id="metadata22">
@@ -54,28 +54,35 @@
      inkscape:window-maximized="1"
      inkscape:current-layer="svg16" />
   <g
+     style="fill:#b3b3b3"
      id="g14"
      transform="matrix(1.1,0,0,1.1,-14.83582,-6.1504683)">
     <g
+       style="fill:#b3b3b3"
        transform="matrix(1.1679092,0,0,1.1679092,-274.931,-137.53749)"
        id="g12">
       <path
+         style="fill:#b3b3b3"
          fill="#000000"
          d="m 313.653,154.602 -26.488,55.612 24.356,15.89 26.354,-15.928 z"
          id="path2" />
       <path
+         style="fill:#b3b3b3"
          fill="#000000"
          d="m 314.9,153.687 24.49,55.919 14.175,-4.584 0.915,-22.612 z"
          id="path4" />
       <path
+         style="fill:#b3b3b3"
          fill="#000000"
          d="m 312.359,227.393 v 8.568 l 40.76,-28.762 -13.608,3.825 z"
          id="path6" />
       <path
+         style="fill:#b3b3b3"
          fill="#000000"
          d="m 312.359,153.927 -26.756,55.732 -13.925,-5.99 -1.229,-22.679 z"
          id="path8" />
       <path
+         style="fill:#b3b3b3"
          fill="#000000"
          d="m 310.517,227.213 v 8.75 l -39.019,-30.157 13.513,5.275 z"
          id="path10" />

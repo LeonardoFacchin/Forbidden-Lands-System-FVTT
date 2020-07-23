@@ -94,6 +94,13 @@ Hooks.once("init", async function() {
     return string = string.match(rexp);
   });
 
+   // Radio button selection
+   Handlebars.registerHelper("radio", function(name, value) { 
+    console.log(name, value);   
+    return name === value ? "checked" : ""; 
+  });
+
+
   game.socket.on("system.forbiddenlands", async data => {
     console.log("Socket Fired");
     switch(data.type) {

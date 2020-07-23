@@ -48,7 +48,7 @@
                                 <label class="table__data table__data--name" data-id="{{attName}}" data-action="roll" data-diehook="Attribute" style="text-align: left" >{{attName}}</label>
                             </div>   
                             <div class="table__field">
-                                <input class="table__data" type="text" name="data.attributes.{{attName}}.value" value="{{attObject.value}}" data-dtype="Number">
+                                <input class="table__data" type="text" name="data.attributes.{{attName}}.max" value="{{attObject.max}}" data-dtype="Number">
                             </div>
                             <div id="{{@key}}" class="table__field">
                                 <div class="table__data">
@@ -58,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="table__field">
-                                <label class="table__data" type="text" data-dtype="Number">{{attObject.currentValue}}</label>
+                                <label class="table__data" type="text" data-dtype="Number">{{attObject.value}}</label>
                             </div> 
                         </div>
                     </div>
@@ -272,16 +272,56 @@
                                             {{/each}}
                                     </div>
                                 </div>
-                                <div class="table__entry table__entry--3col frame" style="background-color: white; margin: 4px; padding: 2px">
-                                    <div class="table__field">
-                                        <img name="data.artifactModifiers.modifierOne.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierOne.propertyTrack}}" alt="" width="25px" style="border: none">
+                                <div class="table__entry table__entry--3col">
+
+                                    <div class="table__entry table__entry--artDice frame" style="background-color: white; margin: 4px; padding: 2px">
+                                        <div class="table__field">
+                                            <img name="data.artifactModifiers.modifierOne.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierOne.propertyTrack}}" alt="" style="border: none; width: 25px">
+                                        </div>
+                                        <div class="table__field">
+                                            <div class="table__data">
+                                                <div>
+                                                    <i class="fas fa-angle-up" data-id="modifierOne" style="font-size: 1.5em; vertical-align: super; opacity: 0.3"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-angle-down" data-id="modifierOne" style="font-size: 1.5em; vertical-align: sub; opacity: 0.3"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="table__field">
-                                        <img name="data.artifactModifiers.modifierTwo.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierTwo.propertyTrack}}" alt="" width="25px" style="border: none">
+            
+                                    <div class="table__entry table__entry--artDice frame" style="background-color: white; margin: 4px; padding: 2px">
+                                        <div class="table__field">
+                                            <img name="data.artifactModifiers.modifierTwo.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierTwo.propertyTrack}}" alt="" style="border: none; width: 25px">
+                                        </div>
+                                        <div class="table__field">
+                                            <div class="table__data">
+                                                <div>
+                                                    <i class="fas fa-angle-up" data-id="modifierTwo" style="font-size: 1.5em; vertical-align: super; opacity: 0.3"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-angle-down" data-id="modifierTwo" style="font-size: 1.5em; vertical-align: sub; opacity: 0.3"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="table__field">
-                                        <img name="data.artifactModifiers.modifierThree.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierThree.propertyTrack}}" alt="" width="25px" style="border: none">
+            
+                                    <div class="table__entry table__entry--artDice frame" style="background-color: white; margin: 4px; padding: 2px">
+                                        <div class="table__field">
+                                            <img name="data.artifactModifiers.modifierThree.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierThree.propertyTrack}}" alt="" style="border: none; width: 25px">
+                                        </div>
+                                        <div class="table__field">
+                                            <div class="table__data">
+                                                <div>
+                                                    <i class="fas fa-angle-up" data-id="modifierThree" style="font-size: 1.5em; vertical-align: super; opacity: 0.3"></i>
+                                                </div>
+                                                <div>
+                                                    <i class="fas fa-angle-down" data-id="modifierThree" style="font-size: 1.5em; vertical-align: sub; opacity: 0.3"></i>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
+            
                                 </div>
                             </div>
                         </div>                            

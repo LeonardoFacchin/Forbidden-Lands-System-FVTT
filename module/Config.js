@@ -120,9 +120,9 @@ export const CONFIG_MAGIC_DISCIPLINES = {
   ]
 
   export const CONFIG_ARTIFACT_MODIFIERS = {    
-    "modifierOne": ["systems/forbiddenlands/icons/dice/d8black.svg","systems/forbiddenlands/icons/dice/d8grey.svg"],
-    "modifierTwo": ["systems/forbiddenlands/icons/dice/d8black.svg", "systems/forbiddenlands/icons/dice/d8grey.svg"],
-    "modifierThree": ["systems/forbiddenlands/icons/dice/d8black.svg", "systems/forbiddenlands/icons/dice/d8grey.svg"],
+    "modifierOne": {"d8":["systems/forbiddenlands/icons/dice/d8black.svg","systems/forbiddenlands/icons/dice/d8grey.svg"], "d10":["systems/forbiddenlands/icons/dice/d10black.svg","systems/forbiddenlands/icons/dice/d10grey.svg"], "d12":["systems/forbiddenlands/icons/dice/d12black.svg","systems/forbiddenlands/icons/dice/d12grey.svg"]},
+    "modifierTwo": {"d8":["systems/forbiddenlands/icons/dice/d8black.svg","systems/forbiddenlands/icons/dice/d8grey.svg"], "d10":["systems/forbiddenlands/icons/dice/d10black.svg","systems/forbiddenlands/icons/dice/d10grey.svg"], "d12":["systems/forbiddenlands/icons/dice/d12black.svg","systems/forbiddenlands/icons/dice/d12grey.svg"]},
+    "modifierThree": {"d8":["systems/forbiddenlands/icons/dice/d8black.svg","systems/forbiddenlands/icons/dice/d8grey.svg"], "d10":["systems/forbiddenlands/icons/dice/d10black.svg","systems/forbiddenlands/icons/dice/d10grey.svg"], "d12":["systems/forbiddenlands/icons/dice/d12black.svg","systems/forbiddenlands/icons/dice/d12grey.svg"]}
   }
 
   export const CONFIG_DICE_ATTRIBUTES = [

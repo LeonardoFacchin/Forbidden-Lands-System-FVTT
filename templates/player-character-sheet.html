@@ -9,9 +9,9 @@
     <header class="layout__header">
         <!-- EXPERIENCE BAR             -->
         <div class="frame" style="flex-direction: row;">
-        <label class="frame__title">Experience: ( {{data.experience.score}} )</label>
+        <label class="frame__title">Experience: ( {{data.experience.value}} )</label>
         {{#each data.experience.propertyTrack}}
-        <img name="data.experience.score" data-trackvalue="{{@index}}" src="{{this}}" alt="Xp" width=18px style="border: none; margin: 2px">
+        <img name="data.experience.value" data-trackvalue="{{@index}}" src="{{this}}" alt="Xp" width=18px style="border: none; margin: 2px">
         {{/each}}    
         </div>
         <!-- CHARACTER NAME -->
@@ -70,7 +70,7 @@
                     {{#each data.willpower.propertyTrack}}
                     <div class="table__field">
                         <div class="table__data">
-                            <img type="image" name="data.willpower.score" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: 3px 0 0 0;" alt="" width="18px" height="18px">
+                            <img type="image" name="data.willpower.value" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: 3px 0 0 0;" alt="" width="18px" height="18px">
                         </div>
                     </div>
                     {{/each}}
@@ -90,7 +90,7 @@
                             <label class="table__data table__data--name" data-id="{{attName}}" data-action="roll" data-diehook="Attribute">{{attName}}</label>
                         </div>   
                         <div class="table__field">
-                            <input class="table__data" type="text" name="data.attributes.{{attName}}.value" value="{{attObject.value}}" data-dtype="Number">
+                            <input class="table__data" type="text" name="data.attributes.{{attName}}.max" value="{{attObject.max}}" data-dtype="Number">
                         </div>
                         <div id="{{@key}}" class="table__field">
                             <div class="table__data">
@@ -100,7 +100,7 @@
                             </div>
                         </div>
                          <div class="table__field">
-                            <label class="table__data" type="text" data-dtype="Number">{{attObject.currentValue}}</label>
+                            <label class="table__data" type="text" data-dtype="Number">{{attObject.value}}</label>
                         </div>
                     </div>
                 {{/each}}
@@ -266,7 +266,7 @@
                         </div>
                         <div class="table__field">
                             <span class="table__data" style="font-size: 1.3em;">
-                                x{{equip.data.quantity}}
+                                x{{equip.flags.forbiddenlands.quantity}}
                             </span>
                         </div>
                         <div class="table__field">
@@ -398,7 +398,6 @@
                 {{else}}
                 <div class="table__entry table__entry--PC-injury-display table__entry--no-border frame frame__margin--PC-items">
                 {{/iff}}
-                {{log @root.data.injuryStatus}}
                     {{#unless injury.data.isTreated}}
                         {{#iff injury.data.lethal.isLethal comparison="Yes"}}
                         <div class="table__field">
@@ -529,16 +528,57 @@
                                 {{/each}}
                         </div>
                     </div>
-                    <div class="table__entry table__entry--3col frame" style="background-color: white; margin: 4px; padding: 2px">
-                        <div class="table__field">
-                            <img name="data.artifactModifiers.modifierOne.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierOne.propertyTrack}}" alt="" style="border: none; width: 25px">
+
+                    <div class="table__entry table__entry--3col">
+
+                        <div class="table__entry table__entry--artDice frame" style="background-color: white; margin: 4px; padding: 2px">
+                            <div class="table__field">
+                                <img name="data.artifactModifiers.modifierOne.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierOne.propertyTrack}}" alt="" style="border: none; width: 25px">
+                            </div>
+                            <div class="table__field">
+                                <div class="table__data">
+                                    <div>
+                                        <i class="fas fa-angle-up" data-id="modifierOne" style="font-size: 1.5em; vertical-align: super; opacity: 0.3"></i>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-angle-down" data-id="modifierOne" style="font-size: 1.5em; vertical-align: sub; opacity: 0.3"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="table__field">
-                            <img name="data.artifactModifiers.modifierTwo.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierTwo.propertyTrack}}" alt="" style="border: none; width: 25px">
+
+                        <div class="table__entry table__entry--artDice frame" style="background-color: white; margin: 4px; padding: 2px">
+                            <div class="table__field">
+                                <img name="data.artifactModifiers.modifierTwo.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierTwo.propertyTrack}}" alt="" style="border: none; width: 25px">
+                            </div>
+                            <div class="table__field">
+                                <div class="table__data">
+                                    <div>
+                                        <i class="fas fa-angle-up" data-id="modifierTwo" style="font-size: 1.5em; vertical-align: super; opacity: 0.3"></i>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-angle-down" data-id="modifierTwo" style="font-size: 1.5em; vertical-align: sub; opacity: 0.3"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="table__field">
-                            <img name="data.artifactModifiers.modifierThree.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierThree.propertyTrack}}" alt="" style="border: none; width: 25px">
+
+                        <div class="table__entry table__entry--artDice frame" style="background-color: white; margin: 4px; padding: 2px">
+                            <div class="table__field">
+                                <img name="data.artifactModifiers.modifierThree.value" data-modtype="artifact" src="{{data.artifactModifiers.modifierThree.propertyTrack}}" alt="" style="border: none; width: 25px">
+                            </div>
+                            <div class="table__field">
+                                <div class="table__data">
+                                    <div>
+                                        <i class="fas fa-angle-up" data-id="modifierThree" style="font-size: 1.5em; vertical-align: super; opacity: 0.3"></i>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-angle-down" data-id="modifierThree" style="font-size: 1.5em; vertical-align: sub; opacity: 0.3"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
                     </div>
                 </div>
             </div>

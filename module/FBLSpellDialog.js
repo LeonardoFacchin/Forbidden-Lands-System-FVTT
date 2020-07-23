@@ -65,7 +65,7 @@ export class SpellDialog extends Dialog {
      // console.log(data.isTooHigh);
      const minDice = Math.max( 0, data.spentWillpower - Math.max(0, data.talentRank - data.spellRank) );
      // console.log(minDice);
-     let WP = actor.isPC ? actor.data.data.willpower.score : data.talentRank;
+     let WP = actor.isPC ? actor.data.data.willpower.value : data.talentRank;
      const WPArray = [];
      const diceToRoll = [];
      for (let i = 1; i <= WP; i++) { WPArray.push(i)};
@@ -101,9 +101,9 @@ export class SpellDialog extends Dialog {
        const castingRoll = new fblPool(spellDice, 0, 0, []);
        // console.log(dialog.data.spellName);
        if (this.actor.isPC) {
-         let willpower = this.actor.data.data.willpower.score;
+         let willpower = this.actor.data.data.willpower.value;
          willpower = willpower - this.data.spentWillpower;
-         this.actor.update({"data.willpower.score": willpower});
+         this.actor.update({"data.willpower.value": willpower});
        }
        // console.log(dialog.actor);
        const dialogData = {"spellName": this.data.spellName, "powerLevel": this.data.powerLevel, "description": this.data.description}

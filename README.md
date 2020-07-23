@@ -1,9 +1,14 @@
 # Forbidden Lands System
 Unofficial, fan made implementation of the Forbidden Lands RPG system for use with the Foundry VTT virtual tabletop.
 
-**version**: 0.2.2  
+**version**: 0.2.3  
 **supported browsers**: Chrome, Edge  
 (NB: Firefox won't display character sheets as intended. Right now I'm inclined not to bother trying to make the system work with Firefox, mostly because on my PC Firefox performance was way worse than Edge's or Chrome's. If enough people are **really really** interested I might change my mind, but I suggest using Chrome to be on the safe side)
+
+# v0.2.3
+- Refactored the attributes names so that the four attributes can now be tracked, displayed and modified by the token bars. **This change will apply only to new actors, not to those who have already been created**
+- Refactored the inventory item quantity properties. **Items will have to be re-added to characters inventory**
+- Changed the Artifact Dice modifiers on the character sheets so that the user can actually chose the size of the bonus dice to be rolled.
 
 # New features and bug fixes in v0.2
 - Implemented a custom Combat Tracker (more on this below).
@@ -75,7 +80,7 @@ Features:
 - tracking of combatants HP. In order for the tracking to work make sure to set the combat tracker Tracked Resource to `attributes.Strength.damage`.
 - tracking of fast and slow actions expenditure. Click on the "F" and "S" icons to toggle their status between "available" and "spent". All the combatants' actions are automatically reset to "available" when a new round is started.
 - The "Lightning Fast" talent is automatically detected and accounted for by the initiative algorithm
-- Support for an arbitrary number of initiative cards to draw in addition to the default 1 + Lightning Fast talent. The GM can just insert the quantity into the corresponding input box (useful to account for surprise or the Path of the Knight Rider talent).
+- Support for an arbitrary number of initiative cards to draw in addition to the default 1 + Lightning Fast talent rank. The GM can just insert the quantity into the corresponding input box (useful to account for surprise or the Path of the Knight Rider talent).
 - An actor that is allowed to act twice in a turn can be flagged by clicking the "Forward" icon **before** rolling for initiative. The combatant will automatically be duplicated and cards drawn for his second action.
 - If the fight includes 10 or less combatants, each one will receive his own initiative card, otherwise combatants will be grouped according to the Forbidden Lands rules and each group will act on the same initiative card.  
 

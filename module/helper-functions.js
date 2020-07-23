@@ -45,7 +45,7 @@ export class fblPool extends DicePool {
 
       this.artifactArray = nArtifact;
 
-      console.log(r.roll());
+      // console.log(r.roll());
       
       this.originalRoll = Object.values(r.roll())[0].map( d => {
         if(d.dice.length===0) return [];
@@ -143,11 +143,11 @@ export async function prepareRollData( rollType, actor, id) {
     const gearDice = item.data.bonus.currentValue;
     let artifactDie = (item.data.isArtifact) ? [item.data.artifactDie] : [];
     let skillDice = actor.data.data.skills[item.data.skill].value;
-    const attributeDice = actor.data.data.attributes[attribute].currentValue;
+    const attributeDice = actor.data.data.attributes[attribute].value;
     const dieModifiers = actor.data.data.dieModifiers;
     const artifactModifiers = actor.data.data.artifactModifiers;
     const skillDieModifier = dieModifiers ? dieModifiers.modifierOne.value + dieModifiers.modifierTwo.value : 0;
-    const artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => "d8" ) : [];
+    const artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => a.type ) : [];
     artifactDie = artifactDie.concat(artModifiers); 
     skillDice = skillDice + skillDieModifier;
     return {
@@ -164,18 +164,24 @@ export async function prepareRollData( rollType, actor, id) {
 
   //----------------------- Armor ------------------------------
   if ( rollType==="Armor" ) {
-    let bodyArmor = actor.data.data.Armor.filter( a => { return a.data.location === "Body"})[0];      
-    let headArmor = actor.data.data.Armor.filter( a => { return a.data.location === "Head"})[0];
-    bodyArmor = bodyArmor ? bodyArmor.data.bonus.currentValue : 0;
-    headArmor = headArmor ? headArmor.data.bonus.currentValue : 0;
+    const bodyArmor = actor.data.data.Armor.filter( a => { return a.data.location === "Body"})[0];      
+    const headArmor = actor.data.data.Armor.filter( a => { return a.data.location === "Head"})[0];
+    const bodyArmorValue = bodyArmor ? bodyArmor.data.bonus.currentValue : 0;
+    const headArmorValue = headArmor ? headArmor.data.bonus.currentValue : 0;
+    // console.log(bodyArmor)
+    const artifactBodyDie = (bodyArmor.data.isArtifact) ? [bodyArmor.data.artifactDie] : [];
+    const artifactHeadDie = (headArmor.data.isArtifact) ? [headArmor.data.artifactDie] : [];
+    const artifactDie = artifactBodyDie.concat(artifactHeadDie);
 
-    const gearDice = bodyArmor + headArmor;
+    const gearDice = bodyArmorValue + headArmorValue;
     const dieModifiers = actor.data.data.dieModifiers;
     const skillDieModifier = dieModifiers ? dieModifiers.modifierOne.value + dieModifiers.modifierTwo.value : 0;
     const attributeDice = skillDieModifier;
     return {"skillName" : "Armor",
             "attributeDice": attributeDice,
-            "gearDice": gearDice
+            "skillDice": 0,
+            "gearDice": gearDice,
+            "artifactDie": artifactDie
           }
   }
 
@@ -189,14 +195,15 @@ export async function prepareRollData( rollType, actor, id) {
     const skillDieModifier = dieModifiers ? dieModifiers.modifierOne.value + dieModifiers.modifierTwo.value : 0;
     skillDice = skillDice + skillDieModifier;
     const artifactModifiers = actor.data.data.artifactModifiers;
-    const attributeDice = actor.data.data.attributes[attribute].currentValue;
-    const artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => "d8" ) : [];
+    const attributeDice = actor.data.data.attributes[attribute].value;
+    const artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => {return a.type} ) : [];
     return {"canPush": true,
             "canPride": true,
             "skillName" : skill,
             "attributeName": attribute,
             "attributeDice": attributeDice,
             "skillDice": skillDice,
+            "gearDice": 0,
             "artifactDie": artModifiers
           }
   }
@@ -204,17 +211,18 @@ export async function prepareRollData( rollType, actor, id) {
   //----------------------- Attribute ------------------------------
   if ( rollType==="Attribute" ) {
     const attribute = id;
-    const attributeDice = actor.data.data.attributes[attribute].currentValue;
+    const attributeDice = actor.data.data.attributes[attribute].value;
     const dieModifiers = actor.data.data.dieModifiers;
     const skillDieModifier = dieModifiers ? dieModifiers.modifierOne.value + dieModifiers.modifierTwo.value : 0;
     const skillDice = skillDieModifier; 
     const artifactModifiers = actor.data.data.artifactModifiers;
-    const artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => "d8" ) : []; 
+    const artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => a.type ) : []; 
     return {"canPush": true,
             "canPride": true,
             "attributeName": attribute,
             "attributeDice": attributeDice,
             "skillDice": skillDice,
+            "gearDice": 0,
             "artifactDie": artModifiers
     }
   }
@@ -238,10 +246,13 @@ export async function prepareRollData( rollType, actor, id) {
     const attack = actor.getEmbeddedEntity("OwnedItem", id);
     const attackName = attack.name;
     const attributeDice = attack.data.stats.dice;
-    // console.log(attack.data.description);
     return {"skillName" : attackName,
+            "weaponDamage": attack.data.stats.damage,
             "description": attack.data.description,
-            "attributeDice": attributeDice
+            "attributeDice": attributeDice,
+            "skillDice": 0,
+            "gearDice": 0,
+            "artifactDie": []
     }
   }
 
@@ -250,7 +261,10 @@ export async function prepareRollData( rollType, actor, id) {
     const armorDice = actor.data.data.armor;
     return {
       "skillName": `Armor`,
-      "attributeDice": armorDice
+      "attributeDice": armorDice,
+      "skillDice": 0,
+      "gearDice": 0,
+      "artifactDie": []
     }
   }
 }
@@ -279,12 +293,13 @@ export async function prepareChatData(fblCustomRoll, rollType=undefined, display
       "description": origin?.dataset.description,
       "diceResult": diceResult,
       "diceIcons": diceIcons
-    }
+    };
     chatData = await temp(chatData);
     return {content: chatData};
   }
 
   let type = rollType;
+  // console.log(type);
 
   if (type==="Spell") {
     chatData = {
@@ -297,9 +312,37 @@ export async function prepareChatData(fblCustomRoll, rollType=undefined, display
         "rolledSpell": displayData ? displayData.spellName : "",
         "diceResult": diceResult,
         "diceIcons": diceIcons
-    }
+    };
+  }
+
+  else if (type==="Monster-attack") {
+    let damage = Number(diceResult.successes) > 0 ? Number(diceResult.successes) + Number(displayData.weaponDamage) - 1 : 0;
+    chatData = {
+        "canPush": false,
+        "canPride": false,
+        "isMonsterAttack": true,
+        "roll_id": roll._id,
+        "rolledSkill": displayData ? displayData.skillName : "",
+        "description": displayData ? displayData.description : "",
+        "diceResult": mergeObject({"damage": damage }, diceResult),
+        "diceIcons": diceIcons
+    };
   }
   
+  else if (type==="Attribute") {
+    chatData = {
+      "canPush": displayData ? displayData.canPush : false,
+      "canPride": displayData ? displayData.canPride : false,
+      "roll_id": roll._id,
+      "rolledAttribute": displayData ? displayData.attributeName : "",
+      "rolledSkill": displayData ? displayData.attributeName : "",
+      "rolledItem": "",
+      "description": "",
+      "diceResult": diceResult,
+      "diceIcons": diceIcons
+    };
+  }
+
   else {
     chatData = {
       "canPush": displayData ? displayData.canPush : false,
@@ -312,9 +355,8 @@ export async function prepareChatData(fblCustomRoll, rollType=undefined, display
       "diceResult": diceResult,
       "diceIcons": diceIcons
     };
-    // console.log(chatData);
   }
-
+  
   chatData = await temp(chatData);
   return {content: chatData};
 }

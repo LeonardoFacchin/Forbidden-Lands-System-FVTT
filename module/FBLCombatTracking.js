@@ -84,7 +84,8 @@ export class FBLCombatTracker extends CombatTracker {
       // console.log(t.fAction);
       t.sAction = t.flags?.forbiddenlands?.slowActionSpent ? CONFIG_COMBAT_TRACKER_ACTIONS.slow[1] : CONFIG_COMBAT_TRACKER_ACTIONS.slow[0];
       // console.log(t.sAction);
-      t.resource = t.actor.data.data.attributes.Strength.value - this.trackedResources[t.tokenId][settings.resource];
+      t.resource = this.trackedResources[t.tokenId][settings.resource];
+      // t.resource = t.actor.data.data.attributes.Strength.value;
       turns.push(t);
     }
 
@@ -249,9 +250,10 @@ export const rollAll = async function () {
       let LFArray = [];
       let othersArray = Array.from(combatants);
       combatants.forEach( c => {
-        if (c.actor.data.data.Talent?.some( t => t.name == "Lightning Fast") || c.flags?.forbiddenlands?.bonusCards > 0) LFArray.push(c);
+        console.log(c);
+        if (c.actor?.data.data.Talent?.some( t => t.name == "Lightning Fast") || c.flags?.forbiddenlands?.bonusCards > 0) LFArray.push(c);
       });
-      console.log(LFArray);
+      // console.log(LFArray);
       // Sort the Lighning Fast combatants in descending order of talent rank
       LFArray.sort((a, b) => { 
         const aTalent = a.actor.data.data.Talent.find( t => t.name === "Lightning Fast");
@@ -267,9 +269,9 @@ export const rollAll = async function () {
       // Remove the combatants with Lightning Fast from the other array
       LFArray.forEach( e => {
         const index = othersArray.indexOf(e);
-        console.log(index);
+        // console.log(index);
         othersArray.splice(index, 1);
-        console.log(othersArray.slice());
+        // console.log(othersArray.slice());
       });
       // console.log("othersArray (before removing doubles): ", othersArray);        
       // Reduce the NPCs combatants to a single sample per archetype
@@ -287,7 +289,8 @@ export const rollAll = async function () {
       // console.log("othersArray (after removing doubles): ", othersArray); 
       // Reduce the remaining array to a single representative for each enemy archetype
       othersArray = othersArray.reduce( ( o, e ) => {
-        return o = !o.some( i => i?.actor.name === e.actor.name) ? o.concat([e]) : o;
+        console.log(e);
+        return o = !o.some( i => i?.actor.name === e?.actor.name) ? o.concat([e]) : o;
       }, []);
       // console.log("othersArray (final): ", othersArray);
       console.log(othersArray);

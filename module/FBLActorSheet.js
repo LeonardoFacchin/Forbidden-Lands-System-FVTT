@@ -30,7 +30,8 @@ export class FBLActorSheet extends ActorSheet {
     let data = super.getData();
 
     // create the Attributes damage track
-    Object.values(data.data.attributes).forEach(d => this._createTrack(d, CONFIG_WOUND_ICONS));
+    // Object.values(data.data.attributes).forEach(d => this._createTrack(d, CONFIG_WOUND_ICONS));
+    Object.values(data.data.attributes).forEach(d => createTrack.call(this, d, ["max","damage"], CONFIG_WOUND_ICONS));
     return data;
   }
 // -------------------------- END GETDATA -------------------------------------
@@ -50,23 +51,6 @@ export class FBLActorSheet extends ActorSheet {
     itemSortEventManager.bind(document.querySelector(`.layout.${this.actor._id}`));  
   }
 // -------------------------- END LISTENERS -------------------------------------
-
-   // logic to create damage track interfaces
-   // arguments:  data -> a data object of the form {"Name": {"maxValue": Num1,"subtractValue": Num2}}
-   //             iconsURLArray -> an array ["url1","url2"] containing the urls of the icons used to build the track
-   // return:     {"Name": {"value": Num1, "damage": Num2, "propertyTrack": dT}}
-   _createTrack(data, iconsURLArray) {
-      if (!data) {return};
-      const track = Object.values(data);
-      let trackTotalLength = track[0];                  // get the track length
-      let trackMarkedLength = track[1];                 // get the marked segments length
-      // create an array that will pass a list of names of svg icons to be rendered to the handlbars template. 
-      let dT = [];
-      for (let i = 1; i <= (trackMarkedLength); i++) { dT.push(iconsURLArray[0]) };                       // append a number of "marked" icons equal to the number of marked
-      for (let i = 1; i <= (trackTotalLength - trackMarkedLength); i++) { dT.push(iconsURLArray[1]) };    // append a number of "unmarked" icons equal to the difference between the total legnth and the marked segments length
-      data = mergeObject(data, {"propertyTrack": dT});        // return the original object after appending the propertyeTrack property
-      // console.log(data);
-    }
 
   // -------------------------- _ONDROP() -------------------------------------
   //  override the _onDrop() method to add logic that checks if the item being dropped is of a valid 
@@ -110,19 +94,19 @@ export class FBLActorSheet extends ActorSheet {
 
         let newItem;
         // EQUIPMENT
-        // if the item is of type "Equipment" add a "quantity" property, in order not to needlessly duplicate the item
+        // if the item is of type "Equipment" add a "quantity" property
         if ( item.type === "Equipment") {
           let existingItem = Object.values(actor.data.data.Equipment).find( i => i.name === item.name );
           // if the item already exists in the inventory, increase its quantity by 1
           if (existingItem) { 
-            let quan = getProperty(existingItem, "data.quantity");
+            let quan = existingItem.flags.forbiddenlands.quantity;
             quan++;
-            await actor.updateEmbeddedEntity("OwnedItem", {"_id": existingItem._id, "data": { "quantity": quan } })
+            await actor.updateEmbeddedEntity("OwnedItem", {"_id": existingItem._id, "flags.forbiddenlands.quantity": quan } );
           }
           // otherwise create a new item, set its quantity to 1 and its sorting order to the default
           else {
             newItem = await actor.createEmbeddedEntity("OwnedItem", duplicate(item.data));
-            await actor.updateEmbeddedEntity("OwnedItem", {"_id": newItem._id, "sort": (actor.data.items.length-1), "data": {"quantity": 1} });
+            await actor.updateEmbeddedEntity("OwnedItem", {"_id": newItem._id, "sort": (actor.data.items.length-1), "flags.forbiddenlands.quantity": 1 });
             actor.prepareEmbeddedEntities();
           };
           return;
@@ -208,20 +192,20 @@ export class PlayerCharacterSheet extends FBLActorSheet {
   getData() {
     let data = super.getData();
     // create the EXPERIENCE track
-    createTrack.call(this, data.data.experience, CONFIG_EXPERIENCE_ICONS);
+    createTrack.call(this, data.data.experience, ["max", "value"], CONFIG_EXPERIENCE_ICONS);
     // create the WILLPOWER score track
-    createTrack.call(this, data.data.willpower, CONFIG_WILLPOWER_ICONS);
+    createTrack.call(this, data.data.willpower, ["max", "value"], CONFIG_WILLPOWER_ICONS);
     // create the EQUIPMENT wear tracks
-    data.data.Weapon.forEach(d => createTrack.call(this, d.data.bonus, CONFIG_WEAR_ICONS));
-    data.data.Armor.forEach(d => createTrack.call(this, d.data.bonus, CONFIG_WEAR_ICONS));
-    data.data.Equipment.forEach(d => createTrack.call(this, d.data.bonus, CONFIG_WEAR_ICONS));
+    data.data.Weapon.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
+    data.data.Armor.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
+    data.data.Equipment.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
     // create CONDITIONS track
-    Object.entries(data.data.conditions).forEach(d => createTrack.call(this, d[1], CONFIG_CONDITIONS_ICONS[d[0]]) );
+    Object.entries(data.data.conditions).forEach(d => createTrack.call(this, d[1], ["max", "isCondition"], CONFIG_CONDITIONS_ICONS[d[0]]) );
     // create DICE MODIFIERS track
     Object.entries(data.data.dieModifiers).forEach( d => createDieTrack.call(this, d));
     // Object.entries(data.data.dieModifiers).forEach( d => createDieTrack.bind(this, d));
     // create ARTIFACT DICE MODIFIERS track
-    Object.entries(data.data.artifactModifiers).forEach(d => createTrack.call(this, d[1], CONFIG_ARTIFACT_MODIFIERS[d[0]]) );
+    Object.entries(data.data.artifactModifiers).forEach( d => createTrack.call(this, d[1], ["max", "value"], CONFIG_ARTIFACT_MODIFIERS[d[0]][d[1].type]) );
     // Object.entries(data.data.artifactModifiers).forEach(d => createTrack.bind(this, d[1], CONFIG_ARTIFACT_MODIFIERS[d[0]]) );
     //configure Icons and Currency
     data.data.Consumables = CONFIG_CONSUMABLE_ICONS;
@@ -298,13 +282,13 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
   getData() {
     let data = super.getData();
     // create the EQUIPMENT wear tracks
-    data.data.Weapon.forEach(d => createTrack.call(this, d.data.bonus, CONFIG_WEAR_ICONS));
-    data.data.Armor.forEach(d => createTrack.call(this, d.data.bonus, CONFIG_WEAR_ICONS));
-    data.data.Equipment.forEach(d => createTrack.call(this, d.data.bonus, CONFIG_WEAR_ICONS));
+    data.data.Weapon.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
+    data.data.Armor.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
+    data.data.Equipment.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
     // create DICE MODIFIERS track
     Object.entries(data.data.dieModifiers).forEach( (d) => createDieTrack.call(this, d));
     // create ARTIFACT DICE MODIFIERS track
-    Object.entries(data.data.artifactModifiers).forEach(d => createTrack.call(this, d[1], CONFIG_ARTIFACT_MODIFIERS[d[0]]) );
+    Object.entries(data.data.artifactModifiers).forEach( d => createTrack.call(this, d[1], ["max", "value"], CONFIG_ARTIFACT_MODIFIERS[d[0]][d[1].type]) );
     data.data.injuryStatus = CONFIG_INJURY_STATUS;
     return data;
   }
@@ -328,17 +312,18 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
 
 /* ------------------------------ FUNCTIONS AND EVENTHANDLERS ------------------------------------ */
 
-function createTrack(data, iconsURLArray) {
+function createTrack(data, trackNames, iconsURLArray) {
+  // console.log(iconsURLArray)
   if (!data) {return};
-  const track = Object.values(data);
-  let trackTotalLength = track[0];                  // get the track length
-  let trackMarkedLength = track[1];                 // get the marked segments length
+  const trackTotalLengthName = trackNames[0];                  // get the track length property name
+  const trackMarkedLengthName = trackNames[1];                 // get the marked segments length property name
+  let trackTotalLength = data[trackTotalLengthName];           // get the track length
+  let trackMarkedLength = data[trackMarkedLengthName];         // get the marked segments length
   // create an array that will pass a list of names of svg icons to be rendered to the handlbars template. 
   let dT = [];
   for (let i = 1; i <= (trackMarkedLength); i++) { dT.push(iconsURLArray[0]) };                       // append a number of "marked" icons equal to the number of marked
   for (let i = 1; i <= (trackTotalLength - trackMarkedLength); i++) { dT.push(iconsURLArray[1]) };    // append a number of "unmarked" icons equal to the difference between the total legnth and the marked segments length
   return data = mergeObject(data, {"propertyTrack": dT});        // return the original object after appending the propertyeTrack property
-  // console.log(data);
 }
 
   function createDieTrack(modifier) {
@@ -407,10 +392,10 @@ async function itemEvents(event) {
     // if item quantity is greater than one then decrese it by one,
     // otherwise delete the item alltogether
     if (item.type === "Equipment") {
-      let quan = getProperty(item, "data.quantity");
+      let quan = item.flags?.forbiddenlands?.quantity;
       if (quan == 1 || !quan) { this.actor.deleteEmbeddedEntity("OwnedItem", id); return;}
       quan--;
-      return this.actor.updateEmbeddedEntity("OwnedItem", { "_id": id, "data" : {"quantity": quan } });
+      return this.actor.updateEmbeddedEntity("OwnedItem", { "_id": id, "flags.forbiddenlands.quantity": quan });
     }
     // if a spellcasting talent is removed, also remove the corresponding spells
     if (item.type === "Talent") {
@@ -450,6 +435,31 @@ async function itemEvents(event) {
         ind--;
         const newValue = diceValues[ind];
         await this.actor.update(updateDataFromProperty(`data.consumable.${cons}`, newValue));
+        return;
+    }
+  }
+
+  // ARTIFACT DICE OPERATIONS
+  if (elementClasses.contains("fa-angle-up") || elementClasses.contains("fa-angle-down")) {
+    let mod = origin.dataset.id;
+    let elementClass = elementClasses.contains("fa-angle-up") ? "fa-angle-up" : "fa-angle-down";
+    let currentValue = data.data.artifactModifiers[mod].type;
+    const diceValues = ["d8", "d10", "d12"];
+    let ind = diceValues.indexOf(currentValue);
+    // if the player clicked to step up the die, step it up
+    if (elementClass === "fa-angle-up") {
+      ind++;
+      ind = ind % 3;
+      const newValue = diceValues[ind];
+      await this.actor.update(updateDataFromProperty(`data.artifactModifiers.${mod}.type`, newValue));
+      return;
+    }
+    // if the player clicked to step down the die, step it down
+    if (elementClass === "fa-angle-down") {
+        ind--;
+        ind = ind === -1 ? 2 : ind;
+        const newValue = diceValues[ind];
+        await this.actor.update(updateDataFromProperty(`data.artifactModifiers.${mod}.type`, newValue));
         return;
     }
   }

@@ -593,6 +593,10 @@ height: 35px;
   grid-template-columns: 16% 1fr 16%;
 }
 
+.table__entry--artDice {
+    grid-template-columns: 65% 30%;
+}
+
 .table__field {
   width: 100%;
   padding: 2px 0px;

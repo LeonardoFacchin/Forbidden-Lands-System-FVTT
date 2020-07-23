@@ -40,16 +40,23 @@
     {{#if @last}}
     <div>
         {{#unless ../isSpell}}
+        {{#unless ../isMonsterAttack}}
         <div>Successes: {{../diceResult.successes}}</div>
         <div>{{../this.rolledAttribute}} Damage: {{../diceResult.attDamage}}</div>
         {{#if ../this.rolledItem}}
         <div><span>{{../this.rolledItem}}</span>  Damage: {{../diceResult.gearDamage}}</div>
         {{/if}}
         {{/unless}}
+        {{/unless}}
 
         {{#if ../isSpell}}
         <div>Overcharge: {{../diceResult.successes}}</div>
         <div>Spell Power Level: {{../powerLevel}}</div>
+        {{/if}}
+
+        {{#if ../isMonsterAttack}}
+        <div>Successes: {{../diceResult.successes}}</div>
+        <div>Damage: {{../diceResult.damage}}</div>
         {{/if}}
     </div>
     <hr>

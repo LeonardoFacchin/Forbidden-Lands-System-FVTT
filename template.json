@@ -5,18 +5,22 @@
         "scores": {
             "attributes": {
                 "Strength": {
+                    "max": 0,
                     "value": 0,
                     "damage": 0
                 },
                 "Agility": {
+                    "max": 0,
                     "value": 0,
                     "damage": 0
                 },
                 "Wits": {
+                    "max": 0,
                     "value": 0,
                     "damage": 0
                 },
                 "Empathy": {
+                    "max": 0,
                     "value": 0,
                     "damage": 0
                 }
@@ -101,8 +105,8 @@
                 "reputation": 0
             },
             "templates": ["scores"],
-            "willpower": {"max": 10, "score": 0},
-            "experience": {"max": 25 , "score": 0},
+            "willpower": {"max": 10, "value": 0},
+            "experience": {"max": 25 , "value": 0},
             "consumable": {
                 "Food": "d6",
                 "Water": "d6",
@@ -127,9 +131,9 @@
                 "modifierThree": {"name": "", "value": 0}
             },
             "artifactModifiers":{
-                "modifierOne": {"max": 1, "value": 0},
-                "modifierTwo": {"max": 1, "value": 0},
-                "modifierThree": {"max": 1, "value": 0}
+                "modifierOne": {"max": 1, "value": 0, "type": "d8"},
+                "modifierTwo": {"max": 1, "value": 0, "type": "d8"},
+                "modifierThree": {"max": 1, "value": 0, "type": "d8"}
             }
         },
 
@@ -154,9 +158,9 @@
                 "modifierThree": {"name": "", "value": 0}
             },
             "artifactModifiers":{
-                "modifierOne": {"max": 1, "value": 0},
-                "modifierTwo": {"max": 1, "value": 0},
-                "modifierThree": {"max": 1, "value": 0}
+                "modifierOne": {"max": 1, "value": 0, "type": "d8"},
+                "modifierTwo": {"max": 1, "value": 0, "type": "d8"},
+                "modifierThree": {"max": 1, "value": 0, "type": "d8"}
             }
         }
     },
@@ -209,9 +213,11 @@
         "description": ""
      },
      "Equipment": {
+        "isArtifact": "false",
          "bonus": {"value": 0, "damage": 0},
          "skill": "",
          "price": {"cost": 0, "currency": ""},
+         "artifactDie": "",
          "templates": ["crafting", "inventory"],
          "description": ""
      },

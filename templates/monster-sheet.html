@@ -63,7 +63,7 @@
                             <label class="table__data table__data--name" data-id="{{attName}}" data-action="roll" data-diehook="Attribute">{{attName}}</label>
                         </div>   
                         <div class="table__field">
-                            <input class="table__data" type="text" name="data.attributes.{{@key}}.value" value="{{this.value}}" data-dtype="Number">
+                            <input class="table__data" type="text" name="data.attributes.{{@key}}.max" value="{{this.max}}" data-dtype="Number">
                         </div>
                         <div id="{{@key}}" class="table__field">
                             <div class="table__data">
@@ -74,7 +74,7 @@
                             <!-- <img class="table__data" type="image" src="systems/forbiddenlands/icons/sheets/healing.svg" style="flex: 0; border: none; float: right;" alt="X" width="15px" height="15px"> -->
                         </div>
                          <div class="table__field">
-                            <label class="table__data" type="text" data-dtype="Number">{{this.currentValue}}</label>
+                            <label class="table__data" type="text" data-dtype="Number">{{this.value}}</label>
                         </div>
                     </div>
                 {{/each}}

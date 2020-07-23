@@ -19,14 +19,14 @@ export class FBLActor extends Actor {
 
         // prepare attributes current values
         Object.values(this.data.data.attributes).forEach( attribute => {
-            attribute.currentValue = attribute.value - attribute.damage;
+            attribute.value = attribute.max - attribute.damage;
         });
 
         // prepare the total skill value and the skill abbreviation to display on the sheet
         Object.values(this.data.data.skills).forEach( skill => {
             const attribute = skill.attr;
             // console.log(skill);
-            skill.total = this.data.data.attributes[attribute].currentValue + skill.value;
+            skill.total = this.data.data.attributes[attribute].value + skill.value;
             skill.abbrev = `${attribute.substring(0,1).toUpperCase()}${attribute.substring(1,3)}`;
         });
 
@@ -53,7 +53,7 @@ export class FBLActor extends Actor {
         if (consolidatedInventory.length > 0) {
             consolidatedWeight = consolidatedInventory.map( item => {
             const weight = item.data.weight;
-            const quantity = item.data.quantity || 1;
+            const quantity = item.flags?.forbiddenlands?.quantity || 1;
             if (weight === "Light") return (0.5 * quantity);
             if (weight === "Normal") return (quantity);
             if (weight === "Heavy") return (2 * quantity);
@@ -75,7 +75,7 @@ export class FBLActor extends Actor {
         
         data.encumbrance = {};
         data.encumbrance.value = itemsWeight + ( Math.floor( (data.money.gold + data.money.silver + data.money.copper) / 100) * 0.5);
-        data.encumbrance.capacity = data.attributes.Strength.value * 2 + additionalWeight;
+        data.encumbrance.capacity = data.attributes.Strength.max * 2 + additionalWeight;
     
     }
 
@@ -142,22 +142,11 @@ async rollCheck(rollType, id) {
   
     if (!rollData) return;
     // console.log(rollData);
-    
-    // defines necessary roll dice variables and their defaults
-    const attributeDice = rollData.attributeDice || 0; 
-    const skillDice  = rollData.skillDice || 0; 
-    const gearDice  = rollData.gearDice || 0;
-    const artifactDie = rollData.artifactDie || [];
-    const attributeName = rollData.attributeName || "";
-    const skillName = rollData.skillName || "";
-    const itemName = rollData.itemName || "";
-    const description = rollData.description || "";
-    const canPush = rollData.canPush || false;
-    const canPride = rollData.canPride || false;
-    const displayData = {"skillName" : skillName, "attributeName": attributeName, "itemName": itemName, "description": description, "canPush": canPush, "canPride": canPride}
+
+    const displayData = rollData;
   
     // roll the check
-    let rollCheck = new fblPool(attributeDice, skillDice, gearDice, artifactDie);
+    let rollCheck = new fblPool(rollData.attributeDice, rollData.skillDice, rollData.gearDice, rollData.artifactDie);
     // console.log(rollCheck);
   
     const chatData = await prepareChatData(rollCheck, rollType, displayData);
@@ -173,5 +162,27 @@ async rollCheck(rollType, id) {
     // console.log(rollCheck);
   }
   //------------------------------------------------------------------------------------------------
+
+  async modifyTokenAttribute(attribute, value, isDelta=false, isBar=true) {
+    console.log("modifyTokenAttribute Fired")
+    const current = getProperty(this.data.data, attribute);
+    // console.log(attribute);
+    if ( isBar ) {
+      if (isDelta) value = Math.clamped(0, Number(current.value) + value, current.max);
+        if (attribute.includes("attributes")) {
+            value = current.max - value;
+            return await this.update({[`data.${attribute}.damage`]: value});
+        }
+      else return await this.update({[`data.${attribute}.value`]: value});
+    } 
     
+    else {
+      if ( isDelta ) value = Number(current) + value;
+        if (attribute.includes("attributes")) {
+            value = current.max - value;
+            return await this.update({[`data.${attribute}.damage`]: value});
+        }
+      else return await this.update({[`data.${attribute}`]: value});
+    }
+  }
 }
