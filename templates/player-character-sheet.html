@@ -411,7 +411,7 @@
                             <img class="table__data" src="{{@root.data.injuryStatus.open}}" style="height: 25px">
                         </div>
                         <div class="table__field">        
-                            <span class="table__data" type="text">{{injury.data.healingTime}} Days</span>
+                            <span class="table__data">{{injury.data.healingTime}} {{#unlesss injury.data.healingTime comparison="Perm"}}Days{{/unlesss}}</span>
                         </div>
                         {{/iff}}
                     {{else}}
@@ -419,7 +419,7 @@
                         <img class="table__data" src="{{@root.data.injuryStatus.healing}}" style="height: 25px">
                     </div>
                     <div class="table__field">        
-                        <span class="table__data" type="text">{{injury.data.healingTime}} Days</span>
+                        <span class="table__data">{{injury.data.healingTime}} {{#unlesss injury.data.healingTime comparison="Perm"}}Days{{/unlesss}}</span>
                     </div>
                     {{/unless}}
 

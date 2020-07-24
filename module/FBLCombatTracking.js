@@ -45,6 +45,7 @@ export class FBLCombatTracker extends CombatTracker {
     };
 
     if ( !hasCombat ) return data;
+
     let upd = this.combat.combatants.map( c => {
       const bCards = c.flags?.forbiddenlands?.bonusCards ? c.flags.forbiddenlands.bonusCards : 0;
       return {_id: c._id, "flags.forbiddenlands.bonusCards": bCards}
@@ -212,14 +213,16 @@ export const setupTurns = function () {
 export const rollAll = async function () {
   
   let combatants = this.data.combatants;
+  console.log(combatants.slice());
 
   // reset the hasInitiative flag before rolling and
   // duplicate the entries of combatants that can take two actions per round
-  let combatantsData = this.data.combatants.filter( c => c.flags?.forbiddenlands?.actTwice).map( c => c );
+  let combatantsData = combatants.filter( c => c.flags?.forbiddenlands?.actTwice).map( c => duplicate(c) );
 
+  console.log(combatantsData.slice());
   await this.createEmbeddedEntity("Combatant", combatantsData);
 
-  let prepareCombatants = this.data.combatants.map( c => {
+  let prepareCombatants = combatants.map( c => {
     let data;
     data = (c.flags?.forbiddenlands?.actTwice) ? {"flags.forbiddenlands.actTwice": false, "flags.forbiddenlands.doubleAction": true} : {};
     data = mergeObject({_id: c._id, "flags.forbiddenlands.hasInitiative": false}, data);
@@ -230,7 +233,7 @@ export const rollAll = async function () {
 
     let combatantsArray;
     let isOverflowing = false;
-
+    console.log(combatants.slice());
 
     if (combatants.length <= 10) { 
       combatantsArray = Array.from(combatants).sort( (a, b) => { 
@@ -250,7 +253,7 @@ export const rollAll = async function () {
       let LFArray = [];
       let othersArray = Array.from(combatants);
       combatants.forEach( c => {
-        console.log(c);
+        // console.log(c);
         if (c.actor?.data.data.Talent?.some( t => t.name == "Lightning Fast") || c.flags?.forbiddenlands?.bonusCards > 0) LFArray.push(c);
       });
       // console.log(LFArray);

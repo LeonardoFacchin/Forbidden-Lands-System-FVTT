@@ -34,6 +34,7 @@ Hooks.once("init", async function() {
   Combat.prototype.rollInitiative = rollInitiative;
   Combat.prototype.nextRound = nextRound;
   Combat.prototype.nextTurn = nextTurn;
+  Token.prototype._onUpdateTokenActor = _onUpdateTokenActor;
   // CONFIG.Actor.sheetClass = FBLActorSheet;
 
   let dPool = new Collection();
@@ -214,3 +215,23 @@ Hooks.on("hotbarDrop", async function (hotbar, dropData, slot) {
   // console.log(macro):
   game.user.assignHotbarMacro(macro, slot);
 })
+
+let _onUpdateTokenActor = function _onUpdateTokenActor(updateData) {
+  // Reject any calls which were incorrectly placed to this method for tokens which are linked
+  if ( !this.actor || this.data.actorLink ) return;
+  // Update data for the synthetic Token
+  mergeObject(this.actor.data, updateData);
+  this.actor._onUpdate(updateData);
+  // Update Token bar attributes
+  this._onUpdateBarAttributes(updateData);
+  // Update tracked Combat resources
+  const checkProperty = (game.combats.settings.resource.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
+
+  if ( this.inCombat && updateData.data && checkProperty ) {
+    console.log("_onUpdateTokenActor Fired");
+    canvas.addPendingOperation(`CombatTracker.updateTrackedResources`, ui.combat.updateTrackedResources, ui.combat);
+    canvas.addPendingOperation(`CombatTracker.render`, ui.combat.render, ui.combat);
+  }
+  // Render the active Token sheet
+  this.actor.sheet.render();
+}

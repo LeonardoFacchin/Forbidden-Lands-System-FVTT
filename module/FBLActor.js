@@ -76,7 +76,6 @@ export class FBLActor extends Actor {
         data.encumbrance = {};
         data.encumbrance.value = itemsWeight + ( Math.floor( (data.money.gold + data.money.silver + data.money.copper) / 100) * 0.5);
         data.encumbrance.capacity = data.attributes.Strength.max * 2 + additionalWeight;
-    
     }
 
     _prepareMonsterData() {

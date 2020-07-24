@@ -115,8 +115,13 @@ export class FBLActorSheet extends ActorSheet {
         if (item.type === "Critical Injury") {
           // roll for healing time and time limit before death
           let timeToHeal = item.data.data.healingTime;
-          let healingRoll = new Roll(timeToHeal);
-          timeToHeal = healingRoll.roll().result;
+          if (timeToHeal === " - ") return;
+          else if (timeToHeal !== "Permanent") {  
+            let healingRoll = new Roll(timeToHeal);
+            timeToHeal = healingRoll.roll().result;
+          }
+          else timeToHeal = "Perm";
+
           let timeToDeath;
           if (item.data.data.lethal.isLethal === "Yes") {
           timeToDeath = item.data.data.timeLimit.value;
@@ -639,7 +644,7 @@ async function woundTreatment(event) {
     return await this.actor.updateEmbeddedEntity("OwnedItem", {"_id": id, "data.lethal.isLethal": false} );
   }
 
-  return await this.actor.updateEmbeddedEntity("OwnedItem", {"_id": id, "data.isTreated": true, "data.healingTime": Math.round(Number(injury.data.healingTime)/2) });
+  return await this.actor.updateEmbeddedEntity("OwnedItem", {"_id": id, "data.isTreated": true, "data.healingTime": Math.round(Number(injury.data.healingTime)/2) || "Perm" });
 }
 
 //----------------  FUNCTION showItemSheet(event) ---------------------------------------------------- 
