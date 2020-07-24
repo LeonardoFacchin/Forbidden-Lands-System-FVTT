@@ -182,7 +182,7 @@
                     <div class="table__field">
                         <div class="table__data">
                             {{#each data.bonus.propertyTrack}}
-                                    <img type="image" name="data.bonus.damage" data-id="{{weapon._id}}" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: -2px -1px;  vertical-align: middle;" alt="" width="18px" height="18px">
+                                    <img type="image" name="data.bonus.damage" data-id="{{weapon._id}}" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: -2px -1px;  vertical-align: middle;" alt="" width="20px" height="20px">
                             {{/each}}
                         </div>
                     </div>
@@ -193,7 +193,7 @@
                     </div>
                     <div class="table__field">
                         <span class="table__data">
-                            {{weapon.data.artifactDie}}
+                            <img class="fas artifactSwitch" type="image" src="{{weapon.data.artifactUrl}}" data-id="{{weapon._id}}" style="border: none; margin: -2px -1px;  vertical-align: middle;" alt="" width="18px" height="18px">
                         </span>
                     </div>
                     <div class="table__field">
@@ -241,7 +241,7 @@
                     </div>
                     <div class="table__field">
                         <span class="table__data">
-                            {{armor.data.artifactDie}}
+                            <img class="fas artifactSwitch" type="image" src="{{armor.data.artifactUrl}}" data-id="{{armor._id}}" style="border: none; margin: -2px -1px;  vertical-align: middle;" alt="" width="18px" height="18px">
                         </span>
                     </div>
                     <div class="table__field">

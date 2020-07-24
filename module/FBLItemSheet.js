@@ -167,7 +167,11 @@ export class SpellSheet extends FBLItemSheet {
 export class EquipmentSheet extends FBLItemSheet {
   constructor(object, options) {
     super(object, options);
-    this.settings =  {"skills": CONFIG_SKILLS_LIST, "supply": CONFIG_EQUIP_SUPPLY, "weight": CONFIG_EQUIP_WEIGHT, "money": CONFIG_MONEY};
+    this.settings =  {"skills": CONFIG_SKILLS_LIST,
+                      "artifactDie": CONFIG_ARTIFACT_DIE,
+                      "supply": CONFIG_EQUIP_SUPPLY,
+                      "weight": CONFIG_EQUIP_WEIGHT,
+                      "money": CONFIG_MONEY};
   }
 
 
@@ -219,7 +223,7 @@ export class ArmorSheet extends FBLItemSheet {
   constructor(object, options) {
     super(object, options);
     this.settings =  {"locations": CONFIG_ARMOR_LOCATION,
-                      "artifact-die": CONFIG_ARTIFACT_DIE,
+                      "artifactDie": CONFIG_ARTIFACT_DIE,
                       "supply": CONFIG_EQUIP_SUPPLY,
                       "weight": CONFIG_EQUIP_WEIGHT,
                       "money": CONFIG_MONEY};

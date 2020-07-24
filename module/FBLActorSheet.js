@@ -93,6 +93,13 @@ export class FBLActorSheet extends ActorSheet {
         if ( !validEmbeddedEntities.includes(item.type) ) {console.log("Invalid"); return};
 
         let newItem;
+        console.log(item.data.data.isArtifact, item.data.data.artifactDie);
+        // If the item is a non-initialized artifact, initialize the default die type
+        if ( item.data.data.isArtifact && !item.data.data.artifactDie ) {
+          item.data.data.artifactDie = item.data.data.artifactArray[0];
+          return this._onDrop(event);
+        } 
+
         // EQUIPMENT
         // if the item is of type "Equipment" add a "quantity" property
         if ( item.type === "Equipment") {
@@ -201,9 +208,18 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     // create the WILLPOWER score track
     createTrack.call(this, data.data.willpower, ["max", "value"], CONFIG_WILLPOWER_ICONS);
     // create the EQUIPMENT wear tracks
-    data.data.Weapon.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
-    data.data.Armor.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
-    data.data.Equipment.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
+    data.data.Weapon.forEach(d => {
+      createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS);
+      if ( d.data.isArtifact ) d.data.artifactUrl = CONFIG_DICE_ICONS[d.data.artifactDie];
+    });
+    data.data.Armor.forEach(d => {
+      createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS)
+      if ( d.data.isArtifact ) d.data.artifactUrl = CONFIG_DICE_ICONS[d.data.artifactDie]; 
+    });
+    data.data.Equipment.forEach(d => {
+      createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS)
+      if ( d.data.isArtifact ) d.data.artifactUrl = CONFIG_DICE_ICONS[d.data.artifactDie];
+    });
     // create CONDITIONS track
     Object.entries(data.data.conditions).forEach(d => createTrack.call(this, d[1], ["max", "isCondition"], CONFIG_CONDITIONS_ICONS[d[0]]) );
     // create DICE MODIFIERS track
@@ -287,9 +303,18 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
   getData() {
     let data = super.getData();
     // create the EQUIPMENT wear tracks
-    data.data.Weapon.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
-    data.data.Armor.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
-    data.data.Equipment.forEach(d => createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS));
+    data.data.Weapon.forEach(d => {
+      createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS)
+      if ( d.data.isArtifact ) d.data.artifactUrl = CONFIG_DICE_ICONS[d.data.artifactDie];
+    });
+    data.data.Armor.forEach(d => {
+      createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS)
+      if ( d.data.isArtifact ) d.data.artifactUrl = CONFIG_DICE_ICONS[d.data.artifactDie];
+    });
+    data.data.Equipment.forEach(d => {
+      createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS)
+      if ( d.data.isArtifact ) d.data.artifactUrl = CONFIG_DICE_ICONS[d.data.artifactDie];
+    });
     // create DICE MODIFIERS track
     Object.entries(data.data.dieModifiers).forEach( (d) => createDieTrack.call(this, d));
     // create ARTIFACT DICE MODIFIERS track
@@ -387,6 +412,7 @@ async function itemEvents(event) {
 
   const origin = event.target;
   const elementClasses= origin.classList;
+  console.log(elementClasses);
   const data = this.getData();
   // console.log(data);
 
@@ -467,6 +493,15 @@ async function itemEvents(event) {
         await this.actor.update(updateDataFromProperty(`data.artifactModifiers.${mod}.type`, newValue));
         return;
     }
+  }
+
+  // ARTIFACT DIE SWITCH
+  if (elementClasses.contains("artifactSwitch")) {
+    let item = this.actor.getEmbeddedEntity("OwnedItem", origin.dataset.id);
+    console.log(item);
+    if (!item.data.artifactArray.every( a => a)) return;
+    let newArtifactDie = item.data.artifactDie === item.data.artifactArray[0] ? item.data.artifactArray[1] :item.data.artifactArray[0];
+    await this.actor.updateEmbeddedEntity("OwnedItem", {_id: item._id, "data.artifactDie" : newArtifactDie});
   }
 }
 

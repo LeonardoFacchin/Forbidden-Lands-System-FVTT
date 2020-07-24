@@ -218,6 +218,7 @@
          "skill": "",
          "price": {"cost": 0, "currency": ""},
          "artifactDie": "",
+         "artifactArray": [],
          "templates": ["crafting", "inventory"],
          "description": ""
      },
@@ -230,6 +231,7 @@
          "features": ["", "", "", ""],
          "skill": "",
          "artifactDie": "",
+         "artifactArray": [],
          "templates": ["crafting", "inventory"],
          "description": ""
      },
@@ -239,6 +241,7 @@
         "location": "",
         "features": "",
         "artifactDie": "",
+        "artifactArray": [],
         "templates": ["crafting", "inventory"],
         "description": ""
     },

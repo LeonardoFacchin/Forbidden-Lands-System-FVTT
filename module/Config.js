@@ -35,7 +35,7 @@ export const CONFIG_WEAPON_SKILLS = ["Melee","Marksmanship"];
 
 // EQUIPMENT/INVENTORY
 
-export const CONFIG_ARTIFACT_DIE = [" - ", "d8", "d10", "d12"];
+export const CONFIG_ARTIFACT_DIE = ["", "d8", "d10", "d12"];
 
 export const CONFIG_DICE_ICONS = {
   "dX": "systems/forbiddenlands/icons/dice/dXblack.svg",

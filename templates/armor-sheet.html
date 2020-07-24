@@ -53,17 +53,30 @@
                 </div>
             </div>
             <!-- ARTIFACT -->
+            {{log this}}
             {{#if data.isArtifact}}
             <label class="frame__title layout__gap--large">Artifact</label>
             <div class="frame frame__placement frame--no-lr-border">
                 <div class="table">
                     <div class="table__entry table__entry--no-border table__entry--mAttacks">
                         <div class="table__field">
-                            <label class="table__data table__data--left-aligned">Artifact Die: </label>
+                            <label class="table__data table__data--left-aligned">Artifact Die One: </label>
                         </div>
                         <div class="table__field">
-                            <select class="table__data" name="data.artifactDie">
-                                {{#select data.artifactDie}}
+                            <select class="table__data" name="data.artifactArray">
+                                {{#select data.artifactArray.[0]}}
+                                    {{#each settings.artifactDie}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Artifact Die Two: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.artifactArray">
+                                {{#select data.artifactArray.[1]}}
                                     {{#each settings.artifactDie}}
                                     <option value="{{this}}">{{this}}</option>
                                     {{/each}}

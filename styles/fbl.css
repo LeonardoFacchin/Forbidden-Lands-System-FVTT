@@ -32,7 +32,9 @@
 
 .fbl .window-content,
 #chat-log .message,
-.dialog .window-content {
+.dialog .window-content,
+.journal-sheet,
+.journal-sheet .window-content {
   /* font-family: "IM Fell DW Pica Roman"; */
   font-family: "IM Fell DW Pica Roman";
   background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
@@ -379,9 +381,13 @@ height: 35px;
   /* border: 2px dashed red; */
 }
 
-.editor-content {
+.editor-content,
+.tox {
   padding: 5px 10px;
   flex: 1;
+  font-family: "IM Fell DW Pica Roman";
+  background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
+  font-size: 0.9rem;
   /* border: 3px dotted blue; */
 }
 
@@ -533,7 +539,7 @@ height: 35px;
 
 .table__entry--PC-weapon-display {
   background-color: white;  
-  grid-template-columns: 8% 15% 5% 17% 15% 5% 5% 27% 5px;
+  grid-template-columns: 8% 15% 5% 13% 15% 5% 9% 27% 5px;
 }
 
 .table__entry--PC-armor-display {
