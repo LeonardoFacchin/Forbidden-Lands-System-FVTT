@@ -195,8 +195,8 @@ export class PlayerCharacterSheet extends FBLActorSheet {
 	  return mergeObject(super.defaultOptions, {
   	  classes: ["fbl"],
   	  template: "systems/forbiddenlands/templates/player-character-sheet.html",
-      width: 929,
-      height: 988,
+      // width: 929,
+      // height: 988,
       resizable: false
     });
   }
@@ -235,6 +235,7 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     data.data.currency = Array.from(CONFIG_MONEY).reverse();
     // configure Encumbrance Icon according to encumbrance status
     data.data.isEncumbered = (data.data.encumbrance.value > data.data.encumbrance.capacity) ?  true : false;
+    // data.data.isSheetCompressed = this.data
     // console.log(data);
     return data;
   }
@@ -244,18 +245,18 @@ export class PlayerCharacterSheet extends FBLActorSheet {
 
     super.activateListeners(html);
     // Listener to manage item-related operations: delete, consumables increase or decrese, etc.
-    document.querySelectorAll(`.layout--PC.${this.actor._id}`).forEach( el => el.addEventListener("click", updateTrackData.bind(this)));
-    document.querySelector(`.layout--PC.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
-    document.querySelector(`.layout--PC.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
-    document.querySelector(`.layout--PC.${this.actor._id}`).addEventListener("dblclick", rollConsumable.bind(this));
-    document.querySelector(`.layout--PC.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
-    document.querySelector(`.layout--PC.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
-    document.querySelector(`.layout--PC.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
-    document.querySelector(`.layout--PC.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
+    document.querySelectorAll(`form.${this.actor._id}`).forEach( el => el.addEventListener("click", updateTrackData.bind(this)));
+    document.querySelector(`form.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", rollConsumable.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
+    document.querySelector(`form.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
 
     //activate tabs
     const tabs = new TabsV2({navSelector: ".tabs", contentSelector: ".content", initial: "talents", callback: ()=>{}});
-    tabs.bind(document.querySelector(`.layout--PC.${this.actor._id}`));
+    tabs.bind(document.querySelector(`form.${this.actor._id}`));
     }  
 }
 /* ------------------------------  END PlayerCharacterSheet------------------------------------ */
@@ -277,10 +278,10 @@ export class MonsterSheet extends FBLActorSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    document.querySelector(`.layout--monster.${this.actor._id}`).addEventListener("click", updateTrackData.bind(this));
-    document.querySelector(`.layout--monster.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
-    document.querySelector(`.layout--monster.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
-    document.querySelector(`.layout--monster.${this.actor._id} .randomAttack`).addEventListener("dblclick", rollRandomAttack.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("click", updateTrackData.bind(this));
+    document.querySelector(`form.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
+    document.querySelector(`form.${this.actor._id} .randomAttack`).addEventListener("dblclick", rollRandomAttack.bind(this));
   }
 }
 /* ------------------------------ END MonsterSheet ------------------------------------ */
@@ -325,13 +326,13 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    document.querySelector(`.layout--NPC.${this.actor._id}`).addEventListener("click", updateTrackData.bind(this));
-    document.querySelector(`.layout--NPC.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
-    document.querySelector(`.layout--NPC.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
-    document.querySelector(`.layout--NPC.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
-    document.querySelector(`.layout--NPC.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
-    document.querySelector(`.layout--NPC.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
-    document.querySelector(`.layout--NPC.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("click", updateTrackData.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
+    document.querySelector(`form.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
+    document.querySelector(`form.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
 
     //activate tabs
     const tabs = new TabsV2({navSelector: ".tabs", contentSelector: ".content", initial: "talents", callback: ()=>{}});
@@ -502,6 +503,14 @@ async function itemEvents(event) {
     if (!item.data.artifactArray.every( a => a)) return;
     let newArtifactDie = item.data.artifactDie === item.data.artifactArray[0] ? item.data.artifactArray[1] :item.data.artifactArray[0];
     await this.actor.updateEmbeddedEntity("OwnedItem", {_id: item._id, "data.artifactDie" : newArtifactDie});
+  }
+
+  // Resize Sheet
+  if (elementClasses.contains("fa-angle-double-down") || elementClasses.contains("fa-angle-double-up")) {
+    console.log("fired");
+    this.actor.data.data.isSheetCompressed = elementClasses.contains("fa-angle-double-down") ? true : false;
+    this.render(true);
+    console.log(this.actor);
   }
 }
 

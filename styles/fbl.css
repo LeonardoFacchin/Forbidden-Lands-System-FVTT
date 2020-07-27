@@ -35,28 +35,26 @@
 .dialog .window-content,
 .journal-sheet,
 .journal-sheet .window-content {
-  /* font-family: "IM Fell DW Pica Roman"; */
   font-family: "IM Fell DW Pica Roman";
   background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
   font-size: var(--table-font-size);
   color: black;
   text-align: justify;
-  min-height: fit-content;
-  min-width: fit-content;
-  /* make sure any refreshed window is resized to match its content.
-  Needed when transitioning from the "edit" version of a sheet to the "display" version. */
-  padding: 10px;
+  height: auto !important;
+  width: auto !important;
+  padding-bottom: 15px;
   overflow-y: hidden;
 }
 
 .app.window-app.fbl {
-  min-height: fit-content;
-  min-width: fit-content;
+  height: auto !important;
+  width: auto !important;
 }
 
 form {
-  min-height: fit-content;
-  min-width: fit-content;
+  height: auto !important;
+  width: auto !important;
+  margin: auto !important;
 }
 
 #chat-log .message {
@@ -154,8 +152,14 @@ border-radius: 2px;
   grid-template-columns: 215px 460px 215px;
   grid-template-rows: 215px 713px;
   min-width: 910px;
-  /* min-height: fit-content; */
-  /* border: 3px dashed purple; */
+}
+
+.layout--PC-compact {
+  grid-template-areas: "header header header"
+                       "left-sidebar body right-sidebar";
+  grid-template-columns: 215px 460px 215px;
+  grid-template-rows: 35px 713px;
+  min-width: 910px;
 }
 
 .layout--monster {
@@ -356,8 +360,16 @@ border-radius: 2px;
 }
 
 input[type="text"].header-title--small {
-font-size: 1.5em;
-height: 35px;
+  font-size: 1.5em;
+  height: 35px;
+  border: var(--frame-border);
+  padding: 0 5px;
+  /* background-color: var(--input-field-background-color); */
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  align-self: center;
+  margin: auto;
+  text-align: start;
 }
 
 /* --------------------------- TinyMCE EDITOR ----------------------------*/

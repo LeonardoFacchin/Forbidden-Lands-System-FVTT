@@ -396,28 +396,28 @@ export function prepareDiceIcons( rollArray, artifactArray, isNegative ) {
 // ----------------------------------------------------------------------------------------------------------
 
 
-export async function pushingRoll(fblCustomRoll, origin) {
+export async function pushingRoll(fblCustomRoll, origin, msg) {
   const oldRoll = fblCustomRoll;
   // console.log(oldRoll);
   const newRoll = oldRoll.pushRoll();
-  let message = game.messages.get(fblCustomRoll.message_id);
+  // let message = game.messages.get(fblCustomRoll.message_id);
   let displayData = {"canPush": true, "canPride": true};
   let chatData = await prepareChatData(newRoll, undefined, displayData, true, origin);
-  message.update(chatData);
+  msg.update(chatData);
   // console.log(fblCustomRoll.sequence);
-  ui.chat.updateMessage(message, true);
+  ui.chat.updateMessage(msg, true);
 }
 
-export async function prideRoll(fblCustomRoll, origin) {
+export async function prideRoll(fblCustomRoll, origin, msg) {
   const oldRoll = fblCustomRoll;
   // console.log(oldRoll);
   const newRoll = oldRoll.rollPride();
-  let message = game.messages.get(fblCustomRoll.message_id);
+  // let message = game.messages.get(fblCustomRoll.message_id);
   let displayData = {"canPush": false,"canPride": false};
   const data = await prepareChatData(newRoll, undefined, displayData, true, origin);
-  message.update(data);
+  msg.update(data);
   // console.log(fblCustomRoll.sequence);
-  ui.chat.updateMessage(message, true);
+  ui.chat.updateMessage(msg, true);
 }
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------

@@ -17,6 +17,7 @@ import { FBLItemSheet,
          CriticalInjurySheet } from "./FBLItemSheet.js";
 import { fblPool, prepareChatData, prepareRollData, pushingRoll, prideRoll } from "./helper-functions.js";
 import { setupTurns, rollAll, rollInitiative, nextRound, nextTurn, FBLCombatTracker } from "./FBLCombatTracking.js";
+import { FBLChatMessage } from "./FBLRollMessage.js"
 
 /* -------------------------------------------- */
 /*  Foundry VTT Initialization                  */
@@ -27,6 +28,7 @@ Hooks.once("init", async function() {
 
   CONFIG.Actor.entityClass = FBLActor;
   CONFIG.Item.entityClass = FBLItem;
+  CONFIG.ChatMessage.entityClass = FBLChatMessage;
   // CONFIG.debug.hooks = true;
   CONFIG.ui.combat = FBLCombatTracker;
   Combat.prototype.rollAll = rollAll;
@@ -128,8 +130,11 @@ Hooks.once("init", async function() {
 
 //     let artifacts = game.data.items.filter( i => i.type === "Weapon" || i.type === "Armor" || i.type === "Equipment");
 //     artifacts = artifacts.map( i => game.items.get(i._id) );
-//     artifacts.forEach( async a => await a.update({"_id": a._id, "data.artifactArray": []}));
-//     console.log(itemsToUpdate);
+//     console.log(artifacts);
+//     artifacts.forEach( async a => {
+//       let upd = a.data.data.artifactDie === " - " ? {"_id": a._id, "data.artifactDie": "", "data.artifactArray": []} : {"_id": a._id, "data.artifactArray": []}
+//       await a.update(upd);
+//     });
 //   }
 // });
 
@@ -143,16 +148,27 @@ Hooks.on( "renderChatLog", async function (cLog) {
     const origin = event.target;
     // console.log(origin);
     // retrieve last chatlog message
-    const roll_id = origin.dataset.roll_id;
-    let fblCustomRoll = game.data.fblDicePools.get(roll_id);
+    // const roll_id = origin.dataset.roll_id;
+    // let fblCustomRoll = game.data.fblDicePools.get(roll_id);
+
+    const message_id = origin.dataset.roll_id;
+    // console.log("Here we are");
+    let msg;
+    for (let m of game.messages) { 
+      // console.log(m.fblRoll_id, message_id);
+      if (m.fblRoll_id === message_id) msg = m };
+    
+    let fblCustomRoll = msg?.fblRoll;
+    // console.log(fblCustomRoll);
+
     if(!fblCustomRoll) return console.log("This is an old roll and can't be modified anymore");
 
     if (origin.classList.contains("push")) {
-      pushingRoll(fblCustomRoll, origin);
+      pushingRoll(fblCustomRoll, origin, msg);
     }
     
     if (origin.classList.contains("pride")) {
-      prideRoll(fblCustomRoll, origin);
+      prideRoll(fblCustomRoll, origin, msg);
     }
   }
 });
@@ -170,8 +186,8 @@ Hooks.on("chatMessage", function (chatLog, chatContent) {
   const displayData = {"canPush": true, "canPride": true};
   let rollMessage;
   prepareChatData(newRoll, undefined, displayData).then( async chatData => {
-    rollMessage = await ChatMessage.create(chatData);
-    newRoll.message_id = rollMessage._id;
+    rollMessage = await FBLChatMessage.create(chatData, {}, newRoll);
+    // newRoll.message_id = rollMessage._id;
     });
   return false; // prevent the default chat message from being broadcast
 })

@@ -9,6 +9,8 @@ import { CONFIG_WEAR_ICONS,
         prepareRollData,
         prepareChatData } from "./helper-functions.js";
 
+    import { FBLChatMessage } from "./FBLRollMessage.js"
+
 export class FBLActor extends Actor {
     
     prepareData() {
@@ -148,16 +150,20 @@ async rollCheck(rollType, id) {
     let rollCheck = new fblPool(rollData.attributeDice, rollData.skillDice, rollData.gearDice, rollData.artifactDie);
     // console.log(rollCheck);
   
-    const chatData = await prepareChatData(rollCheck, rollType, displayData);
+    let chatData = await prepareChatData(rollCheck, rollType, displayData);
     // console.log(chatData);
 
     chatData.speaker = {actor: actor._id,
                         token: actor.token,
                         alias: actor.name};
   
-    let msg = await ChatMessage.create(chatData);
-    rollCheck.message_id = msg.data._id;
-    // console.log(msg);
+    // let msg = await ChatMessage.create(chatData);
+    // msg._roll = rollCheck;
+    console.log(chatData);
+    let msg = await FBLChatMessage.create(chatData, {}, rollCheck);
+    console.log(msg);
+    // rollCheck.message_id = msg.data._id;
+    // ui.chat.updateMessage(msg, true);
     // console.log(rollCheck);
   }
   //------------------------------------------------------------------------------------------------

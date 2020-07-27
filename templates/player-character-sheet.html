@@ -1,3 +1,4 @@
+{{#unless data.isSheetCompressed}}
 <form class="{{cssClass}} layout layout--PC {{actor._id}}" autocomplete="off">
 
     <!-- TOP-LEFT - PROFILE PICTURE -->
@@ -8,11 +9,14 @@
     <!-- TOP-CENTER-RIGHT - HEADER -->
     <header class="layout__header">
         <!-- EXPERIENCE BAR             -->
-        <div class="frame" style="flex-direction: row;">
-        <label class="frame__title">Experience: ( {{data.experience.value}} )</label>
-        {{#each data.experience.propertyTrack}}
-        <img name="data.experience.value" data-trackvalue="{{@index}}" src="{{this}}" alt="Xp" width=18px style="border: none; margin: 2px">
-        {{/each}}    
+        <div style="display:flex; flex-direction: row;">
+            <div class="frame" style="flex-direction: row; flex: 1">
+                <label class="frame__title">Experience: ( {{data.experience.value}} )</label>
+                {{#each data.experience.propertyTrack}}
+                <img name="data.experience.value" data-trackvalue="{{@index}}" src="{{this}}" alt="Xp" width=17px style="border: none; margin: 2px">
+                {{/each}}
+            </div>
+            <i class="fas fa-angle-double-down" title="Collapse Sheet Header" style="font-size: 1.3rem; width: 20px; margin: auto 5px; text-align: center;"></i>    
         </div>
         <!-- CHARACTER NAME -->
         <div class="layout__gap" style="max-height: fit-content">
@@ -56,6 +60,19 @@
             </div>
         </div>
     </header>
+    {{else}}
+
+<form class="{{cssClass}} layout layout--PC-compact {{actor._id}}" autocomplete="off">
+    <header class="layout__header">
+        <!-- CHARACTER NAME -->
+        <div style="display:flex; flex-direction: row;">
+            <div style="flex: 1">
+                <input class= "header-title--small" name="name" type="text" value="{{actor.name}}" placeholder="Name">
+            </div>
+            <i class="fas fa-angle-double-up" title="Expand Sheet Header" style="font-size: 1.3rem; width: 20px; margin: auto 5px; text-align: center;"></i>
+        </div>
+    </header>
+    {{/unless}}
 
     <!-- LEFT-SIDEBAR -->
     <div class="layout__left-sidebar">
@@ -291,7 +308,7 @@
             </div>
         </div>
         <!-- CONSUMABLES + MONEY CONTAINER -->
-        <div class="table layout__gap" style="max-height: fit-content">
+        <div class="table layout__gap" style="max-height: 148.25px">
             <div class="table__entry table__entry--2col" style="column-gap: 2%; border-left: 1px solid black; border-right: 1px solid black">
                 <!-- CONSUMABLES -->
                 <div class="frame frame--no-border" style="border-right: 1px solid black; border-bottom: 1px solid black;">
@@ -511,7 +528,7 @@
                 <label class="frame__title">Dice Modifiers</label>
         </div>
 
-        <section class="table--flexible frame" style="max-height: fit-content">
+        <section class="table--flexible frame" style="max-height: 163.47px">
             <div class="table dieMod">
                 <div class="table__entry">
                     <div class="table__entry frame" style="background-color: white; margin: 4px; padding: 2px">
