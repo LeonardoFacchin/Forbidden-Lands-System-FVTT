@@ -46,7 +46,6 @@ export class fblPool extends DicePool {
       this.artifactArray = nArtifact;
 
       // console.log(r.roll());
-      
       this.originalRoll = Object.values(r.roll())[0].map( d => {
         if(d.dice.length===0) return [];
         return d.dice[0].rolls.map(i => i.roll)

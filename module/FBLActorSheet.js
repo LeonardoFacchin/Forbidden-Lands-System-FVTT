@@ -93,12 +93,6 @@ export class FBLActorSheet extends ActorSheet {
         if ( !validEmbeddedEntities.includes(item.type) ) {console.log("Invalid"); return};
 
         let newItem;
-        console.log(item.data.data.isArtifact, item.data.data.artifactDie);
-        // If the item is a non-initialized artifact, initialize the default die type
-        if ( item.data.data.isArtifact && !item.data.data.artifactDie ) {
-          item.data.data.artifactDie = item.data.data.artifactArray[0];
-          return this._onDrop(event);
-        } 
 
         // EQUIPMENT
         // if the item is of type "Equipment" add a "quantity" property

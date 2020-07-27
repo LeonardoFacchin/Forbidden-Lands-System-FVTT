@@ -1,4 +1,4 @@
-<form class="{{cssClass}}" autocomplete="off" style="font-size: 0.8rem;">
+<form class="{{cssClass}} {{this.entity._id}}" autocomplete="off" style="font-size: 0.8rem;">
 
     <div class="layout layout--equipment">
         <div class="layout__picture">
@@ -92,7 +92,6 @@
                             </select>
                         </div>
                         {{/each}}
-                        {{log this}}
                     </div>
                 </div>
             </div>    
@@ -106,11 +105,11 @@
                             <label class="table__data table__data--left-aligned">Artifact Die One: </label>
                         </div>
                         <div class="table__field">
-                            <select class="table__data" name="data.artifactArray">
+                            <select class="table__data artDie" name="data.artifactArray">
                                 {{#select data.artifactArray.[0]}}
-                                    {{#each settings.artifactDie}}
-                                    <option value="{{this}}">{{this}}</option>
-                                    {{/each}}
+                                    <option value="d8">d8</option>
+                                    <option value="d10">d10</option>
+                                    <option value="d12">d12</option>
                                 {{/select}}
                             </select>
                         </div>

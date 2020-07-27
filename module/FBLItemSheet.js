@@ -213,6 +213,19 @@ export class WeaponSheet extends FBLItemSheet {
       resizable: false
     });    
   }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+    const item = this.entity;
+    const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
+
+    if (!item.data.data.isArtifact || !el) return;
+    el.addEventListener("change", async event => {
+      event.preventDefault();
+      const origin = event.target;
+      await item.update({_id: item._id, "data.artifactDie": origin.value});
+    });
+  }
 }
 
   /* ----------------------- ArmorSheet ------------------------*/
@@ -238,6 +251,19 @@ export class ArmorSheet extends FBLItemSheet {
       // height: 400,
       resizable: false
     });    
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+    const item = this.entity;
+    const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
+    
+    if (!item.data.data.isArtifact || !el) return;
+    el.addEventListener("change", async event => {
+      event.preventDefault();
+      const origin = event.target;
+      await item.update({_id: item._id, "data.artifactDie": origin.value});
+    });
   }
 }
 
