@@ -23,6 +23,19 @@
             <div class="frame frame__placement frame--no-lr-border">
                 <div class="table">
                     <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <!-- WEAPON GROUP -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Weapon Group: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.weaponGroup">
+                                {{#select data.weaponGroup}}
+                                    {{#each settings.weaponGroup}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
                         <!-- GRIP -->
                         <div class="table__field">
                             <label class="table__data table__data--left-aligned">Grip: </label>

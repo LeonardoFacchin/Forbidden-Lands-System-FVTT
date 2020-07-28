@@ -40,22 +40,22 @@
   font-size: var(--table-font-size);
   color: black;
   text-align: justify;
-  height: auto !important;
-  width: auto !important;
+  /* height: auto !important;
+  width: auto !important; */
   padding-bottom: 15px;
   overflow-y: hidden;
 }
 
-.app.window-app.fbl {
+/* .app.window-app.fbl {
   height: auto !important;
   width: auto !important;
-}
+} */
 
-form {
+/* form {
   height: auto !important;
   width: auto !important;
   margin: auto !important;
-}
+} */
 
 #chat-log .message {
   font-size: 0.85rem;

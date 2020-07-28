@@ -145,8 +145,17 @@ export async function prepareRollData( rollType, actor, id) {
     const attributeDice = actor.data.data.attributes[attribute].value;
     const dieModifiers = actor.data.data.dieModifiers;
     const artifactModifiers = actor.data.data.artifactModifiers;
-    const skillDieModifier = dieModifiers ? dieModifiers.modifierOne.value + dieModifiers.modifierTwo.value : 0;
-    const artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => a.type ) : [];
+    let skillDieModifier = dieModifiers ? dieModifiers.modifierOne.value + dieModifiers.modifierTwo.value : 0;
+    let artModifiers = artifactModifiers ? Object.values(artifactModifiers).filter( a => a.value === 1).map( a => a.type ) : [];
+    // Check for Weapon Talents
+    if (rollType==="Weapon") {
+      let weaponTalentRank = Number(actor.data.data.Talent.find( t => t.data.weaponGroup === item.data.weaponGroup)?.data.talentRank);
+      if (weaponTalentRank === 1 || weaponTalentRank === 2) skillDieModifier++;
+      if (weaponTalentRank === 3) {
+        skillDieModifier++;
+        artModifiers = artModifiers.concat("d8");
+      }
+    }
     artifactDie = artifactDie.concat(artModifiers); 
     skillDice = skillDice + skillDieModifier;
     // console.log(attributeDice, skillDice, gearDice, artifactDie);

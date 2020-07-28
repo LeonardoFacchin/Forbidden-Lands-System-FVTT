@@ -68,8 +68,37 @@
                         </select>
                     </div>
                     {{/if}}
-                    
                     {{/iff}}
+
+                    {{#iff data.type comparison="General"}}
+                    <div></div>
+                    <div></div>
+
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Weapon Talent: </label>
+                    </div>
+                    <div class="table__field">
+                        <input class="table__data" type="checkbox" name="data.isWeapon" value="true" style="justify-content: start" {{checked data.isWeapon}}>
+                    </div>
+
+                    <div></div>
+
+                    {{#if data.isWeapon}}
+                    <div class="table__field">
+                        <label class="table__data table__data--name-bold">Weapon Group: </label>
+                    </div>
+                    <div class="table__field">
+                        <select class="table__data" name="data.weaponGroup">
+                        {{#select data.weaponGroup}}
+                            {{#each settings.weaponGroup}}
+                            <option value="{{this}}">{{this}}</option>
+                            {{/each}}
+                        {{/select}}
+                        </select>
+                    </div>
+                    {{/if}}
+                    {{/iff}}
+                    
                 </div>
             </div>
         </div>

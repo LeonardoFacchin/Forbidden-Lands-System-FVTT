@@ -46,9 +46,11 @@ export const CONFIG_DICE_ICONS = {
 
 export const CONFIG_WEAPON_DAMAGE = ["Blunt", "Slash", "Stab"]
 
-export const CONFIG_WEAPON_FEATURES = ["", "Blunt", "Edged", "Light", "Heavy", "Hook", "Parrying", "Pointed", "Slow"]
+export const CONFIG_WEAPON_GROUP = ["Axes", "Bows", "Hammers", "Daggers", "Shields", "Spears", "Swords", "Thrown"];
 
-export const CONFIG_ARMOR_LOCATION = ["Body", "Head"]
+export const CONFIG_WEAPON_FEATURES = ["", "Blunt", "Edged", "Light", "Heavy", "Hook", "Parrying", "Pointed", "Slow"];
+
+export const CONFIG_ARMOR_LOCATION = ["Body", "Head"];
 
 export const CONFIG_EQUIP_SUPPLY = ["Common", "Uncommon", "Rare"];
 

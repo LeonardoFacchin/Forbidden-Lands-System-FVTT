@@ -189,8 +189,8 @@ export class PlayerCharacterSheet extends FBLActorSheet {
 	  return mergeObject(super.defaultOptions, {
   	  classes: ["fbl"],
   	  template: "systems/forbiddenlands/templates/player-character-sheet.html",
-      // width: 929,
-      // height: 988,
+      width: "auto",
+      height: "auto",
       resizable: false
     });
   }
@@ -264,9 +264,9 @@ export class MonsterSheet extends FBLActorSheet {
 	  return mergeObject(super.defaultOptions, {
   	  classes: ["fbl"],
   	  template: "systems/forbiddenlands/templates/monster-sheet.html",
-      width: 900,
-      height: 1010,
-      // resizable: false
+      width: "auto",
+      height: "auto",
+      resizable: false
     });
   }
 
@@ -289,9 +289,9 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
 	  return mergeObject(super.defaultOptions, {
   	  classes: ["fbl"],
   	  template: "systems/forbiddenlands/templates/NPC-sheet.html",
-      width: 929,
-      height: 720,
-      // resizable: false
+      width: "auto",
+      height: "auto",
+      resizable: false
     });
   }
 

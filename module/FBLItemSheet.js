@@ -3,6 +3,7 @@
 // see config.js for the definitions
 
 import {  CONFIG_PC_CLASSES,
+          CONFIG_WEAPON_GROUP,
           CONFIG_WEAPON_DAMAGE,
           CONFIG_WEAPON_FEATURES,
           CONFIG_DAMAGE_TYPE,
@@ -20,7 +21,7 @@ import {  CONFIG_PC_CLASSES,
           CONFIG_ARMOR_LOCATION,
           CONFIG_LETHAL,
           CONFIG_TIME_LIMIT,
-          CONFIG_HEALING_TIME } from "./Config.js";
+          CONFIG_HEALING_TIME} from "./Config.js";
 
 /* ----------------------- FBLItemSheet ------------------------*/
 // extension of the ItemSheet class. NOT INSTANTIATED DIRECTLY, only for inheritance.
@@ -85,8 +86,8 @@ export class MonsterAttackSheet extends FBLItemSheet {
         return mergeObject(super.defaultOptions, {
           classes: ["fbl"],
           template: "systems/forbiddenlands/templates/monster-attack-sheet.html",
-          width: 500,
-          // height: 400,
+          width: "auto",
+          height: "auto",
           resizable: false
       });
     }
@@ -104,8 +105,8 @@ export class MonsterSpecialAbilitySheet extends FBLItemSheet {
         return mergeObject(super.defaultOptions, {
           classes: ["fbl"],
           template: "systems/forbiddenlands/templates/monster-special-ability-sheet.html",
-          width: 460,
-          // height: 350,
+          width: "auto",
+          height: "auto",
           resizable: false
       });
     }
@@ -119,7 +120,10 @@ export class MonsterSpecialAbilitySheet extends FBLItemSheet {
 export class CharacterTalentSheet extends FBLItemSheet {
   constructor(object, options) {
     super(object, options);
-    this.settings =  {"professions": CONFIG_PC_CLASSES, "talent-type": CONFIG_TALENT_TYPE, "disciplines": CONFIG_MAGIC_DISCIPLINES};
+    this.settings =  {"professions": CONFIG_PC_CLASSES,
+                      "talent-type": CONFIG_TALENT_TYPE,
+                      "disciplines": CONFIG_MAGIC_DISCIPLINES,
+                      "weaponGroup": CONFIG_WEAPON_GROUP};
     // this.isBeingEdited = false;
   }
 
@@ -129,8 +133,8 @@ export class CharacterTalentSheet extends FBLItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["fbl"],
             template: "systems/forbiddenlands/templates/character-talent-sheet.html",
-            width: 520,
-            // height: 475
+            width: "auto",
+          height: "auto",
             resizable: false
       });
     }
@@ -153,8 +157,8 @@ export class SpellSheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/spell-sheet.html",
-      //width: 500,
-      // height: 400,
+      width: "auto",
+      height: "auto",
       resizable: false
     });    
   }
@@ -179,8 +183,8 @@ export class EquipmentSheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/equipment-sheet.html",
-      //width: 725,
-      // height: 400,
+      width: "auto",
+      height: "auto",
       resizable: false
     });    
   }
@@ -194,6 +198,7 @@ export class WeaponSheet extends FBLItemSheet {
   constructor(object, options) {
     super(object, options);
     this.settings =  {"skills": CONFIG_WEAPON_SKILLS,
+                      "weaponGroup": CONFIG_WEAPON_GROUP,
                       "damagetype": CONFIG_WEAPON_DAMAGE,
                       "artifactDie": CONFIG_ARTIFACT_DIE,
                       "ranges": CONFIG_COMBAT_RANGES,
@@ -208,8 +213,8 @@ export class WeaponSheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/weapon-sheet.html",
-      //width: 725,
-      // height: 400,
+      width: "auto",
+      height: "auto",
       resizable: false
     });    
   }
@@ -247,8 +252,8 @@ export class ArmorSheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/armor-sheet.html",
-      //width: 725,
-      // height: 400,
+      width: "auto",
+      height: "auto",
       resizable: false
     });    
   }
@@ -287,8 +292,8 @@ export class CriticalInjurySheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/critical-injury-sheet.html",
-      //width: 725,
-      // height: 400,
+      width: "auto",
+      height: "auto",
       resizable: false
     });    
   }
