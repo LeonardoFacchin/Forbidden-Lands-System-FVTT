@@ -12,6 +12,7 @@ Unofficial, fan made implementation of the Forbidden Lands RPG system for use wi
 - artifact Weapons and Armor can now be assigned two different artifact dice and the user can switch between the two by clicking on the die icon on the relevant entry on the character sheet.
 - Weapon related talents and their ranks should now automatically be taken into account when determining the number of dice to roll for the attack. The Weapon creation dialog has a new field to assign the weapon to a "weapon group". The Talent dialog has a checkbox to designate a Generic talent as a Weapon talent and a matching field to assign the weapon group the talent will provide its benefits to. At talent rank 1-2 each talent provides a static +1 Skill Die to the roll. At level 3 it also provides a d8 artifact die.
 - In order to try to accommodate displays with lower resolution, the player character sheet has been modified to include a collapsible header. When collapsed. the sheet is 802px high, which should make it compatible with displays with a vertical resolution of 1080 px or higher.
+- All the sheets have been given auto height and width. This should allow their windows to better fit the sheet content and hopefully make their behavior more consistent across different browsers. 
 
 # v0.2.3
 - Refactored the attributes names so that the four attributes can now be tracked, displayed and modified by the token bars. **This change will apply only to new actors, not to those who have already been created**
@@ -44,7 +45,7 @@ The downside is the frontloading of the import process: all the items required t
 Most dice checks a user will be required to roll during the game are automated to some extent.
 As a general rule, if an element on the actor sheet gets highlighted in orange when hovering, then that element can be interacted with according to the following guidelines:
 - Double clicking an attribute, skill, weapon or equipment name will roll the corresponding check, automatically retrieving all the required informations. For example, if double clicking a weapon's name will cause an attack check to be rolled by adding together the character's relevant current attribute value, skill and the current gear bonus of the weapon, including artifact dice modifiers.
-Injuries and Talents effects are **NOT** automatically included in the computation. Character's and NPC's sheets have a modifier track that allows you to add a modifier to the roll (range: -6 to + 6) and up to 3 d8 artifact dice (to account for Talents, for example).
+Injuries <s>and Talents</s> effects are **NOT** automatically included in the computation. Character's and NPC's sheets have a modifier track that allows you to add a modifier to the roll (range: -6 to + 6) and up to 3 d8 artifact dice (to account for Talents, for example).
 All these rolls support Pushing (as many times as necessary) and rolling the Pride Die. This can be done by clicking on the relevant buttons on the message displayed in the chat log. Rolling the Pride Die will automatically prevent further Pushing.
 
 - Double clicking a spell name will pop up a dialog that will let the player enter relevant informations before casting the spell, like the number of Willpower points spent or if ingredients or a grimoire/scroll are being used.
