@@ -135,8 +135,8 @@ Hooks.on("ready", async () => {
       if (a.data.data.artifactDie === " - " || a.data.data.artifactDie === "") {
         updateData = {"_id": a._id, "data.artifactDie": "d8", "data.artifactArray": []};
         await a.update(updateData);
+        console.log("Updated Items - data.artifactDie reset");
       }
-    console.log("Updated Items - data.artifactDie reset");
     });
   }
 });

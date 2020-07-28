@@ -1,7 +1,7 @@
 # Forbidden Lands System
 Unofficial, fan made implementation of the Forbidden Lands RPG system for use with the Foundry VTT virtual tabletop.
 
-**version**: 0.2.3  
+**version**: 0.2.4  
 **supported browsers**: Chrome, Edge  
 (NB: Firefox won't display character sheets as intended. Right now I'm inclined not to bother trying to make the system work with Firefox, mostly because on my PC Firefox performance was way worse than Edge's or Chrome's. If enough people are **really really** interested I might change my mind, but I suggest using Chrome to be on the safe side)
 
