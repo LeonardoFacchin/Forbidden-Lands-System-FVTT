@@ -48,7 +48,7 @@ export class FBLActorSheet extends ActorSheet {
       permissions: {},     
       callbacks: { "dragstart": onDragStart.bind(this), "drop": sortItems.bind(this)}     
       });
-    itemSortEventManager.bind(document.querySelector(`.layout.${this.actor._id}`));  
+    itemSortEventManager.bind(document.querySelector(`.layout.${this.actor._id}`));
   }
 // -------------------------- END LISTENERS -------------------------------------
 
@@ -188,7 +188,17 @@ export class PlayerCharacterSheet extends FBLActorSheet {
 	static get defaultOptions() {
 	  return mergeObject(super.defaultOptions, {
   	  classes: ["fbl"],
-  	  template: "systems/forbiddenlands/templates/player-character-sheet.html",
+      template: "systems/forbiddenlands/templates/player-character-sheet.html",
+      tabs: [
+        { navSelector: ".tabs",
+          contentSelector: ".content",
+          initial: "talents"
+        },
+        { navSelector: ".equipmentTabs",
+          contentSelector: ".equipmentContent",
+          initial: "inventory"
+        }
+      ],
       width: "auto",
       height: "auto",
       resizable: false
@@ -214,14 +224,17 @@ export class PlayerCharacterSheet extends FBLActorSheet {
       createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS)
       if ( d.data.isArtifact ) d.data.artifactUrl = CONFIG_DICE_ICONS[d.data.artifactDie];
     });
+    // console.log(data.data.MountInventory);
+    data.data.MountInventory.forEach(d => {
+      createTrack.call(this, d.data.bonus, ["value", "damage"], CONFIG_WEAR_ICONS)
+      if ( d.data.isArtifact ) d.data.artifactUrl = CONFIG_DICE_ICONS[d.data.artifactDie];
+    });
     // create CONDITIONS track
     Object.entries(data.data.conditions).forEach(d => createTrack.call(this, d[1], ["max", "isCondition"], CONFIG_CONDITIONS_ICONS[d[0]]) );
     // create DICE MODIFIERS track
     Object.entries(data.data.dieModifiers).forEach( d => createDieTrack.call(this, d));
-    // Object.entries(data.data.dieModifiers).forEach( d => createDieTrack.bind(this, d));
     // create ARTIFACT DICE MODIFIERS track
     Object.entries(data.data.artifactModifiers).forEach( d => createTrack.call(this, d[1], ["max", "value"], CONFIG_ARTIFACT_MODIFIERS[d[0]][d[1].type]) );
-    // Object.entries(data.data.artifactModifiers).forEach(d => createTrack.bind(this, d[1], CONFIG_ARTIFACT_MODIFIERS[d[0]]) );
     //configure Icons and Currency
     data.data.Consumables = CONFIG_CONSUMABLE_ICONS;
     data.data.diceIcons = CONFIG_DICE_ICONS;
@@ -229,8 +242,13 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     data.data.currency = Array.from(CONFIG_MONEY).reverse();
     // configure Encumbrance Icon according to encumbrance status
     data.data.isEncumbered = (data.data.encumbrance.value > data.data.encumbrance.capacity) ?  true : false;
-    // data.data.isSheetCompressed = this.data
-    // console.log(data);
+    // console.log(this);
+    data.data.isMountInventoryActive = this._tabs[1]?.active === "mount" ? true : false;
+    data.data.mount = {};
+    data.data.mount.name = this.actor.data.flags.forbiddenlands?.mount?.name || "";
+    data.data.mount.strength = this.actor.data.flags.forbiddenlands?.mount?.strength || "";
+    data.data.mount.movement = this.actor.data.flags.forbiddenlands?.mount?.movement || "";
+    console.log(this.actor);
     return data;
   }
 
@@ -246,13 +264,19 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
     document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
     document.querySelector(`form.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("change", setMountStats.bind(this));
     document.querySelector(`form.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
+  }
 
-    //activate tabs
-    const tabs = new TabsV2({navSelector: ".tabs", contentSelector: ".content", initial: "talents", callback: ()=>{}});
-    tabs.bind(document.querySelector(`form.${this.actor._id}`));
-    }  
-}
+  _onChangeTab(event, tabs, active) {
+    super._onChangeTab(event, tabs, active);
+    // do your extra logic here
+    if (tabs._navSelector === ".equipmentTabs") {
+      this.getData();
+      this.render(true);
+    }
+  }
+} 
 /* ------------------------------  END PlayerCharacterSheet------------------------------------ */
 
 /* ------------------------------ MonsterSheet ------------------------------------ */
@@ -288,7 +312,8 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
 
 	  return mergeObject(super.defaultOptions, {
   	  classes: ["fbl"],
-  	  template: "systems/forbiddenlands/templates/NPC-sheet.html",
+      template: "systems/forbiddenlands/templates/NPC-sheet.html",
+      tabs: [{navSelector: ".tabs", contentSelector: ".content", initial: "talents", callback: ()=>{}}],
       width: "auto",
       height: "auto",
       resizable: false
@@ -327,10 +352,6 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
     document.querySelector(`form.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
     document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
     document.querySelector(`form.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
-
-    //activate tabs
-    const tabs = new TabsV2({navSelector: ".tabs", contentSelector: ".content", initial: "talents", callback: ()=>{}});
-    tabs.bind(document.querySelector(".layout--NPC"));
   }
 }
 /* ------------------------------ END NPCSheet ------------------------------------ */
@@ -531,6 +552,15 @@ async function sortItems (event) {
   event.preventDefault();
   const transferData = JSON.parse(event.dataTransfer.getData("text/plain"));
   if (!transferData.type || transferData.type === "Spell") {return};
+
+  const dropContainer = event.target.closest(".drag-target")?.dataset.tab;
+  if (transferData.type === "Equipment") {
+    const item = this.actor.getEmbeddedEntity("OwnedItem", transferData.id);
+    const isStoredOnMount = item?.flags?.forbiddenlands.isStoredOnMount;
+    if (dropContainer === "inventory" && isStoredOnMount) await this.actor.updateEmbeddedEntity("OwnedItem", {_id: item._id, "flags.forbiddenlands.isStoredOnMount": false});
+    if (dropContainer === "mount" && !isStoredOnMount) await this.actor.updateEmbeddedEntity("OwnedItem", {_id: item._id, "flags.forbiddenlands.isStoredOnMount": true}); 
+  }
+
   // get the drop target element
   const dropTarget = event.target.closest(".drag-item");
   // is it a valid element?
@@ -571,6 +601,19 @@ async function changeRank(event) {
   return await this.actor.updateEmbeddedEntity("OwnedItem", {"_id": target.id, "data.talentRank": target.value });
 }
 // ----------------------------------------------------------------------------------------------
+
+async function setMountStats(event) {
+  event.preventDefault();
+  const origin = event.target;
+  console.log(!origin.closest(".mount"));
+  if (!origin.closest(".mount")) return;
+  console.log(origin.dataset.edit);
+  const dataName = origin.dataset.edit;
+  const dataValue = origin.value;
+  console.log(`${dataName}`, dataValue)
+  await this.actor.setFlag("forbiddenlands", `${dataName}`, dataValue);
+  console.log(this.actor);
+}
 
 // --------------------- FUNCION updateDieModifier(event) ---------------------------------------
 // manage the update of the die modifiers the player can select from the character sheet

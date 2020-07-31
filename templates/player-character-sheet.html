@@ -269,14 +269,65 @@
             </div>
         </div>
         <!-- INVENTORY -->
-        <div class="frame frame--no-border layout__gap">
-                <label class="frame__title megaphone">Inventory</label>
-        </div>
-        <!-- EQUIPMENT -->
-        <div class="table table--flexible" style="overflow-y: scroll; border: 1px solid black;">
-            <div class="table__entry table__entry--2col drag-target" style="align-self: start">
+        <nav class="equipmentTabs layout__gap" style="flex: 0; display: flex; flex-direction: row;">
+            <a class="item frame__title megaphone drag-target" data-tab="inventory">Personal Inventory</a>
+            <a class="item frame__title megaphone drag-target" data-tab="mount">Mount Inventory</a>
+        </nav>
 
-                    {{#each data.Equipment as |equip counter|}}
+        <section class="equipmentContent table table--flexible">
+            <!-- EQUIPMENT -->
+            <div class="tab table table--flexible drag-target" data-tab="inventory" style="overflow-y: scroll; border: 1px solid black;">
+                <div class="table__entry table__entry--2col" style="align-self: start">
+
+                        {{#each data.Equipment as |equip counter|}}
+                        <div class="table__entry table__entry--PC-equip-display table__entry--no-border frame frame__margin--PC-items drag-item" data-id="{{equip._id}}">
+                            <div class="table__field">
+                                <img class="table__data" src="{{equip.img}}" data-action="show-item" data-id="{{equip._id}}" width="25px" height="25px">
+                            </div>
+                            <div class="table__field">
+                                <span class="table__data" style="font-size: 1.3em;">
+                                    x{{equip.flags.forbiddenlands.quantity}}
+                                </span>
+                            </div>
+                            <div class="table__field">
+                            <span class="table__data" title="{{equip.data.description}}" data-id="{{equip._id}}" data-action="roll" data-diehook="Equipment">
+                                {{equip.name}}
+                            </span>
+                            </div>
+                            <div class="table__field">
+                                <div class="table__data">
+                                    <span>
+                                    {{#each data.bonus.propertyTrack}}
+                                        <img type="image" name="data.bonus.damage" data-id="{{equip._id}}" data-trackvalue="{{@index}}" src="{{this}}" style="border: none; margin: -2px 0;  vertical-align: middle;" alt="" width="18px" height="18px">
+                                    {{/each}}
+                                    </span>        
+                                </div>
+                            </div>
+                            <div class="table__field">
+                            <i class="fas fa-trash table__data" data-id="{{equip._id}}"></i>
+                            </div>
+                        </div>
+                        {{/each}}
+                </div>
+            </div>
+            <!-- MOUNT -->
+            <div class="tab table table--flexible drag-target mount" data-tab="mount" style="overflow-y: scroll; border: 1px solid black;">
+                <div class="table__entry--no-border table__entry--mount" style="background-color: lightgrey; width: 96%; margin: 5px auto">
+                        <div class="table__field" style="padding: 3px 5px">
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Name: </strong></label>
+                            <input class="table__data"  data-edit="mount.name" type="text" value="{{data.mount.name}}" style="text-align: left;">
+                        </div>
+                        <div class="table__field" style="padding: 3px 5px">
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Strength: </strong></label>
+                            <input class="table__data" data-edit="mount.strength" type="text" value="{{data.mount.strength}}">
+                        </div>
+                        <div class="table__field" style="padding: 3px 5px">
+                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Movement: </strong></label>
+                            <input class="table__data" data-edit="mount.movement" type="text" value="{{data.mount.movement}}">
+                        </div>
+                </div>
+                <div class="table__entry table__entry--2col" style="align-self: start">
+                    {{#each data.MountInventory as |equip counter|}}
                     <div class="table__entry table__entry--PC-equip-display table__entry--no-border frame frame__margin--PC-items drag-item" data-id="{{equip._id}}">
                         <div class="table__field">
                             <img class="table__data" src="{{equip.img}}" data-action="show-item" data-id="{{equip._id}}" width="25px" height="25px">
@@ -305,8 +356,9 @@
                         </div>
                     </div>
                     {{/each}}
+                </div>
             </div>
-        </div>
+        </section>
         <!-- CONSUMABLES + MONEY CONTAINER -->
         <div class="table layout__gap" style="max-height: 148.25px">
             <div class="table__entry table__entry--2col" style="column-gap: 2%; border-left: 1px solid black; border-right: 1px solid black">
@@ -378,6 +430,7 @@
         </div>
         <!-- ENCUMBRANCE METER -->
         <div class="frame" style="margin-top: 3px; height: 50px">
+            {{#unless data.isMountInventoryActive}}
             <div class="table table--flexible" title="{{data.encumbrance.value}} / {{data.encumbrance.capacity}}">
 
                 {{#if data.isEncumbered}}
@@ -399,6 +452,28 @@
 
                 </div>
             </div>
+            {{else}}
+            <div class="table table--flexible" title="{{data.mountEncumbrance.value}} / {{data.mountEncumbrance.capacity}}">
+                {{#if data.isEncumbered}}
+                <div class="table__entry table__entry--encumbrance-meter table__data--encumbrance-isEncumbered">
+                {{else}}
+                <div class="table__entry table__entry--encumbrance-meter table__data--encumbrance">
+                {{/if}}
+                <div class="table__field">
+                </div>
+
+                <div class="table__field">
+                    <div class="table__data">
+                        <progress max="{{data.mountEncumbrance.capacity}}" value="{{data.mountEncumbrance.value}}"></progress>
+                    </div>
+                </div>
+
+                <div class="table__field">
+                </div>
+
+                </div>
+            </div>
+            {{/unless}}
         </div>
     </div>
 

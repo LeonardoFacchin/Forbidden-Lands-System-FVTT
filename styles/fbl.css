@@ -615,6 +615,11 @@ input[type="text"].header-title--small {
     grid-template-columns: 65% 30%;
 }
 
+.table__entry--mount {
+  grid-template-columns: 3fr 1fr 1fr;
+  border: 1px solid black;
+}
+
 .table__field {
   width: 100%;
   padding: 2px 0px;
@@ -717,12 +722,12 @@ input[type="text"].table__data--fill-form {
   border-color: var(--negative-effect);
 }
 
-.fbl .tabs .item, .fbl .tabs-modifiers .item {
+.fbl .tabs .item, .fbl .equipmentTabs .item {
 text-shadow: none;
 background-color: lightgrey;
 }
 
-.fbl .tabs .item.active, .fbl .tabs-modifiers .item.active {
+.fbl .tabs .item.active, .fbl .equipmentTabs .item.active {
   text-shadow: none;
   background-color: var(--title-background-color);
 }

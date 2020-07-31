@@ -48,10 +48,19 @@ export class FBLActor extends Actor {
         // sort them into appropriate new arrays for ease of access
         this._prepareEmbeddedArrays();
 
+        // create the character inventory and the mount inventory
+        data.MountInventory = [];
+        data.MountInventory = duplicate(data.Equipment).filter( e => e.flags?.forbiddenlands?.isStoredOnMount);
+        data.Equipment = duplicate(data.Equipment).filter( e => !e.flags?.forbiddenlands?.isStoredOnMount);
+        // console.log("Inventory: ", this.data.data.Equipment);
+        // console.log("Mount: ", this.data.data.MountInventory);
+
         // prepare Encumbrance
         // console.log(this);
         const consolidatedInventory = data.Weapon.concat(data.Armor.concat(data.Equipment));
+        const consolidatedMountInventory = data.MountInventory;
         let consolidatedWeight = [];
+        let consolidatedMountWeight = [];
         if (consolidatedInventory.length > 0) {
             consolidatedWeight = consolidatedInventory.map( item => {
             const weight = item.data.weight;
@@ -63,6 +72,18 @@ export class FBLActor extends Actor {
             });
         }
 
+        if (consolidatedMountInventory.length > 0) {
+            consolidatedMountWeight = consolidatedMountInventory.map( item => {
+            const weight = item.data.weight;
+            const quantity = item.flags?.forbiddenlands?.quantity || 1;
+            if (weight === "Light") return (0.5 * quantity);
+            if (weight === "Normal") return (quantity);
+            if (weight === "Heavy") return (2 * quantity);
+            else return 0;
+            });
+        }
+
+        // Compute character inventory weight
         let itemsWeight = consolidatedWeight.reduce( (total, w) => { return (total + w) }, 0) || 0;
         Object.entries(data.consumable).forEach( i => {
             itemsWeight = (i[1] !== "dX") ? (itemsWeight + 1) : itemsWeight;
@@ -78,6 +99,13 @@ export class FBLActor extends Actor {
         data.encumbrance = {};
         data.encumbrance.value = itemsWeight + ( Math.floor( (data.money.gold + data.money.silver + data.money.copper) / 100) * 0.5);
         data.encumbrance.capacity = data.attributes.Strength.max * 2 + additionalWeight;
+
+        // Compute mount inventory weight
+        let itemsMountWeight = consolidatedMountWeight.reduce( (total, w) => { return (total + w) }, 0) || 0;
+        data.mountEncumbrance = {};
+        data.mountEncumbrance.value = itemsMountWeight;
+        data.mountEncumbrance.capacity = this.data.flags?.forbiddenlands?.mount?.strength * 4 || 0;
+        console.log(this.data);
     }
 
     _prepareMonsterData() {
@@ -114,6 +142,7 @@ export class FBLActor extends Actor {
             this.data.data.Weapon = [];
             this.data.data.Armor = [];
             this.data.data.Equipment = [];
+            this.data.data.MountInventory = [];
             this.data.data["Critical Injury"] = [];
             this.data.data.Talent = [];
             this.data.data.Spell = [];

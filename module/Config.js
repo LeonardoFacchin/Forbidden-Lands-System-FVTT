@@ -46,7 +46,7 @@ export const CONFIG_DICE_ICONS = {
 
 export const CONFIG_WEAPON_DAMAGE = ["Blunt", "Slash", "Stab"]
 
-export const CONFIG_WEAPON_GROUP = ["Axes", "Bows", "Hammers", "Daggers", "Shields", "Spears", "Swords", "Thrown"];
+export const CONFIG_WEAPON_GROUP = ["Axes", "Bows", "Hammers", "Daggers", "Shields", "Spears", "Swords", "Thrown", "Unarmed"];
 
 export const CONFIG_WEAPON_FEATURES = ["", "Blunt", "Edged", "Light", "Heavy", "Hook", "Parrying", "Pointed", "Slow"];
 
