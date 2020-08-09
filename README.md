@@ -126,6 +126,7 @@ Thanks to:
 ![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/ChacracterSheet2020-07-12_104534.png?raw=true)
 ![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Monster_Sheet_2020-07-12_104739.png?raw=true)
 ![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/NPC_Sheet_2020-07-12_105043.png?raw=true)
+|[](https://github.com/LeonardoFacchin/Forbidden-Lands-System-FVTT/blob/media/readme_images/Stronghold%20Sheet%202020-08-09%20162252.png?raw=true)
 ![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Melee_Check_Pushed_2020-07-12_105314.png?raw=true)
 ![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Monster_Attack_Check2020-07-12_105520.png?raw=true)
 ![](https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/blob/media/readme_images/Spell_Casting_2020-07-12_105139.png?raw=true)
