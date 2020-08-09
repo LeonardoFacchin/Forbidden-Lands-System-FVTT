@@ -1,0 +1,137 @@
+<form class="{{cssClass}} layout layout--Stronghold {{actor._id}}" autocomplete="off">
+    {{log data}}
+    <!-- TOP-LEFT - PROFILE PICTURE -->
+    <div class="layout__picture">
+        <img class="profile-img--big player-image" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+    </div>
+
+    <!-- TOP-CENTER-RIGHT - HEADER -->
+    <header class="layout__header">
+        <!-- <div style="position: absolute; top: 0; right: 0%">
+            <div style="height: 50px; width: 50px; background-color: red;">
+
+            </div>
+        </div> -->
+        <!-- CHARACTER NAME -->
+        <div style="max-height: fit-content">
+            <input class= "header-title" name="name" type="text" value="{{actor.name}}" placeholder="Name">
+        </div>
+
+        <div class="table" style="padding: 5px 0;">
+            <div class="table__entry">
+                <div class="table__field">
+                    <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Location: </strong></label>
+                    <input class="table__data table__data--fill-form"  type="text" name="data.location" value="{{data.location}}">
+                </div>
+            </div>
+        </div>
+
+        <div class="frame frame--flexible frame--can-scroll">
+            <label class="frame__title">Description</label>
+            {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+        </div>
+
+    </header>
+
+    <div class="layout__body layout__gap">
+        <div class="table table--flexible">
+            <div class="table__entry table__entry--2col" style="gap: 5px">
+                <div class="frame frame--flexible" style="height: 350px; overflow-y: scroll">
+                    <label class="frame__title">Functions  <i class="fas fa-plus" data-action="addfunction" style="font-size: 1.15em; float: right; margin: 0 2px 0 0"></i></label>
+                    {{#each data.functions as |function key|}}
+                    {{#if function.construction.isUnderConstruction}}
+                    <div class="table">
+                        <div class="table__entry table__entry--function-construction">
+                            <div class="table__field">
+                                <img src="systems/forbiddenlands/icons/sheets/concrete-bag.svg" class="table__data" id={{key}} data-action="constructioncomplete" width="25px" height="25px">
+                            </div>
+                            <div class="table__field">
+                                <input type="text" class="table__data" name="data.functions.{{key}}.name" value="{{function.name}}" placeholder="Function Name" style="font-size: 1.1em">
+                            </div>
+                            <div class="table__field">
+                                <img src="systems/forbiddenlands/icons/sheets/hourglass.svg" class="table__data" width="20px" height="20px">
+                                <input type="text" class="table__data" name="data.functions.{{key}}.construction.time" value="{{function.construction.time}}" style="text-align: end; font-size: 1.1em">
+                                <label class="table__data"> Days</label>
+                            </div>
+                            <div class="table__field">
+                                <i class="fas fa-trash table__data" id="{{key}}" data-action="removefunction" style="font-size: 1.15em; vertical-align: sub; margin: 0 2px 0 0"></i>
+                            </div>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="table">
+                        <div class="table__entry table__entry--function">
+                            <div class="table__field">
+                                <input type="text" class="table__data" name="data.functions.{{key}}.name" value="{{function.name}}" placeholder="Function Name" style="font-size: 1.1em">
+                            </div>
+                            <div class="table__field">
+                                <img src="systems/forbiddenlands/icons/sheets/person.svg" class="table__data" width="20px" height="20px">:
+                                <!-- <label class="table__data">Staff: </label> -->
+                                <input type="text" class="table__data" name="data.functions.{{key}}.production.staff" value="{{function.production.staff}}" style="font-size: 1.1em">
+                            </div>
+                            <div class="table__field">
+                                <img src="systems/forbiddenlands/icons/sheets/plain-arrow.svg" class="table__data" width="20px" height="20px">
+                                <!-- <input type="text" class="table__data" name="data.functions.{{key}}.production.material.name" value="{{function.production.material.name}}" placeholder="Material"> -->
+                                <select class="table__data" name="data.functions.{{key}}.production.material.name">
+                                    {{#select function.production.material.name}}
+                                    {{#each ../data.settings.products}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                                <input type="text" class="table__data" name="data.functions.{{key}}.production.material.quantity" value="{{function.production.material.quantity}}" style="font-size: 1.1em">
+                            </div>
+                            <div class="table__field">
+                                <i class="fas fa-trash table__data" id="{{key}}" data-action="removefunction" style="font-size: 1.15em; vertical-align: sub; margin: 0 2px 0 0"></i>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div class="frame frame--flexible" style="height: 350px; overflow-y: scroll">
+                    <label class="frame__title">Hirelings <i class="fas fa-plus" data-action="addhireling" style="font-size: 1.15em; float: right; margin: 0 2px 0 0"></i>
+                    </label>
+                    {{#each data.hirelings as |hireling key|}}
+                    <div class="table">
+                        <div class="table__entry table__entry--hireling">
+                            <div class="table__field">
+                                <input type="text" class="table__data" name="data.hirelings.{{key}}.name" value="{{hireling.name}}" placeholder="Hireling Name" style="font-size: 1.1em">
+                            </div>
+                            <div class="table__field">
+                                <img src="systems/forbiddenlands/icons/sheets/person.svg" class="table__data" width="20px" height="20px">:
+                                <input type="text" class="table__data" name="data.hirelings.{{key}}.quantity" value="{{hireling.quantity}}" style="font-size: 1.1em">
+                            </div>
+                            <div class="table__field">
+                                <img src="systems/forbiddenlands/icons/sheets/two-coins.svg" class="table__data" width="23px" height="23px">:
+                                <input type="text" class="table__data" data-dtype="Number" name="data.hirelings.{{key}}.salary" value="{{hireling.salary}}" style="font-size: 1.1em">
+                            </div>
+                            <div class="table__field">
+                                <i class="fas fa-trash table__data" id="{{key}}" data-action="removehireling" style="font-size: 1.15em; vertical-align: sub; margin: 0 2px 0 0"></i>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="table__entry table__entry--2col" style="gap: 5px">
+                <label class="frame__title" style="padding: 3px 10px; border-radius: 2px; text-align: left;">Stronghold Defense: <input type="text" name="data.defense.value" value="{{data.defense.value}}" data-dtype="Number" style="width: 35px; background-color: white; text-align: center; font-size:1.1em; float: right"></label>
+                <label class="frame__title" style="padding: 3px 10px; width: 100%; border-radius: 2px; text-align: left;">Total Daily Salary: <label style="float: right"> {{data.totalSalaries}}</label></label>
+            </div>
+                
+            <div class="frame frame--flexible layout__gap--large">
+                <label class="frame__title">Storage</label>
+                <div class="table__entry table__entry--resources">
+                    {{#each data.resources as |resource name|}}
+                    <div class="table__field">
+                        <label class="table__data" style="max-width: 75px; text-align: left;"><strong>{{name}}: </strong></label>
+                        <input class="table__data" type="text" name="data.resources.{{name}}.value" value="{{resource.value}}" style="max-width: 40px">
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>

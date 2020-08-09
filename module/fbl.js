@@ -5,7 +5,8 @@ import { FBLItem } from "./FBLItem.js";
 import { FBLActorSheet,
          MonsterSheet,
          PlayerCharacterSheet,
-         NonPlayerCharacterSheet } from "./FBLActorSheet.js";
+         NonPlayerCharacterSheet,
+         StrongholdSheet } from "./FBLActorSheet.js";
 import { FBLItemSheet,
          MonsterSpecialAbilitySheet,
          MonsterAttackSheet,
@@ -49,6 +50,7 @@ Hooks.once("init", async function() {
   Actors.registerSheet("FBL", PlayerCharacterSheet, { types: ["PC"], makeDefault: true});
   Actors.registerSheet("FBL", MonsterSheet, { types: ["Monster"], makeDefault: true});
   Actors.registerSheet("FBL", NonPlayerCharacterSheet, { types: ["NPC"], makeDefault: true});
+  Actors.registerSheet("FBL", StrongholdSheet, { types: ["Stronghold"], makeDefault: true});
   Items.registerSheet("FBL", MonsterSpecialAbilitySheet, { types: ["Monster Special Ability"], makeDefault: true });
   Items.registerSheet("FBL", MonsterAttackSheet, { types: ["Monster Attack"], makeDefault: true });
   Items.registerSheet("FBL", CharacterTalentSheet, { types: ["Talent"], makeDefault: true });
@@ -57,6 +59,8 @@ Hooks.once("init", async function() {
   Items.registerSheet("FBL", WeaponSheet, { types: ["Weapon"], makeDefault: true });
   Items.registerSheet("FBL", ArmorSheet, { types: ["Armor"], makeDefault: true });
   Items.registerSheet("FBL", CriticalInjurySheet, { types: ["Critical Injury"], makeDefault: true });
+  // Items.registerSheet("FBL", FunctionSheet, { types: ["Function"], makeDefault: true });
+  // Items.registerSheet("FBL", HirelingSheet, { types: ["Hireling"], makeDefault: true });
   
   // format a string removing all tags and most of the invisible formatting tags
   // when pasting content from PDFs

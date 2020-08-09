@@ -15,7 +15,8 @@ import { CONFIG_WEAR_ICONS,
          CONFIG_DICE_ARTIFACT_EPIC,
          CONFIG_DICE_ARTIFACT_LEGENDARY,
          CONFIG_MONEY, 
-         CONFIG_MAGIC_DISCIPLINES} from "./Config.js";
+         CONFIG_MAGIC_DISCIPLINES,
+         CONFIG_PRODUCTS } from "./Config.js";
         
 import { updateDataFromProperty } from "./helper-functions.js";
 import { EquipmentSheet } from "./FBLItemSheet.js";
@@ -31,7 +32,8 @@ export class FBLActorSheet extends ActorSheet {
 
     // create the Attributes damage track
     // Object.values(data.data.attributes).forEach(d => this._createTrack(d, CONFIG_WOUND_ICONS));
-    Object.values(data.data.attributes).forEach(d => createTrack.call(this, d, ["max","damage"], CONFIG_WOUND_ICONS));
+    // console.log(this.actor);
+    if (!(this.actor.data.type === "Stronghold")) Object.values(data.data.attributes).forEach(d => createTrack.call(this, d, ["max","damage"], CONFIG_WOUND_ICONS));
     return data;
   }
 // -------------------------- END GETDATA -------------------------------------
@@ -148,11 +150,12 @@ export class FBLActorSheet extends ActorSheet {
           if (talentData.data.isMagical) {
             // console.log("Magic talent Fired");
             const discipline = talentData.data.magicalDiscipline;
-            console.log(discipline);
-            const spells = (game.items.entries.filter( i => i.type === "Spell"));  // <-------------- !!! Replace this line with Compendium Spell entries once it's done !!!
+            // console.log(discipline);
+            const spells = game.items.entries.filter( i => i.type === "Spell");  // <-------------- !!! Replace this line with Compendium Spell entries once it's done !!!
+            // const spells = game.packs.get(data.pack).getContent().filter( i => i.type === "Spell");
             let generalSpells = spells.filter( spell => { return ( spell.data.data.discipline === "general") });
             generalSpells.sort( (s1,s2) => {return (s1.data.data.rank - s2.data.data.rank)});
-            let spellList = spells.filter( spell => { return (CONFIG_MAGIC_DISCIPLINES[spell.data.data.discipline].name === discipline) });
+            let spellList = spells.filter( spell => { return (CONFIG_MAGIC_DISCIPLINES[spell.data.data.discipline]?.name === discipline) });
             spellList.sort( (s1,s2) => {return (s1.data.data.rank - s2.data.data.rank)});
             spellList = generalSpells.concat(spellList);
             spellList = spellList.filter( spell => {return !actor.data.data.Spell.some( s => s.name === spell.name)});
@@ -242,13 +245,14 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     data.data.currency = Array.from(CONFIG_MONEY).reverse();
     // configure Encumbrance Icon according to encumbrance status
     data.data.isEncumbered = (data.data.encumbrance.value > data.data.encumbrance.capacity) ?  true : false;
+    data.data.isMountEncumbered = (data.data.mountEncumbrance.value > data.data.mountEncumbrance.capacity) ?  true : false;
     // console.log(this);
     data.data.isMountInventoryActive = this._tabs[1]?.active === "mount" ? true : false;
     data.data.mount = {};
     data.data.mount.name = this.actor.data.flags.forbiddenlands?.mount?.name || "";
     data.data.mount.strength = this.actor.data.flags.forbiddenlands?.mount?.strength || "";
     data.data.mount.movement = this.actor.data.flags.forbiddenlands?.mount?.movement || "";
-    console.log(this.actor);
+    // console.log(this.actor);
     return data;
   }
 
@@ -356,6 +360,82 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
 }
 /* ------------------------------ END NPCSheet ------------------------------------ */
 
+export class StrongholdSheet extends FBLActorSheet {
+  constructor(object, options) {
+    super(object, options);
+    this.actor.data.data.settings =  { "products":  CONFIG_PRODUCTS };
+    }
+
+  /** @override */
+	static get defaultOptions() {
+
+	  return mergeObject(super.defaultOptions, {
+  	  classes: ["fbl"],
+      template: "systems/forbiddenlands/templates/stronghold-sheet.html",
+      // tabs: [{navSelector: ".tabs", contentSelector: ".content", initial: "talents", callback: ()=>{}}],
+      width: "auto",
+      height: "auto",
+      resizable: false
+    });
+  }
+
+  activateListeners(html) {
+    super.activateListeners(html);
+    document.querySelector(`form.${this.entity._id}`).addEventListener("dblclick", _manageFunctions.bind(this) );
+
+    async function _manageFunctions(event) {
+      event.preventDefault();
+      const target = event.target;
+      const id = target.dataset.action;
+      if (!id) return;
+      let data = this.getData();
+      if (id === "constructioncomplete") {
+        const func = target.id;
+        // console.log(func);
+        const newData = {"data.functions": {[func]: { "construction": {"isUnderConstruction": false, "time": 0 } } } };
+        return this.object.update(newData);
+      }
+
+      if (target.classList.contains("fa-plus")) {
+        if (id === "addfunction") {
+          let nextFunction = `function_0${Object.keys(data.data.functions).length}`;
+          const newData = {"data.functions": {[nextFunction]: { "name": "", "construction": {"isUnderConstruction": true, "time": 0 }, "production": {"staff": null, "material":{"name": "", "quantity": 0} } } }};
+          return this.object.update(newData);
+        }
+        if (id === "addhireling") {
+          let nextHireling = `hireling_0${Object.keys(data.data.hirelings).length}`;
+          const newData = {"data.hirelings": {[nextHireling]: { "name": "", "quantity": null, "salary": 0} }};
+          return this.object.update(newData);
+        }
+      }
+
+      if (target.classList.contains("fa-trash")) {
+        if (id === "removefunction") {
+          let oldEntries = duplicate(data.data.functions);
+          const func = target.id;
+          delete oldEntries[func];
+          // consolidate naming pattern so that the numbering stays consecutive
+          let newEntries = {};
+          for (let i = 0; i < Object.keys(data.data.functions).length-1; i++) newEntries[`function_0${i}`] = data.data.functions[Object.keys(oldEntries)[i]];
+          await this.object.update({ "data.functions": null});
+          await this.object.update({ "data.functions": newEntries});
+        }
+
+        if (id === "removehireling") {
+          let oldEntries = duplicate(data.data.hirelings);
+          const hir = target.id;
+          delete oldEntries[hir];
+          // consolidate naming pattern so that the numbering stays consecutive
+          let newEntries = {};
+          for (let i = 0; i < Object.keys(data.data.hirelings).length-1; i++) newEntries[`hireling_0${i}`] = data.data.hirelings[Object.keys(oldEntries)[i]];
+          await this.object.update({ "data.hirelings": null});
+          await this.object.update({ "data.hirelings": newEntries});
+        }
+      }
+    }
+  }
+}
+
 /* ------------------------------ FUNCTIONS AND EVENTHANDLERS ------------------------------------ */
 
 function createTrack(data, trackNames, iconsURLArray) {
@@ -372,7 +452,7 @@ function createTrack(data, trackNames, iconsURLArray) {
   return data = mergeObject(data, {"propertyTrack": dT});        // return the original object after appending the propertyeTrack property
 }
 
-  function createDieTrack(modifier) {
+function createDieTrack(modifier) {
   let mod = modifier[1].value;
   let diceModifiers = Array.from(CONFIG_DICE_MODIFIERS[0]);   
   if (mod === 0) {return this.actor.data.data.dieModifiers[modifier[0]] = mergeObject(modifier[1], {"modTrack": diceModifiers})};
@@ -428,7 +508,7 @@ async function itemEvents(event) {
 
   const origin = event.target;
   const elementClasses= origin.classList;
-  console.log(elementClasses);
+  // console.log(elementClasses);
   const data = this.getData();
   // console.log(data);
 
@@ -551,14 +631,57 @@ function onDragStart (event) {
 async function sortItems (event) {
   event.preventDefault();
   const transferData = JSON.parse(event.dataTransfer.getData("text/plain"));
-  if (!transferData.type || transferData.type === "Spell") {return};
+  if (!transferData.type || transferData.type === "Spell") return;
 
   const dropContainer = event.target.closest(".drag-target")?.dataset.tab;
+
+  // Manage the transfer of items from personal to mount inventory
   if (transferData.type === "Equipment") {
     const item = this.actor.getEmbeddedEntity("OwnedItem", transferData.id);
     const isStoredOnMount = item?.flags?.forbiddenlands.isStoredOnMount;
     if (dropContainer === "inventory" && isStoredOnMount) await this.actor.updateEmbeddedEntity("OwnedItem", {_id: item._id, "flags.forbiddenlands.isStoredOnMount": false});
     if (dropContainer === "mount" && !isStoredOnMount) await this.actor.updateEmbeddedEntity("OwnedItem", {_id: item._id, "flags.forbiddenlands.isStoredOnMount": true}); 
+  }
+  
+  // Manage transfer from Weapons and Armor to Inventory
+  if ((transferData.type === "Weapon" || transferData.type === "Armor") && (dropContainer === "inventory" || dropContainer === "mount")) {
+    const item = this.actor.getEmbeddedEntity("OwnedItem", transferData.id);
+    let originalData = item.data;
+
+    let dummyEquipData = {
+      name: item.name,
+      type: "Equipment",
+      img: item.img,
+      data: {
+        isArtifact: false,
+        bonus: {"value": 0, "damage": 0},
+        skill: "None",
+        artifactDie: "",
+        artifactArray: [],
+        rawmaterials:originalData.rawmaterials,
+        time: originalData.time,
+        talent: originalData.talent,
+        tools: originalData.tools,
+        price: {"cost": originalData.price?.cost, "currency": originalData.price?.currency},
+        supply: originalData.supply,
+        weight: originalData.weight,
+        description: originalData.description
+      }
+    }
+    let dummyWeapon = await this.actor.createEmbeddedEntity("OwnedItem", dummyEquipData);
+    await this.actor.updateEmbeddedEntity("OwnedItem", {_id: dummyWeapon._id, "sort": (this.actor.data.items.length-1), "flags.forbiddenlands.quantity": 1, "flags.forbiddenlands.originalData": originalData, "flags.forbiddenlands.originalItemType": transferData.type});
+    await this.actor.deleteEmbeddedEntity("OwnedItem", item._id);
+  }
+
+  // Manage transfer from Inventory to Weapons and Armor
+  if (transferData.type === "Equipment" && ( dropContainer === "weapons" || dropContainer === "armor")) {
+    const item = this.actor.getEmbeddedEntity("OwnedItem", transferData.id);
+    let originalItemType = item.flags.forbiddenlands?.originalItemType;
+    if (!(originalItemType === "Weapon" || originalItemType === "Armor")) return;
+    let itemData = item.flags.forbiddenlands.originalData;
+    // console.log(originalData);
+    await this.actor.createEmbeddedEntity("OwnedItem", {name: item.name, type: originalItemType, img: item.img, data: itemData});
+    await this.actor.deleteEmbeddedEntity("OwnedItem",  item._id);
   }
 
   // get the drop target element
@@ -568,7 +691,7 @@ async function sortItems (event) {
   if (!targetId) {return};
   // get the target and source items id and type
   const targetData = {id: targetId, type: this.actor.getEmbeddedEntity("OwnedItem", targetId).type}
-  // if they are not of the same type then return
+    // if they are not of the same type then return
   if (transferData.type !== targetData.type) {return console.log("You can't sort items of different type")};
   // copy the items array and sort it according to the actual current order
   let itemsArray = Array.from(this.actor.data.items);

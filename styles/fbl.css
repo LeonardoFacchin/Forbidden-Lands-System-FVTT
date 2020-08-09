@@ -33,7 +33,6 @@
 .fbl .window-content,
 #chat-log .message,
 .dialog .window-content,
-.journal-sheet,
 .journal-sheet .window-content {
   font-family: "IM Fell DW Pica Roman";
   background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
@@ -42,23 +41,36 @@
   text-align: justify;
   /* height: auto !important;
   width: auto !important; */
-  padding-bottom: 15px;
+  padding: 10px 10px 20px 10px;
   overflow-y: hidden;
+  border-style: solid;
+  border-image: url('/systems/forbiddenlands/icons/fbl_frame.png') 4% 5% / 15px 15px / 1.75px repeat;
 }
 
-/* .app.window-app.fbl {
-  height: auto !important;
-  width: auto !important;
-} */
+form#chat-form {
+  border-style: solid;
+  border-image: url('/systems/forbiddenlands/icons/fbl_frame.png') 4% 5% / 15px 15px / 1px repeat;
+  background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
+}
 
-/* form {
-  height: auto !important;
-  width: auto !important;
-  margin: auto !important;
-} */
+textarea#chat-message {
+  font-family: "IM Fell DW Pica Roman";
+  background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
+  font-size: 0.9rem;
+  border: none;
+}
 
 #chat-log .message {
+  max-width: 100% !important;
   font-size: 0.85rem;
+}
+
+.app.window-app.fbl {
+  max-width: min-content !important;
+}
+
+.fbl form {
+  max-width: min-content !important;
 }
 
 .fbl .fas:hover,
@@ -99,6 +111,11 @@ border-radius: 2px;
   overflow-y: scroll;
 }
 
+.fblframe {
+  border-style: solid;
+  border-image: url('/systems/forbiddenlands/icons/fbl_frame.png') 4% 5% / 15px 15px / 2px repeat;
+}
+
 /* --------------------------- RESETS ----------------------------*/
 
 .window-app ul {
@@ -118,6 +135,13 @@ border-radius: 2px;
 .app.sidebar-popout #combat-tracker.directory-list{
   overflow: hidden;
 }
+
+.fbl textarea {
+  font-family: "IM Fell DW Pica Roman";
+  display: block;
+  flex: 1;
+  text-align: start;
+}
 /* --------------------------- LAYOUT ----------------------------*/
 /*  Layout classes have the responsibility of defining the Sheet layout and to implement it
 
@@ -128,13 +152,11 @@ border-radius: 2px;
 */
 
 .layout {
-    /* padding: 5px; */
     box-sizing: border-box;
     margin: auto;
     display: grid;
     gap: 1%;
     flex: 1;
-    /* border: 3px dashed red; */
 }
 
 .layout__gap {
@@ -170,7 +192,6 @@ border-radius: 2px;
   min-width: 880px;
   max-width: 880px;
   max-height: 963px;
-  /* border: 3px dashed purple; */
 }
 
 .layout--NPC {
@@ -180,6 +201,17 @@ border-radius: 2px;
   grid-template-rows: 100px 1fr;
   min-width: 880px;
   max-width: 880px;
+  /* border: 3px dashed purple; */
+}
+
+.layout--Stronghold {
+  grid-template-areas: "graphics header header"
+                       "body body body";
+  grid-template-columns: 215px 1fr 1fr;
+  grid-template-rows: 215px 1fr;
+  min-width: 880px;
+  max-width: 880px;
+  min-height: 500px;
   max-height: 963px;
   /* border: 3px dashed purple; */
 }
@@ -319,6 +351,17 @@ border-radius: 2px;
   border-bottom: none;
 }
 
+.fblframe__title {
+  width: 100%;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  padding: 4px 5px;
+  font-size: var(--frame-title-font-size);
+  font-weight: bolder;
+  text-align: center;
+  border-bottom: none;
+}
+
 .frame--flexible {
   flex: 1;
 }
@@ -399,7 +442,7 @@ input[type="text"].header-title--small {
   flex: 1;
   font-family: "IM Fell DW Pica Roman";
   background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
-  font-size: 0.9rem;
+  /* font-size: 0.9rem; */
   /* border: 3px dotted blue; */
 }
 
@@ -618,6 +661,38 @@ input[type="text"].header-title--small {
 .table__entry--mount {
   grid-template-columns: 3fr 1fr 1fr;
   border: 1px solid black;
+}
+
+.table__entry--resources {
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
+  padding: 2px 5px
+}
+
+.table__entry--function-construction {
+  width: 98%;
+  background-color: white;
+  grid-template-columns: 10% 50% 35% 5%;
+  border-style: solid;
+  border-image: url('/systems/forbiddenlands/icons/workInProgress.svg') 17 / 5px / 0 repeat;
+  margin: 2px 5px;
+  padding: 4px 0;
+}
+
+.table__entry--function {
+  width: 98%;
+  background-color: white;
+  grid-template-columns: 35% 15% 45% 5%;
+  border: 1px solid black;
+  margin: 2px 5px;
+}
+
+.table__entry--hireling {
+  width: 98%;
+  background-color: white;
+  grid-template-columns: 55% 15% 25% 5%;
+  border: 1px solid black;
+  margin: 2px 5px;
 }
 
 .table__field {

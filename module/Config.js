@@ -27,7 +27,7 @@ export const CONFIG_EXPERIENCE_ICONS = ["systems/forbiddenlands/icons/sheets/xp-
 
 export const CONFIG_WILLPOWER_ICONS = ["systems/forbiddenlands/icons/sheets/willpower-marked.svg", "systems/forbiddenlands/icons/sheets/willpower-unmarked.svg"];
 
-export const CONFIG_PC_CLASSES = ["Druid", "Fighter", "Hunter", "Minstrel", "Peddler", "Rider", "Rogue", "Sorcerer"];
+export const CONFIG_PC_CLASSES = ["Druid", "Champion", "Fighter", "Hunter", "Minstrel", "Peddler", "Rider", "Rogue", "Sorcerer"];
 
 export const CONFIG_TALENT_TYPE = ["Kin", "Professional", "General"];
 
@@ -70,7 +70,8 @@ export const CONFIG_CONSUMABLE_ICONS = {
 }
 
 // MAGIC
-
+// NB: the first key entry ("general", below) should also appear as the default "discipline" entry in the Spell template in "template.json".
+// If you change the value in the follwoing list remember to also change the corresponding value in the template.
 export const CONFIG_MAGIC_DISCIPLINES = {
     "general": {name: "General", url:"systems/forbiddenlands/icons/magic-disciplines/magic-swirl.svg"},
     "healing": {name: "Healing Magic", url: "systems/forbiddenlands/icons/magic-disciplines/caduceus.svg"},
@@ -113,6 +114,16 @@ export const CONFIG_MAGIC_DISCIPLINES = {
   export const CONFIG_TIME_LIMIT = [" - ", "Rounds", "Minutes", "Hours", "Days"];
 
   export const CONFIG_HEALING_TIME = [" - ", "d6", "2d6", "3d6", "Permanent"];
+
+  // STRONGHOLD FUNCTIONS
+
+  export const CONFIG_BUILDER_SPECIALTY = ["", "Builder","Carpenter"];
+
+  export const CONFIG_RAW_MATERIALS = ["", "Iron", "Stone", "Wood"];
+
+  export const CONFIG_PRODUCTS = ["", "Iron Ore", "Iron", "Silver", "Gold", "Stone", "Glass", "Wood", "Fur", "Leather", "Cloth", "Wool", "Food", "Bread", "Water", "Flour", "Grain","Meat", "Fish", "Vegetables", "Tallow", "Herbs"];
+
+  export const CONFIG_WORKER_SPECIALTY = ["", "Baker", "Bowyer", "Carpenter", "Executioner", "Farmer", "Guard", "Handyman", "Hunter", "Innkeeper", "Jailer", "Lumberjack", "Miller", "Miner", "Quarry Worker", "Smith", "Tanner", "Tailor"];
 
   // DICE
 

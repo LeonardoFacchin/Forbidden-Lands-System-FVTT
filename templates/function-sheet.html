@@ -1,0 +1,288 @@
+<form class="{{cssClass}} {{this.entity._id}}" autocomplete="off" style="font-size: 0.8rem;">
+{{log data}}
+    <div class="layout layout--equipment">
+        <div class="layout__picture">
+            <img class="profile-img--small" src="{{item.img}}" data-edit="img" title="{{item.name}}">
+        </div>
+        
+        <div class="layout__header">
+            <input class="header-title header-title--small" type="text" name="name" value="{{item.name}}", placeholder="Name">
+        </div>
+        
+        <!-- EDIT -->
+        <div class="layout__body">
+            
+            <!-- EFFECTS -->
+            <label class="frame__title layout__gap--large">Building</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <div class="table__entry table__entry--no-border table__entry--3col">
+                        <!-- SPECIALTY -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Specialty: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.building.specialty">
+                                {{#select data.building.specialty.[0]}}
+                                    {{#each settings.builderSpecialty}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.building.specialty">
+                                {{#select data.building.specialty.[1]}}
+                                    {{#each settings.builderSpecialty}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                        <!-- RAW MATERIALS -->
+                    <div class="table__entry table__entry--no-border table__entry--4col">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Materials: </label>
+                        </div>
+                        <div class="table__field">
+                            <input type="text" class="table__data" name="data.building.materials[0]" data-dtype="Number" style="width: 30px" value={{data.building.materials.[0].quantity}}>
+                            <select class="table__data" name="data.building.materials">
+                                {{#select data.building.materials.[0].type}}
+                                    {{#each settings.rawMaterials}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <input type="text" class="table__data" name="data.building.materials[1]" data-dtype="Number" style="width: 30px" value={{data.building.materials.[1].quantity}}>
+                            <select class="table__data" name="data.building.materials">
+                                {{#select data.building.materials.[1].type}}
+                                    {{#each settings.rawMaterials}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <input type="text" class="table__data" name="data.building.materials[2]" data-dtype="Number" style="width: 30px" value={{data.building.materials.[2].quantity}}>
+                            <select class="table__data" name="data.building.materials">
+                                {{#select data.building.materials.[2].type}}
+                                    {{#each settings.rawMaterials}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                        <!-- GRIP -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Grip: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.grip">
+                                {{#select data.grip}}
+                                    <option value="1H">1H</option>
+                                    <option value="2H">2H</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                        <!-- RANGE -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Range: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.range">
+                                {{#select data.range}}
+                                    {{#each settings.ranges}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <!-- BONUS -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Bonus: </label>
+                        </div>
+                        <div class="table__field">
+                            <input class="table__data table__data--left-aligned" name="data.bonus.value" value={{data.bonus.value}} data-dtype="Number">
+                        </div>
+                        <!-- DAMAGE -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Damage: </label>
+                        </div>
+                        <div class="table__field">
+                            <input class="table__data table__data--left-aligned" name="data.damage" value={{data.damage}} data-dtype="Number">
+                        </div>
+                        <!-- SKILL -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Skill: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.skill">
+                                {{#select data.skill}}
+                                    {{#each settings.skills}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>    
+                    <!-- FEATURES -->
+                    <div class="table__entry table__entry--no-border table__entry--weapon-features">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Features: </label>
+                        </div>
+                        {{#each data.features as |feature|}}
+                        <div class="table__field">
+                            <select class="table__data" name="data.features.{{@index}}">
+                                {{#select feature}}
+                                    {{#each ../settings.features as |item|}}
+                                    <option value="{{item}}">{{item}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>    
+            <!-- ARTIFACT -->
+            {{#if data.isArtifact}}
+            <label class="frame__title layout__gap--large">Artifact</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Artifact Die One: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data artDie" name="data.artifactArray">
+                                {{#select data.artifactArray.[0]}}
+                                    <option value="d8">d8</option>
+                                    <option value="d10">d10</option>
+                                    <option value="d12">d12</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Artifact Die Two: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.artifactArray">
+                                {{#select data.artifactArray.[1]}}
+                                    {{#each settings.artifactDie}}
+                                    <option value="{{this}}">{{this}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Effects: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.description" style="height: 120px; padding: 10px">{{formatDisplay data.description}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+
+            <!-- INVENTORY -->            
+            <label class="frame__title layout__gap--large">Inventory Data</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <!-- PRICE -->
+                    {{#unless data.isArtifact}}
+                    <div class="table__entry table__entry--no-border table__entry--price">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Price: </label>
+                        </div>
+                        <div class="table__field">
+                            <input class="table__data" name="data.price.cost" value={{data.price.cost}} data-dtype="Number">
+                        </div>
+                        <div class="table__field">
+                                <select class="table__data table__data--left-aligned" name="data.price.currency">
+                                    {{#select data.price.currency}}
+                                        {{#each settings.money}}
+                                        <option value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                    {{/select}}
+                                </select>
+                        </div>
+                    </div>
+                    {{/unless}}
+                    <!-- SUPPLY -->
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        {{#unless data.isArtifact}}
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Supply: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.supply">
+                                {{#select data.supply}}
+                                {{#each settings.supply}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        {{/unless}}                        
+                    <!-- WEIGHT -->
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Weight: </label>
+                        </div>
+                        <div class="table__field">
+                            <select class="table__data" name="data.weight">
+                                {{#select data.weight}}
+                                {{#each settings.weight}}
+                                <option value="{{this}}">{{this}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRAFTING -->
+            {{#unless data.isArtifact}}
+            <label class="frame__title layout__gap--large">Crafting Data</label>
+            <div class="frame frame__placement frame--no-lr-border">
+                <div class="table">
+                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Materials: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.rawmaterials">{{data.rawmaterials}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Tools: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.tools">{{data.tools}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Talents: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned" contenteditable="true" data-edit="data.talent">{{data.talent}}</div>
+                        </div>
+                        <div class="table__field">
+                            <label class="table__data table__data--left-aligned">Time: </label>
+                        </div>
+                        <div class="table__field">
+                            <div class="table__data table__data--left-aligned"contenteditable="true" data-edit="data.time">{{data.time}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/unless}}
+            <div>
+                <i class="fas fa-save item-edit" style="float: right; font-size: 1.5em; padding: 5px"></i> 
+            </div>
+        </div>
+        </div>
+</form>

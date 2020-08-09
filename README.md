@@ -1,13 +1,18 @@
 # Forbidden Lands System
 Unofficial, fan made implementation of the Forbidden Lands RPG system for use with the Foundry VTT virtual tabletop.
 
-**version**: 0.2.4  
+**version**: 0.3.0  
 **supported browsers**: Chrome, Edge  
 (NB: Firefox won't display character sheets as intended. Right now I'm inclined not to bother trying to make the system work with Firefox, mostly because on my PC Firefox performance was way worse than Edge's or Chrome's. If enough people are **really really** interested I might change my mind, but I suggest using Chrome to be on the safe side)
 
+# v0.3.0
+- Added rudimentary Stronghold Sheet. The sheet is not automated and right now doesn't support dragging and droppping. It's just a form meant to allow basic recording of Strongold functions and hirelings. Automating the stronghold sheet is a nightmare because the game Stronghold rules are all over the place and don't scale all that well between the small players party level and the "big fief" level. There are a lot of small things that needs to be tracked (including spoiling of generated resources) and all these thing tend to have different lifetime cycle durations. I hope to add some automation in the future.
+- Added the ability for users to drag weapons and armor pieces from the Weapons and Armor sections of the sheet to the inventory section and viceversa. The Weapons and Armor sections of the sheet were meant to store only equipped items. There was a need to track transported weapons and armors. Weapons and Armor can't be used from the inventory and mount inventory tabs. They have to be equipped first.
+- added a few visual changes to all the sheets.
+
 # v0.2.5
 - Added rudimentary Mount inventory.
-The mount inventory is accessible through its own tab in the character sheet inventory window. The user can set the mount name, speed and strength and the system will track the weight of the items the mount is carrying independently from the weight of those the character is carrying. Items can be dragged from an inventory to the other by dropping them on the inventory tab navigation element. New items are added to the character inventory by default. Right now items stack cannot be split.
+The mount inventory is accessible through its own tab in the character sheet inventory window. The user can set the mount name, speed and strength and the system will track the weight of the items the mount is carrying independently from the weight of those the character is carrying. Items can be dragged from an inventory to the other by dropping them on the inventory tab navigation element. By default, new items are added to the character inventory. Right now item stacks cannot be split.
 - Fixed missing weapon group for unarmed combat.
 
 # v0.2.4

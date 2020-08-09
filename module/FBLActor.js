@@ -19,22 +19,25 @@ export class FBLActor extends Actor {
         
         const actorType = this.data.type;
 
-        // prepare attributes current values
-        Object.values(this.data.data.attributes).forEach( attribute => {
-            attribute.value = attribute.max - attribute.damage;
-        });
+        if (actorType === "PC" || actorType === "Monster" || actorType === "NPC") {
+            // prepare attributes current values
+            Object.values(this.data.data.attributes).forEach( attribute => {
+                attribute.value = attribute.max - attribute.damage;
+            });
 
-        // prepare the total skill value and the skill abbreviation to display on the sheet
-        Object.values(this.data.data.skills).forEach( skill => {
-            const attribute = skill.attr;
-            // console.log(skill);
-            skill.total = this.data.data.attributes[attribute].value + skill.value;
-            skill.abbrev = `${attribute.substring(0,1).toUpperCase()}${attribute.substring(1,3)}`;
-        });
+            // prepare the total skill value and the skill abbreviation to display on the sheet
+            Object.values(this.data.data.skills).forEach( skill => {
+                const attribute = skill.attr;
+                // console.log(skill);
+                skill.total = this.data.data.attributes[attribute].value + skill.value;
+                skill.abbrev = `${attribute.substring(0,1).toUpperCase()}${attribute.substring(1,3)}`;
+            });
+        }
 
         if (actorType === "PC") this._preparePCData();
         if (actorType === "Monster") this._prepareMonsterData();
         if (actorType === "NPC") this._prepareNPCData();
+        if (actorType === "Stronghold") this._prepareStrongholdData();
     }
 
     _preparePCData() {
@@ -105,7 +108,7 @@ export class FBLActor extends Actor {
         data.mountEncumbrance = {};
         data.mountEncumbrance.value = itemsMountWeight;
         data.mountEncumbrance.capacity = this.data.flags?.forbiddenlands?.mount?.strength * 4 || 0;
-        console.log(this.data);
+        // console.log(this.data);
     }
 
     _prepareMonsterData() {
@@ -125,6 +128,27 @@ export class FBLActor extends Actor {
         // filter the embedded entities "items" array by type of embedded entities and
         // sort them into appropriate new arrays for ease of access
         this._prepareEmbeddedArrays();
+    }
+
+    _prepareStrongholdData() {
+        const data = this.data.data;
+        // import configuration arrays
+        this.validEmbeddedEntities = ["Function","Hireling"];
+        this._prepareEmbeddedArrays();
+
+        data.totalSalaries = Object.values(data.hirelings).reduce( (total, hireling) => {
+            return total = total + Number(hireling.salary);
+        }, 0);
+
+        console.log(data.totalSalaries);
+
+        const gold = Math.trunc(data.totalSalaries/100);
+        const silver = Math.trunc((data.totalSalaries - gold * 100)/10);
+        const copper = Math.trunc((data.totalSalaries - gold * 100 - silver * 10));
+
+        if (data.totalSalaries < 10) data.totalSalaries = `${copper} Copper`
+        if (data.totalSalaries >= 10 &&  data.totalSalaries < 100) data.totalSalaries = `${silver} Silver, ${copper} Copper`
+        if (data.totalSalaries >= 100) data.totalSalaries = `${gold} Gold, ${silver} Silver, ${copper} Copper`
     }
 
     prepareEmbeddedEntities() { 
@@ -186,14 +210,9 @@ async rollCheck(rollType, id) {
                         token: actor.token,
                         alias: actor.name};
   
-    // let msg = await ChatMessage.create(chatData);
-    // msg._roll = rollCheck;
-    console.log(chatData);
+    // console.log(chatData);
     let msg = await FBLChatMessage.create(chatData, {}, rollCheck);
-    console.log(msg);
-    // rollCheck.message_id = msg.data._id;
-    // ui.chat.updateMessage(msg, true);
-    // console.log(rollCheck);
+    // console.log(msg);
   }
   //------------------------------------------------------------------------------------------------
 

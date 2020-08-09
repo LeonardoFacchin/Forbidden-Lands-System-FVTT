@@ -2,7 +2,7 @@
 
     <!-- TOP-LEFT - PROFILE PICTURE -->
     <div class="layout__picture">
-        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+        <img class="profile-img player-image" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
     </div>
 
     <!-- TOP-CENTER-RIGHT - HEADER -->
@@ -130,7 +130,7 @@
                             </div>
                             <div class="table__field">
                                 <span class="table__data">
-                                    {{weapon.data.artifactDie}}
+                                    <img class="fas artifactSwitch" type="image" src="{{weapon.data.artifactUrl}}" data-id="{{weapon._id}}" style="border: none; margin: -2px -1px;  vertical-align: middle;" alt="" width="18px" height="18px">
                                 </span>
                             </div>
                             <div class="table__field">

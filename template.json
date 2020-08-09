@@ -1,6 +1,6 @@
 {
  "Actor": {
-     "types": ["PC", "NPC", "Monster"],
+     "types": ["PC", "NPC", "Monster", "Stronghold"],
      "templates": {
         "scores": {
             "attributes": {
@@ -95,7 +95,6 @@
 
     },
         "PC": {
-            "kin": "",
             "info": {
                 "kin": "",
                 "profession": "",
@@ -162,10 +161,41 @@
                 "modifierTwo": {"max": 1, "value": 0, "type": "d8"},
                 "modifierThree": {"max": 1, "value": 0, "type": "d8"}
             }
+        },
+
+        "Stronghold": {
+            "location": "",
+            "description": "",
+            "defense": {"value": 0},
+            "functions": {},
+            "hirelings": {},
+            "resources": {
+                "Iron Ore": {"value": 0},
+                "Iron": {"value": 0},
+                "Silver": {"value": 0},
+                "Gold": {"value": 0},
+                "Stone": {"value": 0},
+                "Glass": {"value": 0},
+                "Wood": {"value": 0},
+                "Fur": {"value": 0},
+                "Leather": {"value": 0},
+                "Cloth": {"value": 0},
+                "Wool": {"value": 0},
+                "Food": {"value": 0},
+                "Bread": {"value": 0},
+                "Water": {"value": 0},
+                "Flour": {"value": 0},
+                "Grain": {"value": 0},
+                "Meat": {"value": 0},
+                "Fish": {"value": 0},
+                "Vegetables": {"value": 0},
+                "Tallow": {"value": 0},
+                "Herbs": {"value": 0}
+            }
         }
     },
  "Item": {
-     "types": ["Monster Attack","Monster Special Ability","Talent","Spell","Equipment","Weapon","Armor","Critical Injury"],
+     "types": ["Monster Attack","Monster Special Ability","Talent","Spell","Equipment","Weapon","Armor","Critical Injury","Function","Hireling"],
      "templates": {
         "crafting": {
             "rawmaterials": "",
@@ -206,7 +236,7 @@
      },
      "Spell": {
         "image": "icons/svg/mystery-man.svg",
-        "discipline": {},
+        "discipline": "general",
         "rank": "",
         "castingtime": "",
         "range": "",

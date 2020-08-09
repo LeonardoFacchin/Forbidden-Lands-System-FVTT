@@ -21,7 +21,10 @@ import {  CONFIG_PC_CLASSES,
           CONFIG_ARMOR_LOCATION,
           CONFIG_LETHAL,
           CONFIG_TIME_LIMIT,
-          CONFIG_HEALING_TIME} from "./Config.js";
+          CONFIG_HEALING_TIME,
+          CONFIG_BUILDER_SPECIALTY,
+          CONFIG_WORKER_SPECIALTY,
+          CONFIG_RAW_MATERIALS} from "./Config.js";
 
 /* ----------------------- FBLItemSheet ------------------------*/
 // extension of the ItemSheet class. NOT INSTANTIATED DIRECTLY, only for inheritance.
@@ -300,7 +303,7 @@ export class CriticalInjurySheet extends FBLItemSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    document.querySelector(".criticalInjury").addEventListener("click", _managePenalties.bind(this) );
+    document.querySelector(`form.${this.entity._id}`).addEventListener("click", _managePenalties.bind(this) );
 
     async function _managePenalties(event) {
       event.preventDefault();
@@ -309,7 +312,7 @@ export class CriticalInjurySheet extends FBLItemSheet {
       if (!id) return;
       let data = this.getData();
       if (target.classList.contains("fa-plus")) {
-        console.log("fa-plus fired");
+        // console.log("fa-plus fired");
         let nextPenalty = `penalty_0${Object.keys(data.data.bonus).length}`;
         const newData = {"data.bonus": {[nextPenalty]: {"skill": "", "value": 0} }};
         return this.object.update(newData);

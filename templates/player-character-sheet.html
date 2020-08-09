@@ -3,7 +3,7 @@
 
     <!-- TOP-LEFT - PROFILE PICTURE -->
     <div class="layout__picture">
-        <img class="profile-img--big" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+        <img class="profile-img--big player-image" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
     </div>
 
     <!-- TOP-CENTER-RIGHT - HEADER -->
@@ -62,7 +62,7 @@
     </header>
     {{else}}
 
-<form class="{{cssClass}} layout layout--PC-compact {{actor._id}}" autocomplete="off">
+<form class="{{cssClass}} layout layout--PC-compact {{actor._id}} fbl" autocomplete="off">
     <header class="layout__header">
         <!-- CHARACTER NAME -->
         <div style="display:flex; flex-direction: row;">
@@ -177,7 +177,7 @@
             <label class="frame__title">Weapons</label>
 
 
-            <div class="table dieHook-Weapon drag-target">
+            <div class="table dieHook-Weapon drag-target" data-tab="weapons">
                 {{#each data.Weapon as |weapon counter|}}
                 <div class="table__entry table__entry--PC-weapon-display table__entry--no-border frame frame__margin--PC-items drag-item " data-id="{{weapon._id}}">
                     <div class="table__field">
@@ -231,7 +231,7 @@
         <div class="frame layout__gap">
             <label class="frame__title">Armor</label>
 
-            <div class="table drag-target">
+            <div class="table drag-target" data-tab="armor">
                 {{#each data.Armor as |armor counter|}}
                 <div class="table__entry table__entry--PC-armor-display table__entry--no-border frame frame__margin--PC-items drag-item " data-id="{{armor._id}}">
                     <div class="table__field">
@@ -274,9 +274,9 @@
             <a class="item frame__title megaphone drag-target" data-tab="mount">Mount Inventory</a>
         </nav>
 
-        <section class="equipmentContent table table--flexible">
+        <section class="equipmentContent table table--flexible" style="overflow-y: scroll; border: 1px solid black;">
             <!-- EQUIPMENT -->
-            <div class="tab table table--flexible drag-target" data-tab="inventory" style="overflow-y: scroll; border: 1px solid black;">
+            <div class="tab table table--flexible drag-target" data-tab="inventory">
                 <div class="table__entry table__entry--2col" style="align-self: start">
 
                         {{#each data.Equipment as |equip counter|}}
@@ -311,7 +311,7 @@
                 </div>
             </div>
             <!-- MOUNT -->
-            <div class="tab table table--flexible drag-target mount" data-tab="mount" style="overflow-y: scroll; border: 1px solid black;">
+            <div class="tab table table--flexible drag-target mount" data-tab="mount">
                 <div class="table__entry--no-border table__entry--mount" style="background-color: lightgrey; width: 96%; margin: 5px auto">
                         <div class="table__field" style="padding: 3px 5px">
                             <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Name: </strong></label>
@@ -454,7 +454,7 @@
             </div>
             {{else}}
             <div class="table table--flexible" title="{{data.mountEncumbrance.value}} / {{data.mountEncumbrance.capacity}}">
-                {{#if data.isEncumbered}}
+                {{#if data.isMountEncumbered}}
                 <div class="table__entry table__entry--encumbrance-meter table__data--encumbrance-isEncumbered">
                 {{else}}
                 <div class="table__entry table__entry--encumbrance-meter table__data--encumbrance">
