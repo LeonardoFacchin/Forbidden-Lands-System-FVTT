@@ -96,7 +96,7 @@ Make sure to correctly import the talents and spells by configuring the right ma
 This custom implementation of the Foundry VTT default Combat Tracker should make it somewhat easier to track combatants' actions and initiative order according to the Forbidden Lands game rules.  
 
 Features:
-- tracking of combatants HP. In order for the tracking to work make sure to set the combat tracker Tracked Resource to `attributes.Strength.damage`.
+- tracking of combatants HP. In order for the tracking to work make sure to set the combat tracker Tracked Resource to `attributes.Strength.value`.
 - tracking of fast and slow actions expenditure. Click on the "F" and "S" icons to toggle their status between "available" and "spent". All the combatants' actions are automatically reset to "available" when a new round is started.
 - The "Lightning Fast" talent is automatically detected and accounted for by the initiative algorithm
 - Support for an arbitrary number of initiative cards to draw in addition to the default 1 + Lightning Fast talent rank. The GM can just insert the quantity into the corresponding input box (useful to account for surprise or the Path of the Knight Rider talent).
