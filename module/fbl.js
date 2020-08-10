@@ -59,8 +59,6 @@ Hooks.once("init", async function() {
   Items.registerSheet("FBL", WeaponSheet, { types: ["Weapon"], makeDefault: true });
   Items.registerSheet("FBL", ArmorSheet, { types: ["Armor"], makeDefault: true });
   Items.registerSheet("FBL", CriticalInjurySheet, { types: ["Critical Injury"], makeDefault: true });
-  // Items.registerSheet("FBL", FunctionSheet, { types: ["Function"], makeDefault: true });
-  // Items.registerSheet("FBL", HirelingSheet, { types: ["Hireling"], makeDefault: true });
   
   // format a string removing all tags and most of the invisible formatting tags
   // when pasting content from PDFs

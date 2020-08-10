@@ -195,7 +195,7 @@
         }
     },
  "Item": {
-     "types": ["Monster Attack","Monster Special Ability","Talent","Spell","Equipment","Weapon","Armor","Critical Injury","Function","Hireling"],
+     "types": ["Monster Attack","Monster Special Ability","Talent","Spell","Equipment","Weapon","Armor","Critical Injury"],
      "templates": {
         "crafting": {
             "rawmaterials": "",

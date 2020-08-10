@@ -133,8 +133,8 @@ export class FBLActor extends Actor {
     _prepareStrongholdData() {
         const data = this.data.data;
         // import configuration arrays
-        this.validEmbeddedEntities = ["Function","Hireling"];
-        this._prepareEmbeddedArrays();
+        // this.validEmbeddedEntities = ["Function","Hireling"];
+        // this._prepareEmbeddedArrays();
 
         data.totalSalaries = Object.values(data.hirelings).reduce( (total, hireling) => {
             return total = total + Number(hireling.salary);

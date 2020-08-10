@@ -20,6 +20,7 @@ import { CONFIG_WEAR_ICONS,
         
 import { updateDataFromProperty } from "./helper-functions.js";
 import { EquipmentSheet } from "./FBLItemSheet.js";
+import { SpellDialog } from "./FBLSpellDialog.js";
 
 /* ------------------------------ FBLActorSheet ------------------------------------ */
 // extension of the ActorSheet class. Not used directly, just for inheritance.
@@ -248,6 +249,7 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     data.data.isMountEncumbered = (data.data.mountEncumbrance.value > data.data.mountEncumbrance.capacity) ?  true : false;
     // console.log(this);
     data.data.isMountInventoryActive = this._tabs[1]?.active === "mount" ? true : false;
+    data.data.mountIconUrl = data.data.isMountInventoryActive ? "systems/forbiddenlands/icons/sheets/mount_active.svg" : "systems/forbiddenlands/icons/sheets/mount_inactive.svg";
     data.data.mount = {};
     data.data.mount.name = this.actor.data.flags.forbiddenlands?.mount?.name || "";
     data.data.mount.strength = this.actor.data.flags.forbiddenlands?.mount?.strength || "";
@@ -733,10 +735,47 @@ async function setMountStats(event) {
   console.log(origin.dataset.edit);
   const dataName = origin.dataset.edit;
   const dataValue = origin.value;
-  console.log(`${dataName}`, dataValue)
+  console.log(`${dataName}`, dataValue);
   await this.actor.setFlag("forbiddenlands", `${dataName}`, dataValue);
   console.log(this.actor);
 }
+
+// async function setMountStats(event) {
+//   event.preventDefault();
+//   const origin = event.target;
+//   // const action = origin.dataset.action;
+
+//   if (!(origin.dataset.action === "openmount")) return;
+//   let dialogData = await getTemplate("systems/forbiddenlands/templates/mount.html");
+//   let data = this.getData();
+//   console.log(data);
+//   let dial = new Dialog({
+//     title: "Mount",
+//     content: dialogData,
+//     buttons: {
+//       ok: {
+//         label: "Submit",
+//         callback: (event) => { console.log(this.getData)},
+//       },
+//       cancel: {
+//         label: "Cancel",
+//         callback: () => {},
+//       },
+//     }, 
+//     data: {
+//       name: data.data.mount.name,
+//       strength: data.data.mount.strength,
+//       movement: data.data.mount.movement,
+//     }  
+//   }).render(true);
+  // await dial.render(true)
+  // console.log(origin.dataset.edit);
+  // const dataName = origin.dataset.edit;
+  // const dataValue = origin.value;
+  // console.log(`${dataName}`, dataValue)
+  // await this.actor.setFlag("forbiddenlands", `${dataName}`, dataValue);
+  // console.log(this.actor);
+// }
 
 // --------------------- FUNCION updateDieModifier(event) ---------------------------------------
 // manage the update of the die modifiers the player can select from the character sheet

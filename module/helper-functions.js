@@ -245,7 +245,7 @@ export async function prepareRollData( rollType, actor, id) {
       ID: id,
       rollType: rollType}).render(true);
 
-    await diag.render(true);
+    // await diag.render(true);
     return null; // transfer control of the spellcasting process to the Spell dialog
   }
 
