@@ -312,20 +312,6 @@
             </div>
             <!-- MOUNT -->
             <div class="tab table table--flexible drag-target mount" data-tab="mount">
-                <div class="table__entry--no-border table__entry--mount" style="background-color: lightgrey; width: 96%; margin: 5px auto">
-                        <div class="table__field" style="padding: 3px 5px">
-                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Name: </strong></label>
-                            <input class="table__data"  data-edit="mount.name" type="text" value="{{data.mount.name}}" style="text-align: left;">
-                        </div>
-                        <div class="table__field" style="padding: 3px 5px">
-                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Strength: </strong></label>
-                            <input class="table__data" data-edit="mount.strength" type="text" value="{{data.mount.strength}}">
-                        </div>
-                        <div class="table__field" style="padding: 3px 5px">
-                            <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Movement: </strong></label>
-                            <input class="table__data" data-edit="mount.movement" type="text" value="{{data.mount.movement}}">
-                        </div>
-                </div>
                 <div class="table__entry table__entry--2col" style="align-self: start">
                     {{#each data.MountInventory as |equip counter|}}
                     <div class="table__entry table__entry--PC-equip-display table__entry--no-border frame frame__margin--PC-items drag-item" data-id="{{equip._id}}">

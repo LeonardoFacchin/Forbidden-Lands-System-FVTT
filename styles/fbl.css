@@ -80,7 +80,8 @@ textarea#chat-message {
 }
 
 .fbl [data-dieHook="Monster-attack"]:hover,
-.fbl [data-action="show-item"]:hover {
+.fbl [data-action="show-item"]:hover,
+.fbl [data-action="openmount"]:hover {
   box-shadow: 0 0 7px darkorange, 0 0 7px orange;
 }
 
@@ -659,7 +660,7 @@ input[type="text"].header-title--small {
 }
 
 .table__entry--mount {
-  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-columns: 2fr 1fr 1fr;
   border: 1px solid black;
 }
 
@@ -798,8 +799,8 @@ input[type="text"].table__data--fill-form {
 }
 
 .fbl .tabs .item, .fbl .equipmentTabs .item {
-text-shadow: none;
-background-color: lightgrey;
+  text-shadow: none;
+  background-color: rgba(0,0,0,0.1);
 }
 
 .fbl .tabs .item.active, .fbl .equipmentTabs .item.active {

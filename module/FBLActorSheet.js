@@ -270,7 +270,7 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
     document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
     document.querySelector(`form.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
-    document.querySelector(`form.${this.actor._id}`).addEventListener("change", setMountStats.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", setMountStats.bind(this));
     document.querySelector(`form.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
   }
 
@@ -727,55 +727,52 @@ async function changeRank(event) {
 }
 // ----------------------------------------------------------------------------------------------
 
-async function setMountStats(event) {
-  event.preventDefault();
-  const origin = event.target;
-  console.log(!origin.closest(".mount"));
-  if (!origin.closest(".mount")) return;
-  console.log(origin.dataset.edit);
-  const dataName = origin.dataset.edit;
-  const dataValue = origin.value;
-  console.log(`${dataName}`, dataValue);
-  await this.actor.setFlag("forbiddenlands", `${dataName}`, dataValue);
-  console.log(this.actor);
-}
-
 // async function setMountStats(event) {
 //   event.preventDefault();
 //   const origin = event.target;
-//   // const action = origin.dataset.action;
-
-//   if (!(origin.dataset.action === "openmount")) return;
-//   let dialogData = await getTemplate("systems/forbiddenlands/templates/mount.html");
-//   let data = this.getData();
-//   console.log(data);
-//   let dial = new Dialog({
-//     title: "Mount",
-//     content: dialogData,
-//     buttons: {
-//       ok: {
-//         label: "Submit",
-//         callback: (event) => { console.log(this.getData)},
-//       },
-//       cancel: {
-//         label: "Cancel",
-//         callback: () => {},
-//       },
-//     }, 
-//     data: {
-//       name: data.data.mount.name,
-//       strength: data.data.mount.strength,
-//       movement: data.data.mount.movement,
-//     }  
-//   }).render(true);
-  // await dial.render(true)
-  // console.log(origin.dataset.edit);
-  // const dataName = origin.dataset.edit;
-  // const dataValue = origin.value;
-  // console.log(`${dataName}`, dataValue)
-  // await this.actor.setFlag("forbiddenlands", `${dataName}`, dataValue);
-  // console.log(this.actor);
+//   console.log(!origin.closest(".mount"));
+//   if (!origin.closest(".mount")) return;
+//   console.log(origin.dataset.edit);
+//   const dataName = origin.dataset.edit;
+//   const dataValue = origin.value;
+//   console.log(`${dataName}`, dataValue);
+//   await this.actor.setFlag("forbiddenlands", `${dataName}`, dataValue);
+//   console.log(this.actor);
 // }
+
+async function setMountStats(event) {
+  event.preventDefault();
+  const origin = event.target;
+  // const action = origin.dataset.action;
+
+  if (!(origin.dataset.action === "openmount")) return;
+  let data = this.getData();
+  let dialogData = await renderTemplate("systems/forbiddenlands/templates/mount.html", data);
+  // console.log(data);
+  new Dialog({
+    title: "Mount",
+    content: dialogData,
+    buttons: {
+      ok: {
+        label: "Submit",
+        callback: async () => { 
+          const mountName  = document.querySelector("form.mountDialog input[data-edit='mount.name']").value;
+          const mountStrength  = document.querySelector("form.mountDialog input[data-edit='mount.strength']").value;
+          const mountMovement  = document.querySelector("form.mountDialog input[data-edit='mount.movement']").value;
+          // console.log(mountName, mountStrength, mountMovement);
+          let updateData = { "flags.forbiddenlands.mount": { name: mountName, strength: mountStrength, movement: mountMovement} };
+          await this.actor.update(updateData);
+        },
+      },
+      cancel: {
+        label: "Cancel",
+        callback: () => {},
+      },
+    },
+  }, {
+    width: "auto"
+  }).render(true);
+}
 
 // --------------------- FUNCION updateDieModifier(event) ---------------------------------------
 // manage the update of the die modifiers the player can select from the character sheet

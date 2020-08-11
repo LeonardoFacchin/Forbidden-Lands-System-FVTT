@@ -1,4 +1,5 @@
-<form class="{{cssClass}}" style="font-size: 0.9rem;">
+<form class="{{cssClass}} mountDialog" style="font-size: 0.9rem;">
+    {{log this}}
     <body>
         <div class="frame frame--no-border">
             <label class="frame__title">Mount</label>
@@ -6,15 +7,15 @@
                 <div class="table__entry--no-border table__entry--mount" style="width: 96%; margin: 5px auto">
                     <div class="table__field" style="padding: 3px 5px">
                         <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Name: </strong></label>
-                        <input class="table__data"  data-edit="mount.name" type="text" style="text-align: left;" value="{{data.mount.name}}">
+                        <input class="table__data"  data-edit="mount.name" type="text" style="text-align: left;" value="{{data.mount.name}}" style="width: 50px">
                     </div>
                     <div class="table__field" style="padding: 3px 5px">
                         <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Strength: </strong></label>
-                        <input class="table__data" data-edit="mount.strength" type="text" value="{{data.mount.strength}}">
+                        <input class="table__data" data-edit="mount.strength" type="text" data-dtype="Number" value="{{data.mount.strength}}" style="width: 40px">
                     </div>
                     <div class="table__field" style="padding: 3px 5px">
                         <label class="table__data table__data--left-aligned" style="max-width: fit-content"><strong>Movement: </strong></label>
-                        <input class="table__data" data-edit="mount.movement" type="text" value="{{data.mount.movement}}">
+                        <input class="table__data" data-edit="mount.movement" type="text" data-dtype="Number" value="{{data.mount.movement}}" style="width: 40px">
                     </div>
                 </div>
             </div>
