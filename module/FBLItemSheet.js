@@ -225,7 +225,8 @@ export class WeaponSheet extends FBLItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
     const item = this.entity;
-    const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
+    // const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
+    const el = this.form.querySelector(`.artDie`) ? this.form.querySelector(`.artDie`) : null;
 
     if (!item.data.data.isArtifact || !el) return;
     el.addEventListener("change", async event => {
@@ -264,7 +265,8 @@ export class ArmorSheet extends FBLItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
     const item = this.entity;
-    const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
+    // const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
+    const el = this.form.querySelector(`.artDie`) ? this.form.querySelector(`.artDie`) : null;
     
     if (!item.data.data.isArtifact || !el) return;
     el.addEventListener("change", async event => {
@@ -303,7 +305,8 @@ export class CriticalInjurySheet extends FBLItemSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    document.querySelector(`form.${this.entity._id}`).addEventListener("click", _managePenalties.bind(this) );
+    // document.querySelector(`form.${this.entity._id}`).addEventListener("click", _managePenalties.bind(this) );
+   this.form.addEventListener("click", _managePenalties.bind(this) );
 
     async function _managePenalties(event) {
       event.preventDefault();

@@ -226,10 +226,10 @@ let _onUpdateTokenActor = function _onUpdateTokenActor(updateData) {
   // Update Token bar attributes
   this._onUpdateBarAttributes(updateData);
   // Update tracked Combat resources
-  const checkProperty = (game.combats.settings.resource.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
+  const checkProperty = (game.combats.settings.resource?.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
 
   if ( this.inCombat && updateData.data && checkProperty ) {
-    console.log("_onUpdateTokenActor Fired");
+    // console.log("_onUpdateTokenActor Fired");
     canvas.addPendingOperation(`CombatTracker.updateTrackedResources`, ui.combat.updateTrackedResources, ui.combat);
     canvas.addPendingOperation(`CombatTracker.render`, ui.combat.render, ui.combat);
   }
@@ -247,7 +247,7 @@ let _onUpdateBaseActor = function _onUpdateBaseActor(actorData, updateData) {
   // Update Token bar attributes
   this._onUpdateBarAttributes(updateData);
   // Update tracked Combat resources
-  const checkProperty = (game.combats.settings.resource.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
+  const checkProperty = (game.combats.settings.resource?.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
 
   if ( this.inCombat && updateData.data && checkProperty ) {
     ui.combat.updateTrackedResources();
