@@ -66,11 +66,13 @@ textarea#chat-message {
 }
 
 .app.window-app.fbl {
-  max-width: min-content !important;
+  /* max-width: min-content !important; */
+  max-width: min-content;
 }
 
 .fbl form {
-  max-width: min-content !important;
+  /* max-width: min-content !important; */
+  max-width: min-content
 }
 
 .fbl .fas:hover,
