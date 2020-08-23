@@ -91,6 +91,7 @@ export const CONFIG_MAGIC_DISCIPLINES = {
   
   export const CONFIG_MAGIC_DURATIONS = ["Immediate", "One Round", "One Round per Power Level", "One Turn (15 minutes)", "Quarter Day", "Quarter Day per Power Level", "Varies"];
 
+  export const CONFIG_MAGIC_CASTING_TIMES = ["", "Ritual", "Power Word"]
 
   // INJURIES AND CONDITIONS
 

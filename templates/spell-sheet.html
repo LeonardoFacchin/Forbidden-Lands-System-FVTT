@@ -48,9 +48,24 @@
                         </div>
                     </div>
 
-                    <div class="table__entry--no-border" style="grid-template-columns: 34% 22% 22% 22%">
-                            <!-- CASTING TIME -->
+                    <!-- <div class="table__entry--no-border" style="grid-template-columns: 34% 22% 22% 22%"> -->
+                        <div class="table__entry--no-border" style="grid-template-columns: 25% 75%">
                             <div class="table__field">
+                                <label class="table__data table__data--left-aligned">Casting Time: </label>
+                            </div>
+                            <div class="table__field">
+                                <div class="table__field">
+                                    <select class="table__data" name="data.castingtime">
+                                        {{#select data.castingtime}}
+                                        {{#each settings.castingTimes}}
+                                        <option value="{{this}}">{{this}}</option>
+                                        {{/each}}
+                                        {{/select}}
+                                    </select>
+                                </div>
+                            </div>
+                            <!-- CASTING TIME -->
+                            <!-- <div class="table__field">
                                 <label class="table__data table__data--left-aligned">Casting Time: </label>
                             </div>
                             <div class="table__field">
@@ -61,7 +76,7 @@
                             </div>
                             <div class="table__field">
                                 <span><input class="table__data" type="radio" name="data.castingtime" value="Power Word" d-type="Radio" {{radio data.castingtime "Power Word"}}><label> Power Word</label></span>
-                            </div>
+                            </div> -->
                     </div>    
 
                     <div class="table__entry--no-border table__entry--mAttacks">
@@ -145,6 +160,15 @@
         <div class="layout__body">
             <div class="frame frame--no-lr-border frame--flexible frame__placement layout__gap">
                 <ul>
+                    <li>
+                        <span>
+                            <strong>RANK: </strong>
+                            {{formatDisplay data.rank~}}
+                            {{#if data.castingtime~}}
+                            , {{data.castingtime}}
+                            {{/if}}
+                        </span>
+                    </li>
                     <li>
                         <span>
                             <strong>RANGE: </strong>

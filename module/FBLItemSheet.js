@@ -13,6 +13,7 @@ import {  CONFIG_PC_CLASSES,
           CONFIG_MAGIC_DISCIPLINES,
           CONFIG_MAGIC_RANGES,
           CONFIG_MAGIC_DURATIONS,
+          CONFIG_MAGIC_CASTING_TIMES,
           CONFIG_EQUIP_SUPPLY,
           CONFIG_EQUIP_WEIGHT,
           CONFIG_MONEY,
@@ -152,7 +153,7 @@ export class SpellSheet extends FBLItemSheet {
   // extend the constructor to include configuration definitions for general settings and the sheet editing flag
   constructor(object, options) {
     super(object, options);
-    this.settings =  {"disciplines": CONFIG_MAGIC_DISCIPLINES, "ranges": CONFIG_MAGIC_RANGES, "durations": CONFIG_MAGIC_DURATIONS};
+    this.settings =  {"disciplines": CONFIG_MAGIC_DISCIPLINES, "ranges": CONFIG_MAGIC_RANGES, "durations": CONFIG_MAGIC_DURATIONS, "castingTimes": CONFIG_MAGIC_CASTING_TIMES};
     // this.isBeingEdited = false;
   }
 

@@ -173,11 +173,11 @@
 
     <div class="layout__body">
         <!-- WEAPONS -->
-        <div class="frame">
+        <div class="frame drag-target" data-tab="weapons">
             <label class="frame__title">Weapons</label>
 
 
-            <div class="table dieHook-Weapon drag-target" data-tab="weapons">
+            <div class="table dieHook-Weapon">
                 {{#each data.Weapon as |weapon counter|}}
                 <div class="table__entry table__entry--PC-weapon-display table__entry--no-border frame frame__margin--PC-items drag-item " data-id="{{weapon._id}}">
                     <div class="table__field">
@@ -228,10 +228,10 @@
             </div>
         </div>
         <!-- ARMOR -->
-        <div class="frame layout__gap">
+        <div class="frame layout__gap  drag-target" data-tab="armor">
             <label class="frame__title">Armor</label>
 
-            <div class="table drag-target" data-tab="armor">
+            <div>
                 {{#each data.Armor as |armor counter|}}
                 <div class="table__entry table__entry--PC-armor-display table__entry--no-border frame frame__margin--PC-items drag-item " data-id="{{armor._id}}">
                     <div class="table__field">
