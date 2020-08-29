@@ -8,13 +8,14 @@ export class RollDialog extends Dialog {
 
   constructor(dialogData, options) {
     super(dialogData, options);
+    this.data.buttons = this.getButtons();
 
     this.actor    = dialogData.actor;
     this.rollName = dialogData.rollName;
     this.base = dialogData.baseDice ?? { name: 'Base', value: 0};
-    this.skill = dialogData.skillName ?? { name: 'Skill', value: 0};
-    this.gear = dialogData.gearName ?? { name: 'Gear', value: 0};
-    this.artifactDice = dialogData.artifactDice ?? [];
+    this.skill = dialogData.skillDice ?? { name: 'Skill', value: 0};
+    this.gear = dialogData.gearDice ?? { name: 'Gear', value: 0};
+    this.artifact = dialogData.artifactDice ?? {d8: 0, d10: 0, d12: 0};
     this.modifier = dialogData.modifier ?? 0;
 
     this.onRoll = dialogData.onRoll ?? (() => {});
@@ -25,20 +26,20 @@ export class RollDialog extends Dialog {
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["fbl"],
-      template: "/systems/forbiddenlands/templates/roll-dialog.html"
+      classes: ["fbl", "roll-dialog"],
+      template: "/systems/forbiddenlands/templates/roll-dialog.html",
+      width: 290,
     })
   };
 
   getData() {
-    let data = this.data;
+    let data = super.getData();
 
-    // override buttons
-    data.buttons = this.getButtons();
     data.base = this.base;
     data.skill = this.skill;
     data.gear = this.gear;
-    data.artifactDice = this.artifactDice;
+    data.artifact = this.artifact;
+
     data.modifier = (this.modifier >= 0 ? '+' : '') + this.modifier;
 
     return data;
@@ -46,6 +47,16 @@ export class RollDialog extends Dialog {
 
   activateListeners(html) {
     super.activateListeners(html);
+
+    html.find('.modifier-plus').click((e) => { this.modifier++; this.render(true); });
+    html.find('.modifier-minus').click((e) => { this.modifier--; this.render(true); });
+
+    html.find('.input-dice').change((e) => { 
+      let el = $(event.currentTarget);
+      let diceType = el.data("dice").split('.');
+      if (diceType.length === 1) this[diceType[0]].value = el.val();
+      else this[diceType[0]][diceType[1]] = el.val();
+    });
   }
 
   getButtons() {
@@ -63,6 +74,9 @@ export class RollDialog extends Dialog {
           let skill = html.find('.input-skill')[0].value;
           let gear = html.find('.input-gear')[0].value;
           let nArtifact = [];
+          if (html.find('.input-artifact-8')[0].value > 0) nArtifact.push('d8');
+          if (html.find('.input-artifact-10')[0].value > 0) nArtifact.push('d10');
+          if (html.find('.input-artifact-12')[0].value > 0) nArtifact.push('d12');
 
           const newRoll = new fblPool(Number(base), Number(skill), Number(gear), nArtifact);
           const displayData = {
@@ -92,7 +106,7 @@ export class RollDialog extends Dialog {
    * @param {object} baseDice       {name: "Base": value: 0}
    * @param {object} skillDice      {name: "Skill": value: 0}
    * @param {object} gearDice       {name: "Gear": value: 0}
-   * @param {Array} artifactDice    Array of artifact dice. E.g. [8, 10, 12].
+   * @param {Array} artifactDice    {d8: 0, d10: 0, d12: 0}
    * @param {number} modifier       Skill dice modifier
    * 
    * @param {Function} onRoll       Callback function upon Roll

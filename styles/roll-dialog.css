@@ -1,0 +1,61 @@
+.app.window-app.fbl.roll-dialog {
+    max-width: none;
+}
+
+.roll-dialog .input-label {
+    width: 120px;
+    display: inline-flex;
+    height: 40px;
+    font-size: 14px;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.roll-dialog .input-dice {
+    width: 60px;
+    text-align: center;
+    font-size: 30px;
+    vertical-align: top;
+}
+
+.roll-dialog .modifier {
+    font-size: 30px;
+    font-family: Arial;
+    width: 35px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+}
+
+.roll-dialog .step-buttons {
+    display: inline-flex;
+    flex-direction: column;
+    vertical-align: top;
+}
+
+.roll-dialog .step-button {
+    line-height: normal;
+    font-size: 13px;
+}
+
+.roll-dialog .dialog-buttons {
+    display: flex;
+    flex: none;
+}
+
+.roll-dialog .artifact-dice {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.roll-dialog .artifact-die {
+    width: 30px;
+    height: 30px;
+    vertical-align: top;
+}
+
+.roll-dialog .artifact-dice .input-dice {
+    font-size: 21px;
+    width: 50px;
+    margin-right: 2px;
+}

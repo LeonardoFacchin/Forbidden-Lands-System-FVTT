@@ -1,23 +1,30 @@
 <div class="dialog-content">
     <div>
-        <span>{{ localize base.name }}</span> 
-        <input class="input-dice input-base" type="number" min="0" step="1" value="{{ base.value }}" />
+        <span class="input-label">{{ localize base.name }}</span> 
+        <input class="input-dice input-base" type="number" min="0" step="1" value="{{ base.value }}" data-dice="base" />
     </div>
     <div>
-        <span>{{ localize skill.name }}</span> 
-        <input class="input-dice input-skill" type="number" min="0" step="1" value="{{ skill.value }}" />
-        <span>{{ modifier }}</span>
-        <div>
-            <button class="button modifier-plus">+</button>
-            <button class="button modifier-minus">-</button>
+        <span class="input-label">{{ localize skill.name }}</span> 
+        <input class="input-dice input-skill" type="number" min="0" step="1" value="{{ skill.value }}" data-dice="skill" />
+        <span class="modifier">{{ modifier }}</span>
+        <div class="step-buttons">
+            <button class="step-button modifier-plus">+</button>
+            <button class="step-button modifier-minus">-</button>
         </div>
     </div>
     <div>
-        <span>{{ localize gear.name }}</span> 
-        <input class="input-dice input-gear" type="number" min="0" step="1" value="{{ gear.value }}" />
+        <span class="input-label">{{ localize gear.name }}</span> 
+        <input class="input-dice input-gear" type="number" min="0" step="1" value="{{ gear.value }}" data-dice="gear" />
     </div>
-    <div>
-        artifact
+    <div class="artifact-dice">
+        <img class="artifact-die" src="systems/forbiddenlands/icons/dice/d8black.svg" alt="d8">
+        <input class="input-dice input-artifact input-artifact-8" type="number" min="0" max="1" step="1" value="{{ artifact.d8 }}" data-dice="artifact.d8" />
+        
+        <img class="artifact-die" src="systems/forbiddenlands/icons/dice/d10black.svg" alt="d10">
+        <input class="input-dice input-artifact input-artifact-10" type="number" min="0" max="1" step="1" value="{{ artifact.d10 }}" data-dice="artifact.d10" />
+        
+        <img class="artifact-die" src="systems/forbiddenlands/icons/dice/d12black.svg" alt="d12">
+        <input class="input-dice input-artifact input-artifact-12" type="number" min="0" max="1" step="1" value="{{ artifact.d12 }}" data-dice="artifact.d12" />
     </div>
 </div>
 <div class="dialog-buttons">
