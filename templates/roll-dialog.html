@@ -1,0 +1,30 @@
+<div class="dialog-content">
+    <div>
+        <span>{{ localize base.name }}</span> 
+        <input class="input-dice input-base" type="number" min="0" step="1" value="{{ base.value }}" />
+    </div>
+    <div>
+        <span>{{ localize skill.name }}</span> 
+        <input class="input-dice input-skill" type="number" min="0" step="1" value="{{ skill.value }}" />
+        <span>{{ modifier }}</span>
+        <div>
+            <button class="button modifier-plus">+</button>
+            <button class="button modifier-minus">-</button>
+        </div>
+    </div>
+    <div>
+        <span>{{ localize gear.name }}</span> 
+        <input class="input-dice input-gear" type="number" min="0" step="1" value="{{ gear.value }}" />
+    </div>
+    <div>
+        artifact
+    </div>
+</div>
+<div class="dialog-buttons">
+    {{#each buttons as |button id|}}
+    <button class="dialog-button" data-button="{{id}}">
+        {{{button.icon}}}
+        {{{ localize button.label}}}
+    </button>
+    {{/each}}
+</div>
