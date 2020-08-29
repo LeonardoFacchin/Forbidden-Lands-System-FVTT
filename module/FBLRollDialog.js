@@ -73,12 +73,13 @@ export class RollDialog extends Dialog {
           let base = html.find('.input-base')[0].value;
           let skill = html.find('.input-skill')[0].value;
           let gear = html.find('.input-gear')[0].value;
+          let modifier = Number(html.find('.modifier')[0].innerHTML);
           let nArtifact = [];
           if (html.find('.input-artifact-8')[0].value > 0) nArtifact.push('d8');
           if (html.find('.input-artifact-10')[0].value > 0) nArtifact.push('d10');
           if (html.find('.input-artifact-12')[0].value > 0) nArtifact.push('d12');
 
-          const newRoll = new fblPool(Number(base), Number(skill), Number(gear), nArtifact);
+          const newRoll = new fblPool(Number(base), Number(skill) + modifier, Number(gear), nArtifact);
           const displayData = {
             canPush: this.canPush, 
             canPride: true,
