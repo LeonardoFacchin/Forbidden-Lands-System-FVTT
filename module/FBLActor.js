@@ -5,11 +5,12 @@ import { CONFIG_WEAR_ICONS,
     CONFIG_DICE_ICONS,
     CONFIG_MONEY } from "./Config.js";
 
-    import { fblPool,
-        prepareRollData,
-        prepareChatData } from "./helper-functions.js";
+import { fblPool,
+    prepareRollData,
+    prepareChatData } from "./helper-functions.js";
 
-    import { FBLChatMessage } from "./FBLRollMessage.js"
+import { FBLChatMessage } from "./FBLRollMessage.js"
+import { RollDialog } from "./FBLRollDialog.js";
 
 export class FBLActor extends Actor {
     
@@ -197,22 +198,17 @@ async rollCheck(rollType, id) {
     if (!rollData) return;
     // console.log(rollData);
 
-    const displayData = rollData;
-  
-    // roll the check
-    let rollCheck = new fblPool(rollData.attributeDice, rollData.skillDice, rollData.gearDice, rollData.artifactDie);
-    // console.log(rollCheck);
-  
-    let chatData = await prepareChatData(rollCheck, rollType, displayData);
-    // console.log(chatData);
-
-    chatData.speaker = {actor: actor._id,
-                        token: actor.token,
-                        alias: actor.name};
-  
-    // console.log(chatData);
-    let msg = await FBLChatMessage.create(chatData, {}, rollCheck);
-    // console.log(msg);
+    RollDialog.show(
+        {
+            rollingActor:actor,
+            rollName: id,
+            baseDice: { name: game.i18n.localize(rollData.attributeName ?? 'Base'), value: rollData.attributeDice },
+            skillDice: { name: game.i18n.localize(rollData.skillName ?? 'Skill'), value: rollData.skillDice },
+            gearDice: { name: game.i18n.localize(rollData.itemName ?? 'Gear'), value: rollData.gearDice },
+            artifactDice: null,
+            modifier: 0,
+        }
+    );
   }
   //------------------------------------------------------------------------------------------------
 

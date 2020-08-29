@@ -74,11 +74,14 @@ export class RollDialog extends Dialog {
           let skill = html.find('.input-skill')[0].value;
           let gear = html.find('.input-gear')[0].value;
           let modifier = Number(html.find('.modifier')[0].innerHTML);
-          let nArtifact = [].concat(
-            new Array(html.find('.input-artifact-8')[0].value).fill('d8'),
-            new Array(html.find('.input-artifact-10')[0].value).fill('d10'),
-            new Array(html.find('.input-artifact-12')[0].value).fill('d12'),
-          );
+          let d8 = Number(html.find('.input-artifact-8')[0].value);
+          let d10 = Number(html.find('.input-artifact-10')[0].value);
+          let d12 = Number(html.find('.input-artifact-12')[0].value);
+          let nArtifact = [];
+          if (d8 > 0) nArtifact.push(new Array(d8).fill('d8'));
+          if (d10 > 0) nArtifact.push(new Array(d10).fill('d10'));
+          if (d12 > 0) nArtifact.push(new Array(d12).fill('d12'));
+          nArtifact = [].concat(...nArtifact);
 
           const newRoll = new fblPool(Number(base), Number(skill) + modifier, Number(gear), nArtifact);
           const displayData = {
@@ -87,7 +90,6 @@ export class RollDialog extends Dialog {
             attributeName: this.base.name,
             skillName: this.skill.name,
             itemName: this.gear.name,
-            description: this.rollName,
           };
           prepareChatData(newRoll, undefined, displayData).then( async chatData => {
             chatData.speaker = {actor: this.actor};
