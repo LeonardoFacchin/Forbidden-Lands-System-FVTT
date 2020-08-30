@@ -2,6 +2,10 @@
     max-width: none;
 }
 
+.roll-dialog .row {
+    display: inline-flex;
+}
+
 .roll-dialog .input-label {
     width: 120px;
     display: inline-flex;
@@ -9,6 +13,7 @@
     font-size: 14px;
     justify-content: flex-end;
     align-items: center;
+    margin-right: 6px;
 }
 
 .roll-dialog .input-dice {

@@ -1,9 +1,9 @@
 <div class="dialog-content">
-    <div>
+    <div class="row">
         <span class="input-label">{{ localize base.name }}</span> 
         <input class="input-dice input-base" type="number" min="0" step="1" value="{{ base.value }}" data-dice="base" />
     </div>
-    <div>
+    <div class="row">
         <span class="input-label">{{ localize skill.name }}</span> 
         <input class="input-dice input-skill" type="number" min="0" step="1" value="{{ skill.value }}" data-dice="skill" />
         <span class="modifier">{{ modifier }}</span>
@@ -12,7 +12,7 @@
             <button class="step-button modifier-minus">-</button>
         </div>
     </div>
-    <div>
+    <div class="row">
         <span class="input-label">{{ localize gear.name }}</span> 
         <input class="input-dice input-gear" type="number" min="0" step="1" value="{{ gear.value }}" data-dice="gear" />
     </div>
