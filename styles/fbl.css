@@ -803,11 +803,13 @@ input[type="text"].table__data--fill-form {
 .fbl .tabs .item, .fbl .equipmentTabs .item {
   text-shadow: none;
   background-color: rgba(0,0,0,0.1);
+  color: gray;
 }
 
 .fbl .tabs .item.active, .fbl .equipmentTabs .item.active {
   text-shadow: none;
   background-color: var(--title-background-color);
+  color: white;
 }
 
 .trackedResource {
