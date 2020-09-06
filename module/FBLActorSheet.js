@@ -265,7 +265,7 @@ export class PlayerCharacterSheet extends FBLActorSheet {
     // Listener to manage item-related operations: delete, consumables increase or decrese, etc.
     this.form.addEventListener("click", updateTrackData.bind(this));
     this.form.addEventListener("dblclick", itemEvents.bind(this));
-    this.form.addEventListener("dblclick", rollCheckHandler.bind(this));
+    this.form.addEventListener("click", rollCheckHandler.bind(this));
     this.form.addEventListener("dblclick", rollConsumable.bind(this));
     this.form.addEventListener("dblclick", woundTreatment.bind(this));
     this.form.addEventListener("dblclick", showItemSheet.bind(this));
