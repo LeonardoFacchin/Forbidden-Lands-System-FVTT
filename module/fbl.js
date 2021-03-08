@@ -254,7 +254,7 @@ let _onUpdateBaseActor = function _onUpdateBaseActor(actorData, updateData) {
   const checkProperty = (game.combats.settings.resource.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
 
   if ( this.inCombat && updateData.data && checkProperty ) {
-    ui.combat.updateTrackedResources();
+    // ui.combat.updateTrackedResources();
     ui.combat.render();
   }
   // Render the active Token sheet

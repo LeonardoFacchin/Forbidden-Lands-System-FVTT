@@ -365,7 +365,13 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
 export class StrongholdSheet extends FBLActorSheet {
   constructor(object, options) {
     super(object, options);
-    this.actor.data.data.settings =  { "products":  CONFIG_PRODUCTS };
+    this.settings =  { "products":  CONFIG_PRODUCTS };
+    }
+
+    getData() {
+      let data = super.getData();
+      data.settings = this.settings;
+      return data;
     }
 
   /** @override */
@@ -381,6 +387,14 @@ export class StrongholdSheet extends FBLActorSheet {
     });
   }
 
+  // getData() {
+  //   let data = super.getData();
+  //   console.log(data);
+  //   data.settings = { "products":  CONFIG_PRODUCTS };
+  //   console.log(data);
+  //   return data;
+  // }
+
   activateListeners(html) {
     super.activateListeners(html);
     document.querySelector(`form.${this.entity._id}`).addEventListener("dblclick", _manageFunctions.bind(this) );
@@ -393,21 +407,22 @@ export class StrongholdSheet extends FBLActorSheet {
       let data = this.getData();
       if (id === "constructioncomplete") {
         const func = target.id;
-        // console.log(func);
+        console.log(func);
         const newData = {"data.functions": {[func]: { "construction": {"isUnderConstruction": false, "time": 0 } } } };
-        return this.object.update(newData);
+        return await this.object.update(newData);
       }
 
       if (target.classList.contains("fa-plus")) {
         if (id === "addfunction") {
           let nextFunction = `function_0${Object.keys(data.data.functions).length}`;
           const newData = {"data.functions": {[nextFunction]: { "name": "", "construction": {"isUnderConstruction": true, "time": 0 }, "production": {"staff": null, "material":{"name": "", "quantity": 0} } } }};
-          return this.object.update(newData);
+          return await this.object.update(newData);
         }
         if (id === "addhireling") {
+          console.log(data.data.functions);
           let nextHireling = `hireling_0${Object.keys(data.data.hirelings).length}`;
           const newData = {"data.hirelings": {[nextHireling]: { "name": "", "quantity": null, "salary": 0} }};
-          return this.object.update(newData);
+          return await this.object.update(newData);
         }
       }
 

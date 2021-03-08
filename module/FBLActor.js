@@ -178,9 +178,9 @@ export class FBLActor extends Actor {
         // this.validEmbeddedEntities = ["Function","Hireling"];
         // this._prepareEmbeddedArrays();
 
-        data.totalSalaries = Object.values(data.hirelings).reduce( (total, hireling) => {
-            return total = total + Number(hireling.salary);
-        }, 0);
+        data.totalSalaries = data.hirelings ? Object.values(data.hirelings).reduce( (total, hireling) => {
+            return total = total + Number(hireling.salary)*Number(hireling.quantity);
+        }, 0) : 0;
 
         // console.log(data.totalSalaries);
 
