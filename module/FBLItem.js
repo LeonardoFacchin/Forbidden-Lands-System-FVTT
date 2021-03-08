@@ -9,10 +9,10 @@ export class FBLItem extends Item {
         const itemType = this.type;
 
         this._prepareData(itemType);
+        return this.data;
     }
 
-    // // return relevant constants according to item type
-
+    // return relevant constants according to item type
     _prepareData(itemType) {
         if (itemType === "Spell") {
             // retrieve the magic discipline the spell belongs to and its rank
@@ -22,6 +22,12 @@ export class FBLItem extends Item {
             const rank = this.data.data.rank;
             return this.data.data.image = CONFIG_MAGIC_DISCIPLINES[discipline].url;
             // return this.data.data.image = `${url}_0${rank}.svg`;
+        }
+        if (itemType === "Weapon" || itemType === "Equipment" || itemType === "Armor") {
+            this.data.data.bonus.currentValue = this.data.data.bonus.value - this.data.data.bonus.damage;
+            // console.log(this.name, this.data.data.bonus.value);
+            // console.log(this.name, this.data.data.bonus.damage);
+            // console.log(this.name, this.data.data.bonus.currentValue);
         }
     }
 }

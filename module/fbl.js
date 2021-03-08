@@ -17,7 +17,8 @@ import { FBLItemSheet,
          ArmorSheet,
          CriticalInjurySheet } from "./FBLItemSheet.js";
 import { fblPool, prepareChatData, prepareRollData, pushingRoll, prideRoll } from "./helper-functions.js";
-import { setupTurns, rollAll, rollInitiative, nextRound, nextTurn, FBLCombatTracker } from "./FBLCombatTracking.js";
+// import { setupTurns, rollAll, rollInitiative, nextRound, nextTurn, FBLCombatTracker } from "./FBLCombatTracking.js";
+import { _sortCombatants, rollAll, rollInitiative, nextRound, nextTurn, FBLCombatTracker } from "./FBLCombatTracking.js";
 import { FBLChatMessage } from "./FBLRollMessage.js"
 
 /* -------------------------------------------- */
@@ -32,8 +33,9 @@ Hooks.once("init", async function() {
   CONFIG.ChatMessage.entityClass = FBLChatMessage;
   // CONFIG.debug.hooks = true;
   CONFIG.ui.combat = FBLCombatTracker;
+  CONFIG.Combat.initiative.decimals = 0;
   Combat.prototype.rollAll = rollAll;
-  Combat.prototype.setupTurns = setupTurns;
+  Combat.prototype._sortCombatants = _sortCombatants;
   Combat.prototype.rollInitiative = rollInitiative;
   Combat.prototype.nextRound = nextRound;
   Combat.prototype.nextTurn = nextTurn;
@@ -220,19 +222,21 @@ Hooks.on("hotbarDrop", async function (hotbar, dropData, slot) {
 let _onUpdateTokenActor = function _onUpdateTokenActor(updateData) {
   // Reject any calls which were incorrectly placed to this method for tokens which are linked
   if ( !this.actor || this.data.actorLink ) return;
+
   // Update data for the synthetic Token
-  mergeObject(this.actor.data, updateData);
+  mergeObject(this.actor._data, updateData);
   this.actor._onUpdate(updateData);
+
   // Update Token bar attributes
   this._onUpdateBarAttributes(updateData);
-  // Update tracked Combat resources
-  const checkProperty = (game.combats.settings.resource?.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
 
+  // Update tracked Combat resources
+  const checkProperty = (game.combats.settings.resource.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
   if ( this.inCombat && updateData.data && checkProperty ) {
-    // console.log("_onUpdateTokenActor Fired");
     canvas.addPendingOperation(`CombatTracker.updateTrackedResources`, ui.combat.updateTrackedResources, ui.combat);
     canvas.addPendingOperation(`CombatTracker.render`, ui.combat.render, ui.combat);
   }
+
   // Render the active Token sheet
   this.actor.sheet.render();
 }
@@ -247,13 +251,13 @@ let _onUpdateBaseActor = function _onUpdateBaseActor(actorData, updateData) {
   // Update Token bar attributes
   this._onUpdateBarAttributes(updateData);
   // Update tracked Combat resources
-  const checkProperty = (game.combats.settings.resource?.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
+  const checkProperty = (game.combats.settings.resource.includes("attributes")) ? true : hasProperty(updateData.data, game.combats.settings.resource);
 
   if ( this.inCombat && updateData.data && checkProperty ) {
     ui.combat.updateTrackedResources();
     ui.combat.render();
   }
   // Render the active Token sheet
+  console.log("_onUpdateBaseActor Fired");
   this.actor.sheet.render();
-
 }

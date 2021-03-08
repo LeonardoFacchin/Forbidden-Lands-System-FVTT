@@ -51,7 +51,7 @@ export class FBLActorSheet extends ActorSheet {
       permissions: {},     
       callbacks: { "dragstart": onDragStart.bind(this), "drop": sortItems.bind(this)}     
       });
-    itemSortEventManager.bind(this.form);
+    itemSortEventManager.bind(document.querySelector(`.layout.${this.actor._id}`));
   }
 // -------------------------- END LISTENERS -------------------------------------
 
@@ -263,15 +263,15 @@ export class PlayerCharacterSheet extends FBLActorSheet {
 
     super.activateListeners(html);
     // Listener to manage item-related operations: delete, consumables increase or decrese, etc.
-    this.form.addEventListener("click", updateTrackData.bind(this));
-    this.form.addEventListener("dblclick", itemEvents.bind(this));
-    this.form.addEventListener("dblclick", rollCheckHandler.bind(this));
-    this.form.addEventListener("dblclick", rollConsumable.bind(this));
-    this.form.addEventListener("dblclick", woundTreatment.bind(this));
-    this.form.addEventListener("dblclick", showItemSheet.bind(this));
-    this.form.addEventListener("change", changeRank.bind(this));
-    this.form.addEventListener("dblclick", setMountStats.bind(this));
-    this.form.querySelector(`.dieMod`).addEventListener("click", updateDieModifier.bind(this));
+    document.querySelectorAll(`form.${this.actor._id}`).forEach( el => el.addEventListener("click", updateTrackData.bind(this)));
+    document.querySelector(`form.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", rollConsumable.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", setMountStats.bind(this));
+    document.querySelector(`form.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
   }
 
   _onChangeTab(event, tabs, active) {
@@ -302,10 +302,10 @@ export class MonsterSheet extends FBLActorSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    this.form.addEventListener("click", updateTrackData.bind(this));
-    this.form.addEventListener("dblclick", itemEvents.bind(this));
-    this.form.addEventListener("dblclick", rollCheckHandler.bind(this));
-    this.form.querySelector(`.randomAttack`).addEventListener("dblclick", rollRandomAttack.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("click", updateTrackData.bind(this));
+    document.querySelector(`form.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
+    document.querySelector(`form.${this.actor._id} .randomAttack`).addEventListener("dblclick", rollRandomAttack.bind(this));
   }
 }
 /* ------------------------------ END MonsterSheet ------------------------------------ */
@@ -351,13 +351,13 @@ export class NonPlayerCharacterSheet extends FBLActorSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    this.form.addEventListener("click", updateTrackData.bind(this));
-    this.form.addEventListener("dblclick", rollCheckHandler.bind(this));
-    this.form.addEventListener("dblclick", itemEvents.bind(this));
-    this.form.addEventListener("dblclick", showItemSheet.bind(this));
-    this.form.addEventListener("change", changeRank.bind(this));
-    this.form.addEventListener("dblclick", woundTreatment.bind(this));
-    this.form.querySelector(`.dieMod`).addEventListener("click", updateDieModifier.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("click", updateTrackData.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", rollCheckHandler.bind(this));
+    document.querySelector(`form.${this.actor._id}`).querySelectorAll(".fas").forEach(el => el.addEventListener("dblclick", itemEvents.bind(this)));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", showItemSheet.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("change", changeRank.bind(this));
+    document.querySelector(`form.${this.actor._id}`).addEventListener("dblclick", woundTreatment.bind(this));
+    document.querySelector(`form.${this.actor._id} .dieMod`).addEventListener("click", updateDieModifier.bind(this));
   }
 }
 /* ------------------------------ END NPCSheet ------------------------------------ */
@@ -383,7 +383,7 @@ export class StrongholdSheet extends FBLActorSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    this.form.addEventListener("dblclick", _manageFunctions.bind(this) );
+    document.querySelector(`form.${this.entity._id}`).addEventListener("dblclick", _manageFunctions.bind(this) );
 
     async function _manageFunctions(event) {
       event.preventDefault();
@@ -489,15 +489,15 @@ function createDieTrack(modifier) {
     const oldValue = getProperty(obj, property);
     // if the newValue equals the old one then reset the damage to zero (the player needs a way to reset the damage when his character is completely healed)
     // otherwise keep the newValue
-      newValue =  (newValue === oldValue) ? 0 : newValue;
+    newValue =  (newValue === oldValue) ? 0 : newValue;
     // prepare the target property for the update
     let newData = updateDataFromProperty(property, newValue);
-      if (id) {
-        newData = mergeObject( {"_id": id}, newData);
-        await this.actor.updateEmbeddedEntity("OwnedItem", newData);
-        this.actor.prepareEmbeddedEntities();
-      }
-      else { await this.actor.update(newData) }
+    if (id) {
+      newData = mergeObject( {"_id": id}, newData);
+      await this.actor.updateEmbeddedEntity("OwnedItem", newData);
+      this.actor.prepareEmbeddedEntities();
+    }
+    else { await this.actor.update(newData) }
   }
 
 
@@ -506,10 +506,10 @@ function createDieTrack(modifier) {
 
 async function itemEvents(event) {
   event.preventDefault();
-  // event.stopPropagation();
+  event.stopPropagation();
 
   const origin = event.target;
-  const elementClasses = origin.classList;
+  const elementClasses= origin.classList;
   // console.log(elementClasses);
   const data = this.getData();
   // console.log(data);
@@ -545,7 +545,6 @@ async function itemEvents(event) {
 
   // CONSUMABLE UPDATE OPERATIONS
   if (elementClasses.contains("fa-plus-circle") || elementClasses.contains("fa-minus-circle")) {
-    console.log("consumable event");
     let cons = origin.dataset.id;
     let elementClass = elementClasses.contains("fa-plus-circle") ? "fa-plus-circle" : "fa-minus-circle";
     let currentValue = data.data.consumable[cons];
@@ -855,11 +854,9 @@ async function rollConsumable(event) {
     const eventTarget = origin.parentNode.parentNode.querySelector(".fa-minus-circle")
     const synthEvent = new Event("dblclick", {
       target: eventTarget,
-      bubbles: true
     });
     eventTarget.dispatchEvent(synthEvent);
     chatData.passed = false;
-    // console.log(synthEvent);
   }
 
   const temp = await getTemplate("/systems/forbiddenlands/templates/consumable-rolling.html");

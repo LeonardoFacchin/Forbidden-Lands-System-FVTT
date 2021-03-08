@@ -1,7 +1,7 @@
-import {CONFIG_COMBAT_TRACKER_ACTIONS } from "./Config.js"
+import {CONFIG_COMBAT_TRACKER_ACTIONS, CONFIG_DICE_ATTRIBUTES } from "./Config.js"
 
 // ------------------------------------------------------------------------------------------------
-// ---------------------- spellDialog: Forbidden Lands Combat Tracker extension ---------------------
+// ---------------------- FBLCombatTracker: Forbidden Lands Combat Tracker extension ---------------------
 // ------------------------------------------------------------------------------------------------
 
 export class FBLCombatTracker extends CombatTracker {
@@ -21,7 +21,7 @@ export class FBLCombatTracker extends CombatTracker {
     // Get the combat encounters possible for the viewed Scene
     const combat = this.combat;
     const hasCombat = combat !== null;
-    const view = canvas.scene;
+    const view = canvas?.scene;
     const combats = view ? game.combats.entities.filter(c => c.data.scene === view._id) : [];
     const currentIdx = combats.findIndex(c => c === this.combat);
     const previousId = currentIdx > 0 ? combats[currentIdx-1].id : null;
@@ -85,8 +85,8 @@ export class FBLCombatTracker extends CombatTracker {
       // console.log(t.fAction);
       t.sAction = t.flags?.forbiddenlands?.slowActionSpent ? CONFIG_COMBAT_TRACKER_ACTIONS.slow[1] : CONFIG_COMBAT_TRACKER_ACTIONS.slow[0];
       // console.log(t.sAction);
-      t.resource = this.trackedResources[t.tokenId][settings.resource];
-      // t.resource = t.actor.data.data.attributes.Strength.value;
+      let k = `${this.combat.settings.resource}`.split(".");
+      t.resource = t.actor.data.data[k[0]][k[1]][k[2]];
       turns.push(t);
     }
 
@@ -170,43 +170,18 @@ export class FBLCombatTracker extends CombatTracker {
 // ----------------------------- Combat Class methods override ------------------------------------
 // ------------------------------------------------------------------------------------------------
 
-export const setupTurns = function () {
+export const _sortCombatants = function (a, b) {
 
-    // console.log("setupTurns fired");
-    const scene = game.scenes.get(this.data.scene);
-    const players = game.users.players;
-    // Populate additional data for each combatant
-    // console.log(this.data);
-    let turns = this.data.combatants.map(c => {
-      c.token = scene.getEmbeddedEntity("Token", c.tokenId);
-      if ( !c.token ) return c;
-      c.actor = Actor.fromToken(new Token(c.token, scene));
-      c.players = c.actor ? players.filter(u => c.actor.hasPerm(u, "OWNER")) : [];
-      c.owner = game.user.isGM || (c.actor ? c.actor.owner : false);
-      c.visible = c.owner || !c.hidden;
-      return c;
-    }).filter(c => c.token);
-    // console.log(turns);
+  const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
+  const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
 
-    // Sort turns into initiative order: (1) initiative, (2) name, (3) tokenId
-    turns = turns.sort((a, b) => {
-      const ia = Number.isNumeric(a.initiative) ? a.initiative : -9999;
-      const ib = Number.isNumeric(b.initiative) ? b.initiative : -9999;
-      let ci = ia - ib;
-      if ( ci !== 0 ) return ci;
-      let [an, bn] = [a.token.name || "", b.token.name || ""];
-      let cn = an.localeCompare(bn);
-      if ( cn !== 0 ) return cn;
-      return a.tokenId - b.tokenId;
-    });
+  let ci = ia - ib;
+  if ( ci !== 0 ) return ci;
+  let [an, bn] = [a.token?.name || "", b.token?.name || ""];
+  let cn = an.localeCompare(bn);
+  if ( cn !== 0 ) return cn;
+  return a.tokenId - b.tokenId;
 
-    // Ensure the current turn is bounded
-    this.data.turn = Math.clamped(this.data.turn, 0, turns.length-1);
-    this.turns = turns;
-    // When turns change, tracked resources also change
-    if ( ui.combat ) ui.combat.updateTrackedResources();
-    // console.log(turns);
-    return this.turns;
 }
 // -----------------------------------------------------------------------------------------------------------
 
@@ -323,13 +298,13 @@ export const rollInitiative = async function (combatant, cardsArray, isOverflowi
   // console.log(surprise); 
   const nCard = 1 + rank + bonusDraw;
   console.log(combatant.actor.name, nCard)
-  // draw a number of cards equal to 1 + Lightning Fast rank
+  // draw a number of cards equal to nCard
   let draw = [];
   for (let i = 0; i < nCard; i++) {
     let dieFaces = cardsArray.length - i;
     if (dieFaces <= 0) break;
     let die = new Die(dieFaces);
-    let res = die.roll().results[0];
+    let res = new Roll(`1d${dieFaces}`).roll().terms[0].values[0];
     draw = draw.concat(cardsArray.splice(res - 1, 1));
   }
   // console.log(draw)

@@ -11,6 +11,6 @@
     "esmodules": ["module/fbl.js", "module/helper-functions.js"],
     "socket": true,
     "url":"https://github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System",
-    "manifest": "https://raw.githubusercontent.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/master/system.json",
-    "download": "https://codeload.github.com/LeonardoFacchin/Foundry-VTT-Forbidden-Lands-System/zip/master"
+    "manifest": "https://raw.githubusercontent.com/LeonardoFacchin/Forbidden-Lands-System-FVTT/0.7.1-Compatibility/system.json",
+    "download": "https://codeload.github.com/LeonardoFacchin/Forbidden-Lands-System-FVTT/zip/0.7.1-Compatibility"
 }

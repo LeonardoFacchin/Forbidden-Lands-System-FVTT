@@ -12,10 +12,9 @@ import { CONFIG_WEAR_ICONS,
     import { FBLChatMessage } from "./FBLRollMessage.js"
 
 export class FBLActor extends Actor {
-    
-    prepareData() {
-        // some of these should be moved into the constructor, since they don't ever need to be recomputed
-        super.prepareData();
+
+    prepareBaseData() {
+        super.prepareBaseData();
         
         const actorType = this.data.type;
 
@@ -34,23 +33,81 @@ export class FBLActor extends Actor {
             });
         }
 
-        if (actorType === "PC") this._preparePCData();
-        if (actorType === "Monster") this._prepareMonsterData();
-        if (actorType === "NPC") this._prepareNPCData();
-        if (actorType === "Stronghold") this._prepareStrongholdData();
+        // console.log(actorType);
+        if (actorType === "PC") this._prepareBasePCData();
+        if (actorType === "Monster") this._prepareBaseMonsterData();
+        if (actorType === "NPC") this._prepareBaseNPCData();
+        // if (actorType === "Stronghold") this._prepareBaseStrongholdData();
     }
 
-    _preparePCData() {
-        const data = this.data.data;
+    prepareEmbeddedEntities() { 
+        super.prepareEmbeddedEntities();
+        // filter the embedded entities "items" array by type of embedded entities and
+        // sort them into appropriate new arrays for ease of access
+        this._prepareEmbeddedArrays();
+        // console.log(this);
+    }
+
+    prepareDerivedData() {
+        super.prepareDerivedData();
+        const actorType = this.data.type;
+        if (actorType === "PC") this._prepareDerivedPCData();
+        if (actorType === "Monster") this._prepareDerivedMonsterData();
+        if (actorType === "NPC") this._prepareDerivedNPCData();
+        if (actorType === "Stronghold") this._prepareDerivedStrongholdData();
+        // this.prepareEmbeddedEntities();
+    }
+
+    _prepareBasePCData() {
         // import configuration arrays
         // define an array of entities that are allowed to be embedded according to this actor type
         // this value is checked for in the overridden _onDrop() method in FBLActorSheet.js
         this.validEmbeddedEntities = ["Talent", "Spell", "Weapon", "Armor", "Equipment", "Critical Injury", "Ailment"];
+    }
+
+    _prepareBaseMonsterData() {
+        // define an array of entities that are allowed to be embedded according to this actor type
+        // this value is checked for in the overridden _onDrop() method in FBLActorSheet.js
+        this.validEmbeddedEntities = ["Monster Special Ability", "Monster Attack"];
         
         // filter the embedded entities "items" array by type of embedded entities and
         // sort them into appropriate new arrays for ease of access
-        this._prepareEmbeddedArrays();
+    }
 
+    _prepareBaseNPCData() {
+        // import configuration arrays
+        this.validEmbeddedEntities = ["Talent", "Spell", "Weapon", "Armor", "Equipment", "Critical Injury", "Ailment"];
+        // filter the embedded entities "items" array by type of embedded entities and
+        // sort them into appropriate new arrays for ease of access
+    }
+
+    _prepareBaseStrongholdData() {}
+
+    _prepareEmbeddedArrays() {
+        //  if no entities are embedded, initialize the arrays and return
+        // if (!this.data.items) {
+        //     this.data.data.Weapon = [];
+        //     this.data.data.Armor = [];
+        //     this.data.data.Equipment = [];
+        //     this.data.data.MountInventory = [];
+        //     this.data.data["Critical Injury"] = [];
+        //     this.data.data.Talent = [];
+        //     this.data.data.Spell = [];
+        //     return;
+        // }        
+        // for each type of embeddedEntity allowed for this type of actor, create the array
+        // this.data.data[entityType], fill it with embeddedEntities of that
+        // specific type for ease of access and then sort it according to the sort parameter
+        this.validEmbeddedEntities?.forEach( entityType => {
+            this.data.data[entityType] = this.data.items ? this.data.items.filter( (item) => item.type === entityType).sort( (item1, item2) => {
+                return (item1.sort - item2.sort);
+            }) : [] ;
+        });
+        // console.log(this.data.data.Equipment);
+        }
+
+    _prepareDerivedPCData() {
+        const data = this.data.data;
         // create the character inventory and the mount inventory
         data.MountInventory = [];
         data.MountInventory = duplicate(data.Equipment).filter( e => e.flags?.forbiddenlands?.isStoredOnMount);
@@ -111,26 +168,11 @@ export class FBLActor extends Actor {
         // console.log(this.data);
     }
 
-    _prepareMonsterData() {
-        // define an array of entities that are allowed to be embedded according to this actor type
-        // this value is checked for in the overridden _onDrop() method in FBLActorSheet.js
-        this.validEmbeddedEntities = ["Monster Special Ability", "Monster Attack"];
-        
-        // filter the embedded entities "items" array by type of embedded entities and
-        // sort them into appropriate new arrays for ease of access
-        this._prepareEmbeddedArrays();
-    }
+    _prepareDerivedNPCData() {}
 
-    _prepareNPCData() {
-        const data = this.data.data;
-        // import configuration arrays
-        this.validEmbeddedEntities = ["Talent", "Spell", "Weapon", "Armor", "Equipment", "Critical Injury", "Ailment"];
-        // filter the embedded entities "items" array by type of embedded entities and
-        // sort them into appropriate new arrays for ease of access
-        this._prepareEmbeddedArrays();
-    }
+    _prepareDerivedMonsterData() {}
 
-    _prepareStrongholdData() {
+    _prepareDerivedStrongholdData() {
         const data = this.data.data;
         // import configuration arrays
         // this.validEmbeddedEntities = ["Function","Hireling"];
@@ -140,7 +182,7 @@ export class FBLActor extends Actor {
             return total = total + Number(hireling.salary);
         }, 0);
 
-        console.log(data.totalSalaries);
+        // console.log(data.totalSalaries);
 
         const gold = Math.trunc(data.totalSalaries/100);
         const silver = Math.trunc((data.totalSalaries - gold * 100)/10);
@@ -150,39 +192,6 @@ export class FBLActor extends Actor {
         if (data.totalSalaries >= 10 &&  data.totalSalaries < 100) data.totalSalaries = `${silver} Silver, ${copper} Copper`
         if (data.totalSalaries >= 100) data.totalSalaries = `${gold} Gold, ${silver} Silver, ${copper} Copper`
     }
-
-    prepareEmbeddedEntities() { 
-        super.prepareEmbeddedEntities();
-        Object.values(this.data.items).forEach( item => {
-            // if the item doesn't have a bonus property, return
-            if (!item.data.bonus) return;
-            item.data.bonus.currentValue = item.data.bonus.value - item.data.bonus.damage;
-        })
-    }
-
-    _prepareEmbeddedArrays() {
-        //  if no entities are embedded, initialize the arrays and return
-        if (!this.data.items) {
-            this.data.data.Weapon = [];
-            this.data.data.Armor = [];
-            this.data.data.Equipment = [];
-            this.data.data.MountInventory = [];
-            this.data.data["Critical Injury"] = [];
-            this.data.data.Talent = [];
-            this.data.data.Spell = [];
-            return;
-        }        
-        // for each type of embeddedEntity allowed for this type of actor, create the array
-        // this.data.data[entityType], fill it with embeddedEntities of that
-        // specific type for ease of access and then sort it according to the sort parameter
-        this.validEmbeddedEntities.forEach( entityType => {
-            this.data.data[entityType] = this.data.items.filter( (item) => item.type === entityType).sort( (item1, item2) => {
-                return (item1.sort - item2.sort);
-            });
-        });
-        // console.log(this.data.data.Equipment);
-        }
-
         //----------------  FUNCTION rollCheck(event) ---------------------------------------------------- 
 // Roll a generic dice check according to the FBL rules, allowing for the pushing of the roll and/or the
 // rolling of the pride die

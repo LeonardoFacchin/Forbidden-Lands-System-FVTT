@@ -7,7 +7,7 @@
         </div>
         
         <div class="layout__header">
-            <input class="header-title header-title--small" type="text" name="name" value="{{item.name}}" placeholder="Name">
+            <input class="header-title header-title--small" type="text" name="name" value="{{item.name}}", placeholder="Name">
         </div>
 
         {{#if isBeingEdited}}
@@ -22,7 +22,7 @@
                             <label class="table__data table__data--left-aligned">Price: </label>
                         </div>
                         <div class="table__field">
-                            <input class="table__data" name="data.price.cost" value={{data.price.cost}}>
+                            <input class="table__data" name="data.price.cost" data-dtype="Number" value={{data.price.cost}}>
                         </div>
                         <div class="table__field">
                                 <select class="table__data table__data--left-aligned" name="data.price.currency">
@@ -74,7 +74,7 @@
                             <label class="table__data table__data--left-aligned">Bonus: </label>
                         </div>
                         <div class="table__field">
-                            <input class="table__data table__data--left-aligned" name="data.bonus.value" value={{data.bonus.value}}>
+                            <input class="table__data table__data--left-aligned" name="data.bonus.value" data-dtype="Number" value={{data.bonus.value}}>
                         </div>
                         <div class="table__field">
                             <label class="table__data table__data--left-aligned">Skill: </label>

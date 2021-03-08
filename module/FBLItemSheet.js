@@ -13,7 +13,6 @@ import {  CONFIG_PC_CLASSES,
           CONFIG_MAGIC_DISCIPLINES,
           CONFIG_MAGIC_RANGES,
           CONFIG_MAGIC_DURATIONS,
-          CONFIG_MAGIC_CASTING_TIMES,
           CONFIG_EQUIP_SUPPLY,
           CONFIG_EQUIP_WEIGHT,
           CONFIG_MONEY,
@@ -153,7 +152,7 @@ export class SpellSheet extends FBLItemSheet {
   // extend the constructor to include configuration definitions for general settings and the sheet editing flag
   constructor(object, options) {
     super(object, options);
-    this.settings =  {"disciplines": CONFIG_MAGIC_DISCIPLINES, "ranges": CONFIG_MAGIC_RANGES, "durations": CONFIG_MAGIC_DURATIONS, "castingTimes": CONFIG_MAGIC_CASTING_TIMES};
+    this.settings =  {"disciplines": CONFIG_MAGIC_DISCIPLINES, "ranges": CONFIG_MAGIC_RANGES, "durations": CONFIG_MAGIC_DURATIONS};
     // this.isBeingEdited = false;
   }
 
@@ -226,8 +225,7 @@ export class WeaponSheet extends FBLItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
     const item = this.entity;
-    // const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
-    const el = this.form.querySelector(`.artDie`) ? this.form.querySelector(`.artDie`) : null;
+    const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
 
     if (!item.data.data.isArtifact || !el) return;
     el.addEventListener("change", async event => {
@@ -266,8 +264,7 @@ export class ArmorSheet extends FBLItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
     const item = this.entity;
-    // const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
-    const el = this.form.querySelector(`.artDie`) ? this.form.querySelector(`.artDie`) : null;
+    const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
     
     if (!item.data.data.isArtifact || !el) return;
     el.addEventListener("change", async event => {
@@ -306,8 +303,7 @@ export class CriticalInjurySheet extends FBLItemSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    // document.querySelector(`form.${this.entity._id}`).addEventListener("click", _managePenalties.bind(this) );
-   this.form.addEventListener("click", _managePenalties.bind(this) );
+    document.querySelector(`form.${this.entity._id}`).addEventListener("click", _managePenalties.bind(this) );
 
     async function _managePenalties(event) {
       event.preventDefault();

@@ -26,14 +26,15 @@ export function  updateDataFromProperty(property, value) {
 export class fblPool extends DicePool {
     // Define base roll functionality
     constructor (nAttribute, nSkill, nGear, nArtifact=[]) {
-      // const r1 = (nAttribute!==0) ? new Roll(`${nAttribute}d6`) : new Roll("0d6");
-      // const r2 = (nSkill!==0) ? new Roll(`${Math.abs(nSkill)}d6`) : new Roll("0d6");
-      // const r3 = (nGear!==0) ? new Roll(`${nGear}d6`) : new Roll("0d6");
-      const r1 = new Roll(`${nAttribute}d6`);
-      const r2 = new Roll(`${Math.abs(nSkill)}d6`);
-      const r3 = new Roll(`${nGear}d6`);
+      const r1 = (nAttribute!==0) ? new Roll(`${nAttribute}d6`) : null;
+      const r2 = (nSkill!==0) ? new Roll(`${Math.abs(nSkill)}d6`) : null;
+      const r3 = (nGear!==0) ? new Roll(`${nGear}d6`) : null;
+      console.log(nGear);
+      // const r1 = new Roll(`${nAttribute}d6`);
+      // const r2 = new Roll(`${Math.abs(nSkill)}d6`);
+      // const r3 = new Roll(`${nGear}d6`);
       const allRolls = [r1, r2, r3].concat(nArtifact.map( d => {return new Roll(d)}));
-      let r = super(allRolls);
+      let r = super({rolls: allRolls}).evaluate();
 
       if (nSkill < 0) this.isSkillNegative = true;
       
@@ -45,18 +46,18 @@ export class fblPool extends DicePool {
 
       this.artifactArray = nArtifact;
 
-      // console.log(r.roll());
-      this.originalRoll = Object.values(r.roll())[0].map( d => {
-        if(d.dice.length===0) return [];
-        return d.dice[0].rolls.map(i => i.roll)
+      this.originalRoll = r.rolls.map( d => {
+        return !d ? [] : d.terms[0].values;
       });
     //   console.log(this.originalRoll);
 
       this.res = duplicate(this.originalRoll);
-    //   console.log(this.res)
+      console.log(this.res)
 
       this.sequence = [this.originalRoll];
     //   console.log(this.sequence.length)
+
+      this.wasPrideRolled = false;
 
       // store this pool in a collection for later reference by the chat message interface
       game.data.fblDicePools.set(this._id, this);
@@ -64,16 +65,17 @@ export class fblPool extends DicePool {
     
     // Push the roll
     pushRoll() {
-      this.res[0] = this.res[0].map( d => { return ((d===1 || d===6) ? d : (new Die(6).roll()).rolls[0].roll) });
+      console.log(this);
+      this.res[0] = this.res[0].map( d => { return ((d===1 || d===6) ? d : new Roll("1d6").roll().terms[0].values[0]) });
     //   console.log(this.res[0]);
-      this.res[1] = this.res[1].map( d => { return((d===6) ? d : (new Die(6).roll()).rolls[0].roll) });
+      this.res[1] = this.res[1].map( d => { return((d===6) ? d : new Roll("1d6").roll().terms[0].values[0]) });
     //   console.log(this.res[1]);
-      this.res[2] = this.res[2].map( d => { return((d===1 || d===6) ? d : (new Die(6).roll()).rolls[0].roll) });
+      this.res[2] = this.res[2].map( d => { return((d===1 || d===6) ? d : new Roll("1d6").roll().terms[0].values[0]) });
     //   console.log(this.res[2]);
       for (let i = 3; i <= (this.res.length-1); i++) {
         const dFaces = this.dice[i].faces;
         const dResult = this.res[i][0]
-        this.res[i] = (dResult>=6) ? [dResult] : [(new Die(dFaces).roll()).rolls[0].roll];
+        this.res[i] = (dResult>=6) ? [dResult] : new Roll(`1d${dFaces}`).roll().terms[0].values;
       }
       this.sequence.push(duplicate(this.res));
       // console.log(this.sequence);
@@ -83,11 +85,13 @@ export class fblPool extends DicePool {
     // roll the d12 Pride die
     rollPride() {
       let prideRoll = duplicate(this.sequence).pop();
-      prideRoll.push([(new Die(12).roll()).rolls[0].roll]);
+      prideRoll.push(new Roll("d12").roll().terms[0].values);
       this.sequence.push(duplicate(prideRoll));
       this.artifactArray.push("d12");
       this.res = prideRoll;
-      this.dice.push({faces: 12});
+      this.wasPrideRolled = true;
+      // this.dice.push({faces: 12});
+      // console.log(this);
       return this;
     }
 
@@ -100,8 +104,8 @@ export class fblPool extends DicePool {
       const tSucc = tRoll.reduce( (sum, i) => {
         return sum = i.success + sum;
       }, 0);
-      const tAttDam = (this.sequence.length === 1)? 0 : tRoll[0].damage;
-      const tGearDam = (this.sequence.length === 1)? 0 : tRoll[2].damage;
+      const tAttDam = (this.sequence.length === 1 || (this.sequence.length === 2 && this.wasPrideRolled)) ? 0 : tRoll[0].damage;
+      const tGearDam = (this.sequence.length === 1 || (this.sequence.length === 2 && this.wasPrideRolled)) ? 0 : tRoll[2].damage;
 
       return { "successes": Math.max(0, tSucc), "attDamage": tAttDam, "gearDamage": tGearDam }
 
@@ -134,12 +138,17 @@ export async function prepareRollData( rollType, actor, id) {
 
   //-------------- Equipment or Weapon ------------------------------
   if ( rollType==="Weapon" || rollType==="Equipment") {
-    const item = actor.getEmbeddedEntity("OwnedItem", id);
+    // const item = actor.getEmbeddedEntity("OwnedItem", id); //<----- Why doesn't this work?
+    //const item = actor.data.items.find( i => i._id === id);
+    const item = actor.getOwnedItem(id).data;
+    console.log(item);
     if (item.data.skill === "None") {console.log("This Item can't be used in a check"); return null};
     const skill = item.data.skill;
     const attribute = actor.data.data.skills[item.data.skill].attr;
     const itemName = item.name;
     const gearDice = item.data.bonus.currentValue;
+    console.log(item.data);
+    // console.log("gear Dice: ", item);
     let artifactDie = (item.data.isArtifact) ? [item.data.artifactDie] : [];
     let skillDice = actor.data.data.skills[item.data.skill].value;
     const attributeDice = actor.data.data.attributes[attribute].value;
