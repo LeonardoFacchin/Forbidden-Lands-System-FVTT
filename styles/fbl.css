@@ -35,7 +35,8 @@
 .dialog .window-content,
 .journal-sheet .window-content {
   font-family: "IM Fell DW Pica Roman";
-  background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
+  /* background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg"); */
+  background-image: radial-gradient(rgba(255, 255, 240, 0.1), rgba(255, 255, 240, 0.2)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
   font-size: var(--table-font-size);
   color: black;
   text-align: justify;
@@ -50,12 +51,14 @@
 form#chat-form {
   border-style: solid;
   border-image: url('/systems/forbiddenlands/icons/fbl_frame.png') 4% 5% / 15px 15px / 1px repeat;
-  background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
+  /* background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg"); */
+  background-image: radial-gradient(rgba(255, 255, 240, 0.1), rgba(255, 255, 240, 0.2)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
 }
 
 textarea#chat-message {
   font-family: "IM Fell DW Pica Roman";
-  background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
+  /* background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg"); */
+  background-image: radial-gradient(rgba(255, 255, 240, 0.1), rgba(255, 255, 240, 0.2)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
   font-size: 0.9rem;
   border: none;
 }

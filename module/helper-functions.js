@@ -73,7 +73,7 @@ export class fblPool extends DicePool {
       this.res[2] = this.res[2].map( d => { return((d===1 || d===6) ? d : new Roll("1d6").roll().terms[0].values[0]) });
     //   console.log(this.res[2]);
       for (let i = 3; i <= (this.res.length-1); i++) {
-        const dFaces = this.dice[i].faces;
+        const dFaces = this.rolls[i].terms[0].faces;
         const dResult = this.res[i][0]
         this.res[i] = (dResult>=6) ? [dResult] : new Roll(`1d${dFaces}`).roll().terms[0].values;
       }
