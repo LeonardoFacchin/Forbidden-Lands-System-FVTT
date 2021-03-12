@@ -15,6 +15,11 @@
     font-family: "IM Fell Great Primer Roman";
     src: url('../fonts/IMFeGPrm28P.ttf');
   }
+
+  @font-face {
+    font-family: "Raleway Medium";
+    src: url('../fonts/raleway_medium.ttf');
+  }
 /* -------------------------- GLOBAL -------------------------*/
 
 :root {
@@ -66,6 +71,9 @@ textarea#chat-message {
 #chat-log .message {
   max-width: 100% !important;
   font-size: 0.85rem;
+  font-family: "Raleway Medium";
+  padding: 10px;
+  border-image: url('/systems/forbiddenlands/icons/fbl_frame.png') 4% 5% / 10px 10px / 1.75px repeat;
 }
 
 .app.window-app.fbl {
