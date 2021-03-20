@@ -39,18 +39,16 @@
 #chat-log .message,
 .dialog .window-content,
 .journal-sheet .window-content {
-  font-family: "IM Fell DW Pica Roman";
-  /* background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg"); */
+  /* font-family: "IM Fell DW Pica Roman"; */
+  font-family: "Raleway Medium";
   background-image: radial-gradient(rgba(255, 255, 240, 0.1), rgba(255, 255, 240, 0.2)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
   font-size: var(--table-font-size);
   color: black;
   text-align: justify;
-  /* height: auto !important;
-  width: auto !important; */
-  padding: 10px 10px 20px 10px;
+  padding: 10px 10px 10px 10px;
   overflow-y: hidden;
   border-style: solid;
-  border-image: url('/systems/forbiddenlands/icons/fbl_frame.png') 4% 5% / 15px 15px / 1.75px repeat;
+  border-image: url('/systems/forbiddenlands/icons/fbl_frame.png') 5% 4%/ 20px 15px 20px / 0px 1.5px 1.75px 1.5px repeat;
 }
 
 form#chat-form {
@@ -76,13 +74,13 @@ textarea#chat-message {
   border-image: url('/systems/forbiddenlands/icons/fbl_frame.png') 4% 5% / 10px 10px / 1.75px repeat;
 }
 
-.app.window-app.fbl {
+/* .app.window-app.fbl {
   max-width: min-content !important;
 }
 
 .fbl form {
   max-width: min-content !important;
-}
+} */
 
 .fbl .fas:hover,
 .fbl [data-action="roll"]:hover,
@@ -154,6 +152,7 @@ border-radius: 2px;
   flex: 1;
   text-align: start;
 }
+
 /* --------------------------- LAYOUT ----------------------------*/
 /*  Layout classes have the responsibility of defining the Sheet layout and to implement it
 
@@ -168,7 +167,8 @@ border-radius: 2px;
     margin: auto;
     display: grid;
     gap: 1%;
-    flex: 1;
+    width: 100%;
+    height: 100%
 }
 
 .layout__gap {
@@ -180,7 +180,29 @@ border-radius: 2px;
   margin-top: 20px;
 }
 
-.layout--PC {
+.layout--wrapper {
+  grid-template-areas: "header"
+                       "main";
+  grid-template-columns: 1fr;
+  grid-template-rows: 30px 1fr;
+}
+
+.layout--tabbed-container {
+  grid-template-areas: "tabs"
+                       "body";
+  grid-template-columns: 1fr;
+  grid-template-rows: min-content 1fr;
+  row-gap: 0;
+}
+
+.layout--tabbed-sheet {
+  grid-template-areas: "header . tabs"
+                       "body body body";
+  grid-template-columns: 4fr 1fr 2fr;
+  grid-template-rows: min-content 1fr;
+}
+
+/* .layout--PC {
   grid-template-areas: "graphics header header"
                        "left-sidebar body right-sidebar";
   grid-template-columns: 215px 460px 215px;
@@ -194,9 +216,30 @@ border-radius: 2px;
   grid-template-columns: 215px 460px 215px;
   grid-template-rows: 35px 713px;
   min-width: 910px;
+} */
+
+.layout--PC-Info {
+  grid-template-areas: "graphics header"
+                       "body body";
+  grid-template-columns: 215px 1fr;
+  grid-template-rows: 215px 1fr;
+  /* min-width: 910px; */
 }
 
-.layout--monster {
+.layout--PC-Statistics {
+  grid-template-areas: "left-sidebar body right-sidebar";
+  /* grid-template-columns: 210px 450px 210px; */
+  grid-template-columns: 25fr 49fr 24fr;
+  grid-template-rows: 1fr;
+  /* min-width: 870px; */
+}
+
+.layout--PC-Sheet-Title {
+  grid-template-columns: 50px 0 7fr;
+  grid-template-rows: min-content;
+}
+
+/* .layout--monster {
   grid-template-areas: "graphics header"
                        "left-sidebar body";
   grid-template-columns: 250px 1fr;
@@ -204,6 +247,27 @@ border-radius: 2px;
   min-width: 880px;
   max-width: 880px;
   max-height: 963px;
+} */
+
+.layout--monster-description {
+  grid-template-areas: "graphics header";
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: 1fr;
+  /* min-width: 880px;
+  max-width: 880px; */
+  height: 700px;
+  /* max-height: 600px; */
+}
+
+.layout--monster-stats {
+  grid-template-areas: "body body"
+                       "left-sidebar right-sidebar";
+  grid-template-columns: 250px 1fr;
+  grid-template-rows: min-content 1fr;
+  /* min-width: 880px;
+  max-width: 880px; */
+  height: 700px;
+  /* max-height: 600px; */
 }
 
 .layout--NPC {
@@ -237,16 +301,19 @@ border-radius: 2px;
                        "body body";
   grid-template-columns: 75px 1fr;
   grid-template-rows: 75px 1fr;
-  min-width: 450px;
-  max-width: 750px;
+  /* min-width: 450px;
+  max-width: 750px; */
   /* border: 3px dashed purple; */
 }
 
 .layout--spell-display {
-  grid-template-areas: "header"
-                        "body";
-  min-width: 450px;
-  max-width: 750px;
+  grid-template-areas:  "header"
+                        "body"
+                        "main";
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content max-content 1fr;
+  /* min-width: 450px;
+  max-width: 750px; */
   /* border: 3px dashed purple; */
 }
 
@@ -256,6 +323,27 @@ border-radius: 2px;
   padding: 0;
   margin: 0;
   grid-template-rows: 1fr 140px 20px;
+}
+
+.layout__tabs {
+  grid-area: tabs;
+  flex: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.layout__tabs-content {
+  grid-area: body;
+  display: flex;
+  flex-direction: column;
+  justify-items: space-between;
+  /* border: 3px dashed salmon; */
+}
+
+.layout__main {
+  grid-area: main;
+  display: flex;
+  flex-direction: column;
 }
 
 .layout__picture {
@@ -452,11 +540,15 @@ input[type="text"].header-title--small {
 .tox {
   padding: 5px 10px;
   flex: 1;
-  font-family: "IM Fell DW Pica Roman";
+  font-family: "Raleway Medium";
   background-image: radial-gradient(rgba(255, 255, 240, 0.2), rgba(255, 255, 240, 0.4)), url("/systems/forbiddenlands/icons/paper_bright.jpg");
-  /* font-size: 0.9rem; */
+  font-size: 1.0rem;
   /* border: 3px dotted blue; */
 }
+
+/* input[type="text"] {
+  font-family: "Raleway Medium" !important;
+} */
 
 /* --------------------------- TABLE ----------------------------*/
 /*  Stylings for any kind of tabular-looking table UI.
@@ -538,7 +630,7 @@ input[type="text"].header-title--small {
 }
 
 .table__entry--mAttacks {
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 10% 90%;
 }
 
 .table__entry--attack-stats,
@@ -575,8 +667,16 @@ input[type="text"].header-title--small {
   grid-template-columns: repeat(4, minmax(75px, 1fr));
 }
 
+.table__entry--weapon-form,
+.table__entry--armor-form,
+.table__entry--equipment-form,
+.table__entry--spell-form,
+.table__entry--critical-form {
+  grid-template-columns: 20% 80%;
+}
+
 .table__entry--weapon-features {
-  grid-template-columns: 15% repeat(4, 21%);
+  grid-template-columns: 20% repeat(4, 19.5%);
   justify-content: space-between;
 }
 
@@ -585,7 +685,9 @@ input[type="text"].header-title--small {
 }
 
 .table__entry--weapon-artifact-stats {
-  grid-template-columns: repeat(7, minmax(75px, 1fr)) minmax(min-content, 3fr);
+  /* grid-template-columns: repeat(7, minmax(75px, 1fr)) minmax(min-content, 3fr); */
+  grid-template-columns: repeat(5, minmax(75px, 1fr)) minmax(min-content, 3fr);
+  grid-template-rows: fit-content;
 }
 
 .table__entry--weapon-inventory {
@@ -605,7 +707,7 @@ input[type="text"].header-title--small {
 }
 
 .table__entry--PC-weapon-display {
-  background-color: white;  
+  background-color: white;
   grid-template-columns: 8% 15% 5% 13% 15% 5% 9% 27% 5px;
 }
 
@@ -760,7 +862,7 @@ select.table__data {
 }
 
 .table__data--left-aligned {
-  text-align: justify;
+  text-align: left;
 }
 
 .table__data--name {
@@ -809,12 +911,18 @@ input[type="text"].table__data--fill-form {
   border-color: var(--negative-effect);
 }
 
-.fbl .tabs .item, .fbl .equipmentTabs .item {
+.fbl .talentsTabs .item,
+.fbl .descriptionTabs .item, 
+.fbl .equipmentTabs .item,
+.fbl .functionTabs .item {
   text-shadow: none;
   background-color: rgba(0,0,0,0.1);
 }
 
-.fbl .tabs .item.active, .fbl .equipmentTabs .item.active {
+.fbl .talentsTabs .item.active,
+.fbl .descriptionTabs .item.active,
+.fbl .equipmentTabs .item.active,
+.fbl .functionTabs .item.active {
   text-shadow: none;
   background-color: var(--title-background-color);
 }

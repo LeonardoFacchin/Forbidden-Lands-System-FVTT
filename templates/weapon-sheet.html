@@ -1,4 +1,4 @@
-<form class="{{cssClass}} {{this.entity._id}}" autocomplete="off" style="font-size: 0.8rem;">
+<form class="{{cssClass}}" autocomplete="off" style="font-size: 0.8rem;">
 
     <div class="layout layout--equipment">
         <div class="layout__picture">
@@ -22,7 +22,7 @@
             <label class="frame__title layout__gap--large">Gaming Stats Data</label>
             <div class="frame frame__placement frame--no-lr-border">
                 <div class="table">
-                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                    <div class="table__entry table__entry--no-border table__entry--weapon-form">
                         <!-- WEAPON GROUP -->
                         <div class="table__field">
                             <label class="table__data table__data--left-aligned">Weapon Group: </label>
@@ -113,7 +113,7 @@
             <label class="frame__title layout__gap--large">Artifact</label>
             <div class="frame frame__placement frame--no-lr-border">
                 <div class="table">
-                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                    <div class="table__entry table__entry--no-border table__entry--weapon-form">
                         <div class="table__field">
                             <label class="table__data table__data--left-aligned">Artifact Die One: </label>
                         </div>
@@ -174,7 +174,7 @@
                     </div>
                     {{/unless}}
                     <!-- SUPPLY -->
-                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                    <div class="table__entry table__entry--no-border table__entry--weapon-form">
                         {{#unless data.isArtifact}}
                         <div class="table__field">
                             <label class="table__data table__data--left-aligned">Supply: </label>
@@ -211,7 +211,7 @@
             <label class="frame__title layout__gap--large">Crafting Data</label>
             <div class="frame frame__placement frame--no-lr-border">
                 <div class="table">
-                    <div class="table__entry table__entry--no-border table__entry--mAttacks">
+                    <div class="table__entry table__entry--no-border table__entry--weapon-form">
                         <div class="table__field">
                             <label class="table__data table__data--left-aligned">Materials: </label>
                         </div>
@@ -248,7 +248,6 @@
     {{else}}
     
     <!-- DISPLAY -->
-    {{log this}}
     <div class="layout__body">
         <!-- COMBAT STATS -->
         <div class="table">

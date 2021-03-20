@@ -1,4 +1,5 @@
-<form class="{{cssClass}} layout layout--NPC {{actor._id}}" autocomplete="off">
+<form class="{{cssClass}} layout layout--NPC" autocomplete="off">
+    {{log this}}
 
     <!-- TOP-LEFT - PROFILE PICTURE -->
     <div class="layout__picture">
@@ -176,9 +177,14 @@
                                 {{/each}}
                                 </div>
                             </div>
-                            <div class="table__field">
+                            <!-- <div class="table__field">
                                 <span class="table__data">
                                     {{armor.data.artifactDie}}
+                                </span>
+                            </div> -->
+                            <div class="table__field">
+                                <span class="table__data">
+                                    <img class="fas artifactSwitch" type="image" src="{{armor.data.artifactUrl}}" data-id="{{armor._id}}" style="border: none; margin: -2px -1px;  vertical-align: middle;" alt="" width="18px" height="18px">
                                 </span>
                             </div>
                             <div class="table__field">
@@ -194,14 +200,14 @@
                 <!-- FIRST COLUMN: TALENTS -->
                 <div class="frame frame--no-border">
 
-                    <nav class="tabs">
+                    <nav class="talentsTabs" style="display: flex; flex-direction: row; flex: 1">
                         <a class="item frame__title" data-tab="talents">Talents</a>
                         {{#if data.isSpellcaster}}
                         <a class="item frame__title" data-tab="spells">Spells</a>
                         {{/if}}
                     </nav> 
 
-                    <section class="content table--flexible frame" style="overflow-y: scroll; height: 336.31px">
+                    <section class="talentsContent table--flexible frame" style="overflow-y: scroll; height: 336.31px">
                         <div class="table tab drag-target" data-tab="talents">
                             {{#each data.Talent as |talent key|}}
                             <div class="table__entry table__entry--PC-talent-display table__entry--no-border frame frame__margin--PC-items drag-item" data-id="{{talent._id}}" style="background-color: white;">

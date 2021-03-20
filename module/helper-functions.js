@@ -182,10 +182,11 @@ export async function prepareRollData( rollType, actor, id) {
 
   //----------------------- Armor ------------------------------
   if ( rollType==="Armor" ) {
-    const bodyArmor = actor.data.data.Armor.filter( a => { return a.data.location === "Body"})[0];      
-    const headArmor = actor.data.data.Armor.filter( a => { return a.data.location === "Head"})[0];
-    const bodyArmorValue = bodyArmor ? bodyArmor.data.bonus.currentValue : 0;
-    const headArmorValue = headArmor ? headArmor.data.bonus.currentValue : 0;
+    const bodyArmor = actor.getOwnedItem((actor.data.data.Armor.filter( a => { return a.data.location === "Body"})[0])._id);      
+    const headArmor = actor.getOwnedItem((actor.data.data.Armor.filter( a => { return a.data.location === "Head"})[0])._id);
+    console.log(bodyArmor, headArmor);
+    const bodyArmorValue = bodyArmor ? bodyArmor.data.data.bonus.currentValue : 0;
+    const headArmorValue = headArmor ? headArmor.data.data.bonus.currentValue : 0;
     // console.log(bodyArmor)
     const artifactBodyDie = (bodyArmor?.data.isArtifact) ? [bodyArmor.data.artifactDie] : [];
     const artifactHeadDie = (headArmor?.data.isArtifact) ? [headArmor.data.artifactDie] : [];

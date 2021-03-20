@@ -101,7 +101,9 @@
                 "age": "",
                 "dark secret": "",
                 "pride": "",
-                "reputation": 0
+                "reputation": 0,
+                "biography": "",
+                "notes": ""
             },
             "templates": ["scores"],
             "willpower": {"max": 10, "value": 0},

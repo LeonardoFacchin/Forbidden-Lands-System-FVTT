@@ -89,7 +89,7 @@ export class MonsterAttackSheet extends FBLItemSheet {
         return mergeObject(super.defaultOptions, {
           classes: ["fbl"],
           template: "systems/forbiddenlands/templates/monster-attack-sheet.html",
-          width: "auto",
+          width: "450",
           height: "auto",
           resizable: false
       });
@@ -108,7 +108,7 @@ export class MonsterSpecialAbilitySheet extends FBLItemSheet {
         return mergeObject(super.defaultOptions, {
           classes: ["fbl"],
           template: "systems/forbiddenlands/templates/monster-special-ability-sheet.html",
-          width: "auto",
+          width: "450",
           height: "auto",
           resizable: false
       });
@@ -136,8 +136,8 @@ export class CharacterTalentSheet extends FBLItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["fbl"],
             template: "systems/forbiddenlands/templates/character-talent-sheet.html",
-            width: "auto",
-          height: "auto",
+            width: "450",
+            height: "auto",
             resizable: false
       });
     }
@@ -160,7 +160,7 @@ export class SpellSheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/spell-sheet.html",
-      width: "auto",
+      width: "450",
       height: "auto",
       resizable: false
     });    
@@ -186,7 +186,7 @@ export class EquipmentSheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/equipment-sheet.html",
-      width: "auto",
+      width: "500",
       height: "auto",
       resizable: false
     });    
@@ -216,7 +216,7 @@ export class WeaponSheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/weapon-sheet.html",
-      width: "auto",
+      width: "500",
       height: "auto",
       resizable: false
     });    
@@ -225,7 +225,7 @@ export class WeaponSheet extends FBLItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
     const item = this.entity;
-    const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
+    const el = this.form.querySelector(`.artDie`) ? this.form.querySelector(`.artDie`) : null;
 
     if (!item.data.data.isArtifact || !el) return;
     el.addEventListener("change", async event => {
@@ -255,7 +255,7 @@ export class ArmorSheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/armor-sheet.html",
-      width: "auto",
+      width: "450",
       height: "auto",
       resizable: false
     });    
@@ -264,7 +264,7 @@ export class ArmorSheet extends FBLItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
     const item = this.entity;
-    const el = document.querySelector(`form.${this.entity._id} .artDie`) ? document.querySelector(`form.${this.entity._id} .artDie`) : null;
+    const el = this.form.querySelector(`.artDie`) ? this.form.querySelector(`.artDie`) : null;
     
     if (!item.data.data.isArtifact || !el) return;
     el.addEventListener("change", async event => {
@@ -295,7 +295,7 @@ export class CriticalInjurySheet extends FBLItemSheet {
     return mergeObject(super.defaultOptions, {
       classes: ["fbl"],
       template: "systems/forbiddenlands/templates/critical-injury-sheet.html",
-      width: "auto",
+      width: "450",
       height: "auto",
       resizable: false
     });    
@@ -303,7 +303,7 @@ export class CriticalInjurySheet extends FBLItemSheet {
 
   activateListeners(html) {
     super.activateListeners(html);
-    document.querySelector(`form.${this.entity._id}`).addEventListener("click", _managePenalties.bind(this) );
+    this.form.addEventListener("click", _managePenalties.bind(this) );
 
     async function _managePenalties(event) {
       event.preventDefault();
